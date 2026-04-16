@@ -12,12 +12,13 @@
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <script>
     console.log('Plotly loaded:', typeof Plotly);
-    console.log('Canvas elements:', document.querySelectorAll('canvas').length);
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('DOM ready, calling render functions');
+    
+    // Wait for scripts to load, then render
+    setTimeout(() => {
+      console.log('Canvas elements:', document.querySelectorAll('canvas').length);
       renderMarketSankeyPlotly();
       renderValueChainSankeyPlotly();
-    });
+    }, 1000);
 
     function renderMarketSankeyPlotly() {
       const canvas = document.getElementById('marketSankey');
