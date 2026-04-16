@@ -39,7 +39,7 @@
       }
       console.log('Rendering Market Sankey...');
       
-      // Market sizes in $B (scaled for visualization)
+      // 1. Science sources
       const science = [
         'Academic Research ($2B)',
         'PubMed/Clinical ($0.5B)',
@@ -47,13 +47,17 @@
         'Gov Grants ($5B)',
         'Pharma R&D ($10B)'
       ];
-      const bigtech = [
-        'Google/Calico ($1B)',
-        'Microsoft ($0.5B)',
-        'Amazon ($0.3B)',
-        'Apple ($0.2B)',
-        'NVIDIA ($0.5B)'
+      
+      // 2. Main longevity domains (instead of BigTech)
+      const domains = [
+        'Supplements/Pharma ($50B)',
+        'Nutrition/Diet ($30B)',
+        'Exercise/Fitness ($25B)',
+        'Sleep/Recovery ($15B)',
+        'Diagnostics/Testing ($10B)'
       ];
+      
+      // 3. SME players
       const sme = [
         'Human Longevity ($50M)',
         'InsideTracker ($20M)',
@@ -61,37 +65,39 @@
         'TruDiagnostic ($10M)',
         'BioAge Labs ($30M)'
       ];
+      
+      // 4. Target markets
       const target = [
         'Pharma R&D ($2B)',
         'Longevity Clinics ($1B)',
         'D2C Premium ($0.5B)'
       ];
 
-      // Build link arrays with real scale ($B scaled by 10 for visibility)
+      // Build flows proportional to market size
       const source = [];
       const target_arr = [];
       const value = [];
       const linkColor = [];
       
-      // Science → BigTech (flow proportional to investment)
-      const scienceValues = [20, 5, 10, 50, 100];  // $B * 10
-      const bigtechValues = [10, 5, 3, 2, 5];  // $B
+      // Science → Domains (research feeds domains)
+      const sciValues = [20, 5, 10, 50, 100];  // $B * 10
+      const domainValues = [50, 30, 25, 15, 10];   // Domain market $B
       
       science.forEach((s, si) => {
-        bigtech.forEach((b, bi) => {
+        domains.forEach((d, di) => {
           source.push(si);
-          target_arr.push(science.length + bi);
-          value.push(Math.round(scienceValues[si] * bigtechValues[bi] * 0.02));
+          target_arr.push(science.length + di);
+          value.push(Math.round(sciValues[si] * domainValues[di] * 0.015));
           linkColor.push('rgba(0,102,204,0.3)');
         });
       });
       
-      // BigTech → SME (investment flow)
-      bigtech.forEach((b, bi) => {
+      // Domains → SME (market flows to players)
+      domains.forEach((d, di) => {
         sme.forEach((s, si) => {
-          source.push(science.length + bi);
-          target_arr.push(science.length + bigtech.length + si);
-          value.push(Math.round(bigtechValues[bi] * (si === 2 ? 0.2 : (si + 1) * 0.3));
+          source.push(science.length + di);
+          target_arr.push(science.length + domains.length + si);
+          value.push(Math.round(domainValues[di] * (si === 2 ? 0.3 : (si + 1) * 0.2));
           linkColor.push(si === 2 ? 'rgba(214,51,132,0.5)' : 'rgba(111,66,204,0.3)');
         });
       });
@@ -99,17 +105,17 @@
       // SME → Target (market opportunity)
       sme.forEach((s, si) => {
         target.forEach((t, ti) => {
-          source.push(science.length + bigtech.length + si);
-          target_arr.push(science.length + bigtech.length + sme.length + ti);
-          value.push(si === 2 ? 8 : Math.round((si + 1) * 0.8));
+          source.push(science.length + domains.length + si);
+          target_arr.push(science.length + domains.length + sme.length + ti);
+          value.push(si === 2 ? 10 : Math.round((si + 1) * 0.8));
           linkColor.push(si === 2 ? 'rgba(214,51,132,0.6)' : 'rgba(40,167,69,0.3)');
         });
       });
 
-      const allLabels = [...science, ...bigtech, ...sme, ...target];
+      const allLabels = [...science, ...domains, ...sme, ...target];
       const nodeColors = [
         ...Array(science.length).fill('#0066cc'),
-        ...Array(bigtech.length).fill('#6f42c1'),
+        ...Array(domains.length).fill('#6f42c1'),
         ...sme.map((_, i) => i === 2 ? '#d63384' : '#28a745'),
         ...Array(target.length).fill('#fd7e14')
       ];
