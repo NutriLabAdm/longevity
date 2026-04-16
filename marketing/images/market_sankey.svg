@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradScience" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.3"/>
+    </linearGradient>
+    <linearGradient id="gradBigtech" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.3"/>
+    </linearGradient>
+    <linearGradient id="gradSME" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.3"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#666"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="900" height="600" fill="#f8fafc"/>
+  
+  <!-- Column Headers -->
+  <text x="150" y="35" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e293b" text-anchor="middle">1. SCIENCE</text>
+  <text x="450" y="35" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e293b" text-anchor="middle">2. BIGTECH</text>
+  <text x="750" y="35" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e293b" text-anchor="middle">3. SME SPECIALIZATION</text>
+  
+  <!-- Column 1: Science Sources -->
+  <rect x="50" y="60" width="200" height="80" rx="8" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-width="2"/>
+  <text x="150" y="85" font-family="Arial" font-size="14" font-weight="bold" fill="#1e40af" text-anchor="middle">Academic Research</text>
+  <text x="150" y="105" font-family="Arial" font-size="11" fill="#1e40af" text-anchor="middle">Universities, Institutes</text>
+  <text x="150" y="125" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$2B annual</text>
+  
+  <rect x="50" y="155" width="200" height="80" rx="8" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-width="2"/>
+  <text x="150" y="180" font-family="Arial" font-size="14" font-weight="bold" fill="#1e40af" text-anchor="middle">PubMed/Clinical Trials</text>
+  <text x="150" y="200" font-family="Arial" font-size="11" fill="#1e40af" text-anchor="middle">Published Studies</text>
+  <text x="150" y="220" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$500M annual</text>
+  
+  <rect x="50" y="250" width="200" height="80" rx="8" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-width="2"/>
+  <text x="150" y="275" font-family="Arial" font-size="14" font-weight="bold" fill="#1e40af" text-anchor="middle">Biobanks</text>
+  <text x="150" y="295" font-family="Arial" font-size="11" fill="#1e40af" text-anchor="middle">UKBB, FinnGen, etc.</text>
+  <text x="150" y="315" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$1B annual</text>
+  
+  <rect x="50" y="345" width="200" height="80" rx="8" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-width="2"/>
+  <text x="150" y="370" font-family="Arial" font-size="14" font-weight="bold" fill="#1e40af" text-anchor="middle">Government Grants</text>
+  <text x="150" y="390" font-family="Arial" font-size="11" fill="#1e40af" text-anchor="middle">NIH, EU Programs</text>
+  <text x="150" y="410" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$5B annual</text>
+  
+  <rect x="50" y="440" width="200" height="80" rx="8" fill="#3b82f6" fill-opacity="0.15" stroke="#3b82f6" stroke-width="2"/>
+  <text x="150" y="465" font-family="Arial" font-size="14" font-weight="bold" fill="#1e40af" text-anchor="middle">Pharma R&D Data</text>
+  <text x="150" y="485" font-family="Arial" font-size="11" fill="#1e40af" text-anchor="middle">Clinical Data</text>
+  <text x="150" y="505" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$10B annual</text>
+  
+  <!-- Column 2: Big Tech Players -->
+  <rect x="350" y="60" width="200" height="80" rx="8" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="450" y="85" font-family="Arial" font-size="14" font-weight="bold" fill="#5b21b6" text-anchor="middle">Google/Alphabet</text>
+  <text x="450" y="105" font-family="Arial" font-size="11" fill="#5b21b6" text-anchor="middle">DeepMind, Calico</text>
+  <text x="450" y="125" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$1B+ investment</text>
+  
+  <rect x="350" y="155" width="200" height="80" rx="8" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="450" y="180" font-family="Arial" font-size="14" font-weight="bold" fill="#5b21b6" text-anchor="middle">Microsoft</text>
+  <text x="450" y="200" font-family="Arial" font-size="11" fill="#5b21b6" text-anchor="middle">Healthcare AI</text>
+  <text x="450" y="220" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$500M investment</text>
+  
+  <rect x="350" y="250" width="200" height="80" rx="8" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="450" y="275" font-family="Arial" font-size="14" font-weight="bold" fill="#5b21b6" text-anchor="middle">Amazon</text>
+  <text x="450" y="295" font-family="Arial" font-size="11" fill="#5b21b6" text-anchor="middle">AWS Health</text>
+  <text x="450" y="315" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$300M investment</text>
+  
+  <rect x="350" y="345" width="200" height="80" rx="8" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="450" y="370" font-family="Arial" font-size="14" font-weight="bold" fill="#5b21b6" text-anchor="middle">Apple</text>
+  <text x="450" y="390" font-family="Arial" font-size="11" fill="#5b21b6" text-anchor="middle">Health Ecosystem</text>
+  <text x="450" y="410" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$200M investment</text>
+  
+  <rect x="350" y="440" width="200" height="80" rx="8" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="450" y="465" font-family="Arial" font-size="14" font-weight="bold" fill="#5b21b6" text-anchor="middle">NVIDIA</text>
+  <text x="450" y="485" font-family="Arial" font-size="11" fill="#5b21b6" text-anchor="middle">BioNGC, AI Hardware</text>
+  <text x="450" y="505" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$500M investment</text>
+  
+  <!-- Column 3: SME Specialization -->
+  <rect x="650" y="60" width="200" height="80" rx="8" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-width="2"/>
+  <text x="750" y="85" font-family="Arial" font-size="14" font-weight="bold" fill="#065f46" text-anchor="middle">Human Longevity Inc</text>
+  <text x="750" y="105" font-family="Arial" font-size="11" fill="#065f46" text-anchor="middle">Early Detection</text>
+  <text x="750" y="125" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$50M ARR</text>
+  
+  <rect x="650" y="155" width="200" height="80" rx="8" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-width="2"/>
+  <text x="750" y="180" font-family="Arial" font-size="14" font-weight="bold" fill="#065f46" text-anchor="middle">InsideTracker</text>
+  <text x="750" y="200" font-family="Arial" font-size="11" fill="#065f46" text-anchor="middle">Biomarker Tracking</text>
+  <text x="750" y="220" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$20M ARR</text>
+  
+  <rect x="650" y="250" width="200" height="80" rx="8" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="750" y="275" font-family="Arial" font-size="14" font-weight="bold" fill="#059669" text-anchor="middle">⭐ GliaTwin AI</text>
+  <text x="750" y="295" font-family="Arial" font-size="11" fill="#059669" text-anchor="middle">Digital Twin of Microglia</text>
+  <text x="750" y="315" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">TARGET: $10M+</text>
+  <rect x="650" y="250" width="200" height="80" rx="8" fill="#10b981" fill-opacity="0.3" stroke="#16a34a" stroke-width="3"/>
+  
+  <rect x="650" y="345" width="200" height="80" rx="8" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-width="2"/>
+  <text x="750" y="370" font-family="Arial" font-size="14" font-weight="bold" fill="#065f46" text-anchor="middle">TruDiagnostic</text>
+  <text x="750" y="390" font-family="Arial" font-size="11" fill="#065f46" text-anchor="middle">Epigenetic Testing</text>
+  <text x="750" y="410" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$10M ARR</text>
+  
+  <rect x="650" y="440" width="200" height="80" rx="8" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-width="2"/>
+  <text x="750" y="465" font-family="Arial" font-size="14" font-weight="bold" fill="#065f46" text-anchor="middle">BioAge Labs</text>
+  <text x="750" y="485" font-family="Arial" font-size="11" fill="#065f46" text-anchor="middle">Drug Discovery</text>
+  <text x="750" y="505" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$30M ARR</text>
+  
+  <!-- Flow Arrows from Science to Big Tech -->
+  <path d="M250 100 Q300 100 350 100" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  <path d="M250 195 Q300 195 350 195" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  <path d="M250 290 Q300 290 350 290" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  <path d="M250 385 Q300 385 350 385" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  <path d="M250 480 Q300 480 350 480" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  
+  <!-- Flow Arrows from Big Tech to SME -->
+  <path d="M550 100 Q600 100 650 100" stroke="#8b5cf6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  <path d="M550 195 Q600 195 650 195" stroke="#8b5cf6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  <path d="M550 290 Q600 290 650 290" stroke="#8b5cf6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  <path d="M550 385 Q600 385 650 385" stroke="#8b5cf6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  <path d="M550 480 Q600 480 650 480" stroke="#8b5cf6" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.6"/>
+  
+  <!-- Target Market Box below -->
+  <rect x="250" y="560" width="400" height="35" rx="8" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="2"/>
+  <text x="450" y="585" font-family="Arial" font-size="14" font-weight="bold" fill="#b45309" text-anchor="middle">4. TARGET MARKETS: Pharma R&D, Longevity Clinics, D2C</text>
+</svg>
