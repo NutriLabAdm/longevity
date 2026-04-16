@@ -33,7 +33,11 @@
 
     function renderMarketSankeyPlotly() {
       const canvas = document.getElementById('marketSankey');
-      if (!canvas || typeof Plotly === 'undefined') return;
+      if (!canvas || typeof Plotly === 'undefined') {
+        console.log('Market Sankey: canvas or Plotly not found');
+        return;
+      }
+      console.log('Rendering Market Sankey...');
       
       const science = ['Academic Research', 'PubMed/Clinical', 'Biobanks', 'Gov Grants', 'Pharma R&D'];
       const bigtech = ['Google/Calico', 'Microsoft', 'Amazon', 'Apple', 'NVIDIA'];
@@ -109,7 +113,11 @@
 
     function renderValueChainSankeyPlotly() {
       const canvas = document.getElementById('valueChainSankey');
-      if (!canvas || typeof Plotly === 'undefined') return;
+      if (!canvas || typeof Plotly === 'undefined') {
+        console.log('Value Chain Sankey: canvas or Plotly not found');
+        return;
+      }
+      console.log('Rendering Value Chain Sankey...');
       
       const inbound = ['Blood Test', 'Genetic Data', 'Wearable Sensors', 'Research Data'];
       const process = ['Data Validation', 'Multi-omics', 'TF-Network', 'Twin Engine'];
@@ -705,7 +713,7 @@
         <p class="section-intro">Revenue flow from data ingestion through user-facing products.</p>
         
         <div class="sankey-box">
-          <canvas id="valueChainSankey" width="1050" height="280"></canvas>
+          <div id="valueChainSankey" style="width:1050px;height:280px;"></div>
         </div>
         
         <div class="legend-row">
@@ -746,7 +754,7 @@
         <p class="section-intro">Capital and value flow from basic research through commercialization.</p>
         
         <div class="sankey-box">
-          <canvas id="marketSankey" width="1050" height="350"></canvas>
+          <div id="marketSankey" style="width:1050px;height:350px;"></div>
         </div>
         
         <div class="legend-row">
