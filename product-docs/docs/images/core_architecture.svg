@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#1a202c"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" fill="#fff" font-size="24" text-anchor="middle" font-family="Arial">GliaTwin AI - Core Architecture</text>
+  
+  <!-- Input Box -->
+  <rect x="50" y="80" width="150" height="80" rx="10" fill="#667eea"/>
+  <text x="125" y="115" fill="#fff" font-size="14" text-anchor="middle" font-family="Arial">UPLOAD</text>
+  <text x="125" y="135" fill="#fff" font-size="10" text-anchor="middle" font-family="Arial">Sensor Test</text>
+  <text x="125" y="150" fill="#fff" font-size="10" text-anchor="middle" font-family="Arial">+ Labs</text>
+  
+  <!-- Arrow 1 -->
+  <line x1="200" y1="120" x2="280" y2="120" stroke="#48bb78" stroke-width="3"/>
+  <polygon points="280,110 295,120 280,130" fill="#48bb78"/>
+  
+  <!-- Processing Box -->
+  <rect x="280" y="80" width="180" height="120" rx="10" fill="#48bb78"/>
+  <text x="370" y="115" fill="#fff" font-size="14" text-anchor="middle" font-family="Arial">CREATE DIGITAL</text>
+  <text x="370" y="135" fill="#fff" font-size="10" text-anchor="middle" font-family="Arial">Twin</text>
+  <text x="370" y="150" fill="#fff" font-size="10" text-anchor="middle" font-family="Arial">Multi-omics Analysis</text>
+  <text x="370" y="165" fill="#fff" font-size="10" text-anchor="middle" font-family="Arial">TF Networks + HDWGCNA</text>
+  
+  <!-- Arrow 2 -->
+  <line x1="460" y1="120" x2="540" y2="120" stroke="#ed8936" stroke-width="3"/>
+  <polygon points="540,110 555,120 540,130" fill="#ed8936"/>
+  
+  <!-- Output Box -->
+  <rect x="540" y="80" width="160" height="80" rx="10" fill="#ed8936"/>
+  <text x="620" y="115" fill="#fff" font-size="14" text-anchor="middle" font-family="Arial">GENERATE</text>
+  <text x="620" y="135" fill="#fff" font-size="10" text-anchor="middle" font-family="Arial">Longevity Path</text>
+  <text x="620" y="150" fill="#fff" font-size="10" text-anchor="middle" font-family="Arial">Recommendations</text>
+  
+  <!-- Bottom Section - Components -->
+  <rect x="50" y="220" width="700" height="250" rx="10" fill="#2d3748" stroke="#4a5568" stroke-width="2"/>
+  <text x="400" y="250" fill="#fff" font-size="16" text-anchor="middle" font-family="Arial">System Components</text>
+  
+  <!-- Components -->
+  <rect x="70" y="270" width="140" height="60" rx="5" fill="#667eea"/>
+  <text x="140" y="300" fill="#fff" font-size="12" text-anchor="middle" font-family="Arial">Data Ingestion</text>
+  <text x="140" y="318" fill="#fff" font-size="9" text-anchor="middle" font-family="Arial">Blood, Wearable, DNA</text>
+  
+  <rect x="230" y="270" width="140" height="60" rx="5" fill="#4299e1"/>
+  <text x="300" y="300" fill="#fff" font-size="12" text-anchor="middle" font-family="Arial">ML Pipeline</text>
+  <text x="300" y="318" fill="#fff" font-size="9" text-anchor="middle" font-family="Arial">TF Analysis, HDWGCNA</text>
+  
+  <rect x="390" y="270" width="140" height="60" rx="5" fill="#48bb78"/>
+  <text x="460" y="300" fill="#fff" font-size="12" text-anchor="middle" font-family="Arial">Digital Twin</text>
+  <text x="460" y="318" fill="#fff" font-size="9" text-anchor="middle" font-family="Arial">Hybrid Model + Bayesian</text>
+  
+  <rect x="550" y="270" width="140" height="60" rx="5" fill="#ed8936"/>
+  <text x="620" y="300" fill="#fff" font-size="12" text-anchor="middle" font-family="Arial">RL Optimizer</text>
+  <text x="620" y="318" fill="#fff" font-size="9" text-anchor="middle" font-family="Arial">Intervention Search</text>
+  
+  <!-- Output Components -->
+  <rect x="70" y="350" width="180" height="50" rx="5" fill="#667eea"/>
+  <text x="160" y="375" fill="#fff" font-size="11" text-anchor="middle" font-family="Arial">Web Dashboard</text>
+  
+  <rect x="270" y="350" width="140" height="50" rx="5" fill="#667eea"/>
+  <text x="340" y="375" fill="#fff" font-size="11" text-anchor="middle" font-family="Arial">Mobile App</text>
+  
+  <rect x="430" y="350" width="140" height="50" rx="5" fill="#667eea"/>
+  <text x="500" y="375" fill="#fff" font-size="11" text-anchor="middle" font-family="Arial">Clinician Portal</text>
+  
+  <rect x="590" y="350" width="140" height="50" rx="5" fill="#667eea"/>
+  <text x="660" y="375" fill="#fff" font-size="11" text-anchor="middle" font-family="Arial">API Integration</text>
+  
+  <!-- Connecting Lines -->
+  <line x1="140" y1="330" x2="140" y2="350" stroke="#718096" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="300" y1="330" x2="300" y2="350" stroke="#718096" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="460" y1="330" x2="460" y2="350" stroke="#718096" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="620" y1="330" x2="620" y2="350" stroke="#718096" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <line x1="140" y1="370" x2="660" y2="370" stroke="#718096" stroke-width="2"/>
+  
+  <path d="M 660 400 Q 400 430 160 400" stroke="#48bb78" stroke-width="2" fill="none" stroke-dasharray="5,5"/>
+  <text x="410" y="420" fill="#48bb78" font-size="10" text-anchor="middle" font-family="Arial">Continuous Updates</text>
+</svg>
