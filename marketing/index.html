@@ -9,15 +9,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.umd.js" onload="initCharts()"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.umd.js"></script>
   <script src="https://unpkg.com/chartjs-chart-sankey@0.2.0/dist/chartjs-chart-sankey.umd.min.js"></script>
   <script>
-    function initCharts() {
-      if (typeof Chart !== 'undefined') {
-        renderMarketSankey();
-        renderValueChainSankey();
-      }
-    }
+    // Debug: check what's loaded
+    console.log('Chart:', typeof Chart);
+    console.log('Chart.controllers:', Chart?.controllers?.keys ? Array.from(Chart.controllers.keys()) : 'none');
+    
+    // Wait for DOM and render
+    setTimeout(() => {
+      console.log('Rendering charts...');
+      renderMarketSankey();
+      renderValueChainSankey();
+    }, 500);
   </script>
   
   <style>
