@@ -13,9 +13,20 @@
   <script>
     console.log('Plotly loaded:', typeof Plotly);
     
-    // Wait for scripts to load, then render
+    // Simple test demo
     setTimeout(() => {
-      console.log('Canvas elements:', document.querySelectorAll('canvas').length);
+      const testCanvas = document.createElement('div');
+      testCanvas.id = 'test-plot';
+      document.body.insertBefore(testCanvas, document.body.firstChild);
+      
+      Plotly.newPlot('test-plot', [{
+        x: [1, 2, 3],
+        y: [1, 2, 3],
+        type: 'scatter',
+        mode: 'lines+markers'
+      }], { title: 'Test Plot' });
+      
+      // Now render main charts
       renderMarketSankeyPlotly();
       renderValueChainSankeyPlotly();
     }, 1000);
