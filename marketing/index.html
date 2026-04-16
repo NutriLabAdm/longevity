@@ -93,21 +93,27 @@
       });
       
       // Domains → SME (market flows to players)
-      domains.forEach((d, di) => {
-        sme.forEach((s, si) => {
+      domains.forEach(function(d, di) {
+        sme.forEach(function(s, si) {
           source.push(science.length + di);
           target_arr.push(science.length + domains.length + si);
-          value.push(Math.round(domainValues[di] * (si === 2 ? 0.3 : ((si + 1) * 0.2)));
-          linkColor.push(si === 2 ? 'rgba(214,51,132,0.5)' : 'rgba(111,66,204,0.3)');
+          var calcVal = (si + 1) * 0.2;
+          if (si === 2) calcVal = 0.3;
+          value.push(Math.round(domainValues[di] * calcVal));
+          var calcColor = 'rgba(111,66,204,0.3)';
+          if (si === 2) calcColor = 'rgba(214,51,132,0.5)';
+          linkColor.push(calcColor);
         });
       });
       
       // SME → Target (market opportunity)
-      sme.forEach((s, si) => {
-        target.forEach((t, ti) => {
+      sme.forEach(function(s, si) {
+        target.forEach(function(t, ti) {
           source.push(science.length + domains.length + si);
           target_arr.push(science.length + domains.length + sme.length + ti);
-          value.push(si === 2 ? 10 : Math.round((si + 1) * 0.8));
+          var calcVal2 = (si + 1) * 0.8;
+          if (si === 2) calcVal2 = 10;
+          value.push(calcVal2);
           linkColor.push(si === 2 ? 'rgba(214,51,132,0.6)' : 'rgba(40,167,69,0.3)');
         });
       });
