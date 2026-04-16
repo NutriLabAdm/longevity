@@ -11,7 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <script>
+    console.log('Plotly loaded:', typeof Plotly);
+    console.log('Canvas elements:', document.querySelectorAll('canvas').length);
     document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOM ready, calling render functions');
       renderMarketSankeyPlotly();
       renderValueChainSankeyPlotly();
     });
