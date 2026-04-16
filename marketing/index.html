@@ -9,20 +9,165 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.umd.js"></script>
-  <script src="https://unpkg.com/chartjs-chart-sankey@0.2.0/dist/chartjs-chart-sankey.umd.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <script>
-    // Debug: check what's loaded
-    console.log('Chart:', typeof Chart);
-    console.log('Chart.controllers:', Chart?.controllers?.keys ? Array.from(Chart.controllers.keys()) : 'none');
-    
     document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        console.log('Rendering charts...');
-        renderMarketSankey();
-        renderValueChainSankey();
-      }, 500);
+      renderMarketSankeyPlotly();
+      renderValueChainSankeyPlotly();
     });
+
+    function renderMarketSankeyPlotly() {
+      const canvas = document.getElementById('marketSankey');
+      if (!canvas || typeof Plotly === 'undefined') return;
+      
+      const science = ['Academic Research', 'PubMed/Clinical', 'Biobanks', 'Gov Grants', 'Pharma R&D'];
+      const bigtech = ['Google/Calico', 'Microsoft', 'Amazon', 'Apple', 'NVIDIA'];
+      const sme = ['Human Longevity', 'InsideTracker', 'GliaTwin AI ⭐', 'TruDiagnostic', 'BioAge Labs'];
+      const target = ['Pharma R&D', 'Longevity Clinics', 'D2C Premium'];
+
+      // Build link arrays
+      const source = [];
+      const target_arr = [];
+      const value = [];
+      const linkColor = [];
+      
+      // Science → BigTech
+      science.forEach((s, si) => {
+        bigtech.forEach((b, bi) => {
+          source.push(si);
+          target_arr.push(science.length + bi);
+          value.push(Math.round((bi + 1) * 5));
+          linkColor.push('rgba(0,102,204,0.3)');
+        });
+      });
+      
+      // BigTech → SME
+      bigtech.forEach((b, bi) => {
+        sme.forEach((s, si) => {
+          source.push(science.length + bi);
+          target_arr.push(science.length + bigtech.length + si);
+          value.push(Math.round((bi + 1) * 2));
+          linkColor.push('rgba(111,66,204,0.3)');
+        });
+      });
+      
+      // SME → Target
+      sme.forEach((s, si) => {
+        target.forEach((t, ti) => {
+          source.push(science.length + bigtech.length + si);
+          target_arr.push(science.length + bigtech.length + sme.length + ti);
+          value.push(si === 2 ? 5 : Math.round((si + 1)));
+          linkColor.push(si === 2 ? 'rgba(214,51,132,0.5)' : 'rgba(40,167,69,0.3)');
+        });
+      });
+
+      const allLabels = [...science, ...bigtech, ...sme, ...target];
+      const nodeColors = [
+        ...Array(science.length).fill('#0066cc'),
+        ...Array(bigtech.length).fill('#6f42c1'),
+        ...sme.map((_, i) => i === 2 ? '#d63384' : '#28a745'),
+        ...Array(target.length).fill('#fd7e14')
+      ];
+
+      Plotly.newPlot(canvas, [{
+        type: 'sankey',
+        orientation: 'h',
+        node: {
+          pad: 15,
+          thickness: 20,
+          label: allLabels,
+          color: nodeColors,
+          font: { size: 10, color: '#495057' }
+        },
+        link: {
+          source: source,
+          target: target_arr,
+          value: value,
+          color: linkColor
+        }
+      }], {
+        font: { size: 12 },
+        paperBg: '#f8f9fa',
+        plotBg: '#f8f9fa'
+      }, { responsive: true });
+    }
+
+    function renderValueChainSankeyPlotly() {
+      const canvas = document.getElementById('valueChainSankey');
+      if (!canvas || typeof Plotly === 'undefined') return;
+      
+      const inbound = ['Blood Test', 'Genetic Data', 'Wearable Sensors', 'Research Data'];
+      const process = ['Data Validation', 'Multi-omics', 'TF-Network', 'Twin Engine'];
+      const revenue = ['Analysis Fee', 'Subscription', 'Protocol Service', 'Enterprise API'];
+      const output = ['Dashboard', 'Protocols', 'Reports', 'Alerts'];
+
+      const source = [];
+      const target_arr = [];
+      const value = [];
+      const linkColor = [];
+      
+      // Inbound → Process
+      inbound.forEach((i, si) => {
+        process.forEach((p, pi) => {
+          source.push(si);
+          target_arr.push(inbound.length + pi);
+          value.push(Math.round((pi + 1) * 8));
+          linkColor.push('rgba(233,236,239,0.8)');
+        });
+      });
+      
+      // Process → Revenue
+      process.forEach((p, pi) => {
+        revenue.forEach((r, ri) => {
+          source.push(inbound.length + pi);
+          target_arr.push(inbound.length + process.length + ri);
+          value.push(Math.round((ri + 1) * 5));
+          linkColor.push(ri === 1 ? 'rgba(40,167,69,0.5)' : 'rgba(0,102,204,0.3)');
+        });
+      });
+      
+      // Revenue → Output
+      revenue.forEach((r, ri) => {
+        output.forEach((o, oi) => {
+          source.push(inbound.length + process.length + ri);
+          target_arr.push(inbound.length + process.length + revenue.length + oi);
+          value.push(Math.round((ri + 1) * 3));
+          linkColor.push('rgba(253,126,20,0.3)');
+        });
+      });
+
+      const allLabels = [...inbound, ...process, ...revenue, ...output];
+      const nodeColors = [
+        ...Array(inbound.length).fill('#e9ecef'),
+        ...Array(process.length).fill('#0066cc'),
+        ...revenue.map((_, i) => i === 1 ? '#28a745' : '#0066cc'),
+        ...Array(output.length).fill('#fd7e14')
+      ];
+
+      Plotly.newPlot(canvas, [{
+        type: 'sankey',
+        orientation: 'h',
+        node: {
+          pad: 15,
+          thickness: 20,
+          label: allLabels,
+          color: nodeColors,
+          font: { size: 10, color: '#495057' }
+        },
+        link: {
+          source: source,
+          target: target_arr,
+          value: value,
+          color: linkColor
+        }
+      }], {
+        font: { size: 12 },
+        paperBg: '#f8f9fa',
+        plotBg: '#f8f9fa'
+      }, { responsive: true });
+    }
+
+    // Remove old Chart.js code
   </script>
   
   <style>
@@ -708,235 +853,6 @@
     </div>
   </footer>
 
-  <script>
-    function renderMarketSankey() {
-      const canvas = document.getElementById('marketSankey');
-      if (!canvas || typeof Chart === 'undefined') return;
-      
-      const science = [
-        { name: 'Academic Research', value: 2 },
-        { name: 'PubMed/Clinical', value: 0.5 },
-        { name: 'Biobanks', value: 1 },
-        { name: 'Gov Grants', value: 5 },
-        { name: 'Pharma R&D', value: 10 }
-      ];
-      const bigtech = [
-        { name: 'Google/Calico', value: 1 },
-        { name: 'Microsoft', value: 0.5 },
-        { name: 'Amazon', value: 0.3 },
-        { name: 'Apple', value: 0.2 },
-        { name: 'NVIDIA', value: 0.5 }
-      ];
-      const sme = [
-        { name: 'Human Longevity', value: 0.05 },
-        { name: 'InsideTracker', value: 0.02 },
-        { name: 'GliaTwin AI ⭐', value: 0.01, highlight: true },
-        { name: 'TruDiagnostic', value: 0.01 },
-        { name: 'BioAge Labs', value: 0.03 }
-      ];
-      const target = [
-        { name: 'Pharma R&D', value: 2 },
-        { name: 'Longevity Clinics', value: 1 },
-        { name: 'D2C Premium', value: 0.5 }
-      ];
 
-      const flows = [];
-      const nodeColors = {};
-
-      science.forEach(s => {
-        bigtech.forEach(b => {
-          flows.push({ from: s.name, to: b.name, flow: Math.round(s.value * b.value * 3) });
-        });
-      });
-
-      bigtech.forEach(b => {
-        sme.forEach(s => {
-          flows.push({ from: b.name, to: s.name, flow: Math.round(b.value * 20) });
-        });
-      });
-
-      sme.forEach(s => {
-        target.forEach(t => {
-          flows.push({ from: s.name, to: t.name, flow: Math.round(s.value * 50) });
-        });
-      });
-
-      science.forEach(s => nodeColors[s.name] = '#0066cc');
-      bigtech.forEach(b => nodeColors[b.name] = '#6f42c1');
-      sme.forEach(s => nodeColors[s.name] = s.highlight ? '#d63384' : '#28a745');
-      target.forEach(t => nodeColors[t.name] = '#fd7e14');
-
-      const columnAssignments = {};
-      science.forEach((s, i) => columnAssignments[s.name] = 0);
-      bigtech.forEach((b, i) => columnAssignments[b.name] = 1);
-      sme.forEach((s, i) => columnAssignments[s.name] = 2);
-      target.forEach((t, i) => columnAssignments[t.name] = 3);
-
-      new Chart(canvas, {
-        type: 'sankey',
-        data: {
-          datasets: [{
-            data: flows,
-            colorMode: 'gradient',
-            size: 'max',
-            column: columnAssignments,
-            colorFrom: (c) => {
-              const from = c?.dataset?.data?.[c.dataIndex]?.from;
-              return nodeColors[from] || '#0066cc';
-            },
-            colorTo: (c) => {
-              const to = c?.dataset?.data?.[c.dataIndex]?.to;
-              return nodeColors[to] || '#0066cc';
-            },
-            labels: {
-              display: true,
-              color: '#495057',
-              font: { size: 9, family: 'Inter, sans-serif' },
-              padding: 4
-            }
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              enabled: true,
-              backgroundColor: 'rgba(33, 37, 41, 0.95)',
-              titleColor: '#fff',
-              bodyColor: '#e9ecef',
-              cornerRadius: 4,
-              callbacks: {
-                title: (ctx) => {
-                  const d = ctx[0].dataset.data[ctx[0].dataIndex];
-                  return d.from + ' → ' + d.to;
-                },
-                label: () => '$M flow'
-              }
-            }
-          }
-        }
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', initCharts);
-
-    // Value Chain Sankey
-    function renderValueChainSankey() {
-      const canvas = document.getElementById('valueChainSankey');
-      if (!canvas || typeof Chart === 'undefined') return;
-      
-      const inbound = [
-        { name: 'Blood Test', value: 1 },
-        { name: 'Genetic Data', value: 0.8 },
-        { name: 'Wearable Sensors', value: 0.6 },
-        { name: 'Research Data', value: 0.4 }
-      ];
-      const process = [
-        { name: 'Data Validation', value: 0.9 },
-        { name: 'Multi-omics', value: 0.7 },
-        { name: 'TF-Network', value: 0.5 },
-        { name: 'Twin Engine', value: 0.3 }
-      ];
-      const revenue = [
-        { name: 'Analysis Fee', value: 1 },
-        { name: 'Subscription', value: 0.8 },
-        { name: 'Protocol Service', value: 0.5 },
-        { name: 'Enterprise API', value: 0.3 }
-      ];
-      const output = [
-        { name: 'Dashboard', value: 1 },
-        { name: 'Protocols', value: 0.6 },
-        { name: 'Reports', value: 0.4 },
-        { name: 'Alerts', value: 0.2 }
-      ];
-
-      const flows = [];
-      const nodeColors = {};
-
-      // Inbound → Process
-      inbound.forEach(i => {
-        process.forEach(p => {
-          flows.push({ from: i.name, to: p.name, flow: Math.round(i.value * p.value * 30) });
-        });
-      });
-
-      // Process → Revenue
-      process.forEach(p => {
-        revenue.forEach(r => {
-          flows.push({ from: p.name, to: r.name, flow: Math.round(p.value * r.value * 40) });
-        });
-      });
-
-      // Revenue → Output
-      revenue.forEach(r => {
-        output.forEach(o => {
-          flows.push({ from: r.name, to: o.name, flow: Math.round(r.value * o.value * 30) });
-        });
-      });
-
-      // Colors
-      inbound.forEach(i => nodeColors[i.name] = '#e9ecef');
-      process.forEach(p => nodeColors[p.name] = '#0066cc');
-      revenue.forEach(r => nodeColors[r.name] = '#28a745');
-      output.forEach(o => nodeColors[o.name] = '#fd7e14');
-
-      const columnAssignments = {};
-      inbound.forEach(i => columnAssignments[i.name] = 0);
-      process.forEach(p => columnAssignments[p.name] = 1);
-      revenue.forEach(r => columnAssignments[r.name] = 2);
-      output.forEach(o => columnAssignments[o.name] = 3);
-
-      new Chart(canvas, {
-        type: 'sankey',
-        data: {
-          datasets: [{
-            data: flows,
-            colorMode: 'gradient',
-            size: 'max',
-            column: columnAssignments,
-            colorFrom: (c) => {
-              const from = c?.dataset?.data?.[c.dataIndex]?.from;
-              return nodeColors[from] || '#6c757d';
-            },
-            colorTo: (c) => {
-              const to = c?.dataset?.data?.[c.dataIndex]?.to;
-              return nodeColors[to] || '#6c757d';
-            },
-            labels: {
-              display: true,
-              color: '#495057',
-              font: { size: 9, family: 'Inter, sans-serif' },
-              padding: 4
-            }
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              enabled: true,
-              backgroundColor: 'rgba(33, 37, 41, 0.95)',
-              titleColor: '#fff',
-              bodyColor: '#e9ecef',
-              cornerRadius: 4,
-              callbacks: {
-                title: (ctx) => {
-                  const d = ctx[0].dataset.data[ctx[0].dataIndex];
-                  return d.from + ' → ' + d.to;
-                },
-                label: () => ''
-              }
-            }
-          }
-        }
-      });
-    }
-  </script>
 </body>
 </html>
