@@ -16,12 +16,13 @@
     console.log('Chart:', typeof Chart);
     console.log('Chart.controllers:', Chart?.controllers?.keys ? Array.from(Chart.controllers.keys()) : 'none');
     
-    // Wait for DOM and render
-    setTimeout(() => {
-      console.log('Rendering charts...');
-      renderMarketSankey();
-      renderValueChainSankey();
-    }, 500);
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        console.log('Rendering charts...');
+        renderMarketSankey();
+        renderValueChainSankey();
+      }, 500);
+    });
   </script>
   
   <style>
