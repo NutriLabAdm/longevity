@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey@0.2.0"></script>
+  <script src="https://unpkg.com/chartjs-chart-sankey@0.2.0/dist/chartjs-chart-sankey.umd.min.js"></script>
   
   <style>
     :root {
@@ -531,19 +531,15 @@
         <h2>Value Chain</h2>
         <p class="section-intro">Revenue flow from data ingestion through user-facing products.</p>
         
-        <div class="flow-diagram">
-          <pre>┌─────────────┐    ┌─────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│  📥 INBOUND  │    │ ⚙️ PROCESS  │    │  💰 REVENUE    │    │  📤 OUTBOUND   │
-├─────────────┤    ├─────────────┤    ├─────────────────┤    ├─────────────────┤
-│ Blood Test │───▶│Data Valid.│───▶│ Analysis Fee    │───▶│   Dashboard    │
-│ Genetic   │    │Multi-omics│    │ $100-1000/test │    │               │
-│ Wearables │    │TF-Network │    │ Subscription  │    │   Protocols    │
-│ Research  │    │Twin Engine│    │ $50-500/mo     │    │               │
-│    Data   │    │          │    │ Protocol Srvc  │    │   Reports     │
-│           │    │          │    │ $100-1000/plan │    │               │
-│           │    │          │    │ Enterprise API │    │   Alerts      │
-│           │    │          │    │ $10K-100K/yr   │    │               │
-└─────────────┘    └─────────────┘    └─────────────────┘    └─────────────────┘</pre>
+        <div class="sankey-box">
+          <canvas id="valueChainSankey" width="1050" height="280"></canvas>
+        </div>
+        
+        <div class="legend-row">
+          <div class="legend-item"><div class="legend-dot" style="background: #e9ecef;"></div>Inbound Data</div>
+          <div class="legend-item"><div class="legend-dot" style="background: #0066cc;"></div>Processing</div>
+          <div class="legend-item"><div class="legend-dot" style="background: #28a745;"></div>Revenue</div>
+          <div class="legend-item"><div class="legend-dot" style="background: #fd7e14;"></div>Output</div>
         </div>
         
         <div class="grid-2" style="margin-top: 32px;">
@@ -700,11 +696,9 @@
   </footer>
 
   <script>
-    async function renderMarketSankey() {
+    function renderMarketSankey() {
       const canvas = document.getElementById('marketSankey');
       if (!canvas) return;
-      
-      const { SankeyController } = Chart;
       
       const science = [
         { name: 'Academic Research', value: 2 },
@@ -814,7 +808,125 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', renderMarketSankey);
+    document.addEventListener('DOMContentLoaded', () => {
+      renderMarketSankey();
+      renderValueChainSankey();
+    });
+
+    // Value Chain Sankey
+    function renderValueChainSankey() {
+      const canvas = document.getElementById('valueChainSankey');
+      if (!canvas) return;
+      
+      const inbound = [
+        { name: 'Blood Test', value: 1 },
+        { name: 'Genetic Data', value: 0.8 },
+        { name: 'Wearable Sensors', value: 0.6 },
+        { name: 'Research Data', value: 0.4 }
+      ];
+      const process = [
+        { name: 'Data Validation', value: 0.9 },
+        { name: 'Multi-omics', value: 0.7 },
+        { name: 'TF-Network', value: 0.5 },
+        { name: 'Twin Engine', value: 0.3 }
+      ];
+      const revenue = [
+        { name: 'Analysis Fee', value: 1 },
+        { name: 'Subscription', value: 0.8 },
+        { name: 'Protocol Service', value: 0.5 },
+        { name: 'Enterprise API', value: 0.3 }
+      ];
+      const output = [
+        { name: 'Dashboard', value: 1 },
+        { name: 'Protocols', value: 0.6 },
+        { name: 'Reports', value: 0.4 },
+        { name: 'Alerts', value: 0.2 }
+      ];
+
+      const flows = [];
+      const nodeColors = {};
+
+      // Inbound → Process
+      inbound.forEach(i => {
+        process.forEach(p => {
+          flows.push({ from: i.name, to: p.name, flow: Math.round(i.value * p.value * 30) });
+        });
+      });
+
+      // Process → Revenue
+      process.forEach(p => {
+        revenue.forEach(r => {
+          flows.push({ from: p.name, to: r.name, flow: Math.round(p.value * r.value * 40) });
+        });
+      });
+
+      // Revenue → Output
+      revenue.forEach(r => {
+        output.forEach(o => {
+          flows.push({ from: r.name, to: o.name, flow: Math.round(r.value * o.value * 30) });
+        });
+      });
+
+      // Colors
+      inbound.forEach(i => nodeColors[i.name] = '#e9ecef');
+      process.forEach(p => nodeColors[p.name] = '#0066cc');
+      revenue.forEach(r => nodeColors[r.name] = '#28a745');
+      output.forEach(o => nodeColors[o.name] = '#fd7e14');
+
+      const columnAssignments = {};
+      inbound.forEach(i => columnAssignments[i.name] = 0);
+      process.forEach(p => columnAssignments[p.name] = 1);
+      revenue.forEach(r => columnAssignments[r.name] = 2);
+      output.forEach(o => columnAssignments[o.name] = 3);
+
+      new Chart(canvas, {
+        type: 'sankey',
+        data: {
+          datasets: [{
+            data: flows,
+            colorMode: 'gradient',
+            size: 'max',
+            column: columnAssignments,
+            colorFrom: (c) => {
+              const from = c?.dataset?.data?.[c.dataIndex]?.from;
+              return nodeColors[from] || '#6c757d';
+            },
+            colorTo: (c) => {
+              const to = c?.dataset?.data?.[c.dataIndex]?.to;
+              return nodeColors[to] || '#6c757d';
+            },
+            labels: {
+              display: true,
+              color: '#495057',
+              font: { size: 9, family: 'Inter, sans-serif' },
+              padding: 4
+            }
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              enabled: true,
+              backgroundColor: 'rgba(33, 37, 41, 0.95)',
+              titleColor: '#fff',
+              bodyColor: '#e9ecef',
+              cornerRadius: 4,
+              callbacks: {
+                title: (ctx) => {
+                  const d = ctx[0].dataset.data[ctx[0].dataIndex];
+                  return d.from + ' → ' + d.to;
+                },
+                label: () => ''
+              }
+            }
+          }
+        }
+      });
+    }
   </script>
 </body>
 </html>
