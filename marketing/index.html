@@ -1,47 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light-corporate">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GliaTwin AI — Market Research</title>
-  <meta name="description" content="Market research, competitive analysis, and positioning for GliaTwin AI digital twin of microglia">
+  <title>GliaTwin AI — Market Analysis</title>
+  <meta name="description" content="Market research and competitive analysis for GliaTwin AI digital twin of microglia">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-sankey@0.2.0"></script>
   
   <style>
     :root {
-      --bg-primary: #0d1117;
-      --bg-secondary: #161b22;
-      --bg-tertiary: #21262d;
-      --text-primary: #f0f6fc;
-      --text-secondary: #8b949e;
-      --text-accent: #58a6ff;
-      --accent-blue: #388bfd;
-      --accent-purple: #a371f7;
-      --accent-green: #3fb950;
-      --accent-orange: #d29922;
-      --border-color: #30363d;
+      --white: #ffffff;
+      --off-white: #f8f9fa;
+      --light-gray: #e9ecef;
+      --mid-gray: #adb5bd;
+      --dark-gray: #495057;
+      --charcoal: #212529;
+      --black: #000000;
+      --accent: #0066cc;
+      --accent-light: #e6f0fa;
+      --highlight: #d63384;
     }
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
+    html { scroll-behavior: smooth; }
+    
     body {
-      font-family: 'IBM Plex Sans', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--white);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-size: 17px;
     }
     
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    h1, h2, h3, h4 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
     
     header {
       padding: 20px 0;
-      border-bottom: 1px solid var(--border-color);
-      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--light-gray);
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
     
     .header-inner {
@@ -51,104 +66,119 @@
     }
     
     .logo {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--accent-green);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--charcoal);
       text-decoration: none;
+      letter-spacing: -0.5px;
     }
     
-    .logo span { color: var(--accent-blue); }
+    .logo em {
+      font-style: normal;
+      color: var(--highlight);
+    }
     
     nav a {
-      color: var(--text-secondary);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--dark-gray);
       text-decoration: none;
       margin-left: 24px;
       transition: color 0.2s;
     }
     
-    nav a:hover { color: var(--text-primary); }
+    nav a:hover { color: var(--accent); }
     
     .hero {
-      padding: 80px 0;
+      padding: 80px 0 60px;
       text-align: center;
-      background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+      border-bottom: 1px solid var(--light-gray);
     }
     
     .hero h1 {
-      font-size: 48px;
+      font-size: 42px;
       font-weight: 700;
       margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      letter-spacing: -1px;
+      color: var(--black);
     }
     
     .hero .subtitle {
       font-size: 20px;
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto 40px;
+      color: var(--dark-gray);
+      max-width: 650px;
+      margin: 0 auto 48px;
     }
     
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 24px;
-      margin-top: 40px;
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
     }
     
-    .stat-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
+    .stat-item {
       text-align: center;
     }
     
     .stat-value {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--accent-green);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--accent);
     }
     
     .stat-label {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-top: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--dark-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
     }
     
-    section { padding: 60px 0; }
+    section {
+      padding: 64px 0;
+    }
     
     section h2 {
-      font-size: 32px;
-      font-weight: 600;
-      margin-bottom: 16px;
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: var(--black);
     }
     
-    .section-subtitle {
-      color: var(--text-secondary);
+    .section-intro {
+      color: var(--dark-gray);
       margin-bottom: 40px;
+      max-width: 700px;
     }
     
-    .grid {
+    .grid-3 {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 24px;
     }
     
     .card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
       padding: 24px;
     }
     
     .card h3 {
-      font-size: 18px;
-      margin-bottom: 12px;
-      color: var(--accent-blue);
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: var(--charcoal);
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--light-gray);
     }
     
     .card table {
@@ -157,61 +187,80 @@
       font-size: 14px;
     }
     
-    .card th, .card td {
-      padding: 8px 12px;
+    .card th,
+    .card td {
+      padding: 10px 0;
       text-align: left;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--light-gray);
     }
     
-    .card th { color: var(--text-secondary); font-weight: 500; }
+    .card th {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--dark-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
     
-    .highlight { color: var(--accent-green); font-weight: 600; }
+    .card td { font-size: 14px; }
     
-    .sankey-container {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
+    .highlight-cell {
+      color: var(--highlight);
+      font-weight: 600;
+    }
+    
+    .sankey-box {
+      background: var(--off-white);
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
       padding: 24px;
-      margin-top: 40px;
+      margin-top: 32px;
     }
     
-    .sankey-container canvas {
-      max-width: 100%;
-      height: auto;
+    .sankey-box canvas {
+      display: block;
+      width: 100%;
     }
     
-    .legend {
+    .legend-row {
       display: flex;
-      gap: 24px;
       justify-content: center;
-      margin-top: 16px;
+      gap: 32px;
+      margin-top: 20px;
       flex-wrap: wrap;
     }
     
     .legend-item {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--dark-gray);
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 14px;
     }
     
     .legend-dot {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
     }
     
-    .diagram-container {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
-      margin: 24px 0;
+    .flow-diagram {
+      background: var(--off-white);
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      padding: 32px;
+      margin: 32px 0;
       overflow-x: auto;
     }
     
-    .diagram-container pre {
+    .flow-diagram pre {
       text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--dark-gray);
+      line-height: 1.8;
     }
     
     .pricing-grid {
@@ -221,99 +270,155 @@
     }
     
     .pricing-card {
-      background: var(--bg-secondary);
-      border: 2px solid var(--border-color);
-      border-radius: 12px;
+      background: var(--white);
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
       padding: 32px;
       text-align: center;
     }
     
     .pricing-card.featured {
-      border-color: var(--accent-green);
+      border-color: var(--accent);
+      border-width: 2px;
       position: relative;
     }
     
-    .pricing-card.featured::before {
-      content: 'RECOMMENDED';
+    .pricing-card.featured::after {
+      content: 'Recommended';
       position: absolute;
-      top: -12px;
+      top: -10px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--accent-green);
-      color: var(--bg-primary);
+      background: var(--accent);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
       padding: 4px 12px;
       border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
+      font-weight: 500;
     }
     
     .pricing-tier {
-      font-size: 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
       font-weight: 600;
       margin-bottom: 8px;
     }
     
     .pricing-price {
-      font-size: 36px;
-      font-weight: 700;
-      color: var(--accent-green);
-      margin-bottom: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    
+    .pricing-price span {
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      color: var(--dark-gray);
+      font-weight: 400;
     }
     
     .pricing-features {
       text-align: left;
       font-size: 14px;
-      color: var(--text-secondary);
+      list-style: none;
     }
     
     .pricing-features li {
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border-color);
-      list-style: none;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--light-gray);
+      color: var(--dark-gray);
     }
     
     .growth-table {
       width: 100%;
       border-collapse: collapse;
-      background: var(--bg-secondary);
-      border-radius: 12px;
-      overflow: hidden;
+      font-size: 15px;
     }
     
-    .growth-table th, .growth-table td {
-      padding: 16px 24px;
+    .growth-table th,
+    .growth-table td {
+      padding: 16px 20px;
       text-align: left;
+      border-bottom: 1px solid var(--light-gray);
     }
     
     .growth-table th {
-      background: var(--bg-tertiary);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--dark-gray);
+      background: var(--off-white);
+    }
+    
+    .growth-table td:first-child {
+      font-weight: 500;
+    }
+    
+    .highlight-row td {
+      background: var(--accent-light);
       font-weight: 600;
     }
     
-    .growth-table tr:nth-child(even) {
-      background: var(--bg-secondary);
+    .cta-box {
+      text-align: center;
+      padding: 48px;
+      background: var(--off-white);
+      border-radius: 8px;
+    }
+    
+    .cta-box h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    
+    .cta-box p {
+      color: var(--dark-gray);
+      margin-bottom: 24px;
+    }
+    
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--charcoal);
+      color: var(--white);
+      text-decoration: none;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    
+    .cta-btn:hover {
+      background: var(--accent);
     }
     
     footer {
-      padding: 40px 0;
-      border-top: 1px solid var(--border-color);
+      padding: 32px 0;
+      border-top: 1px solid var(--light-gray);
       text-align: center;
-      color: var(--text-secondary);
       font-size: 14px;
+      color: var(--dark-gray);
     }
     
     @media (max-width: 768px) {
       .hero h1 { font-size: 32px; }
-      .pricing-grid { grid-template-columns: 1fr; }
+      .grid-3, .grid-2, .pricing-grid { grid-template-columns: 1fr; }
+      .stats-row { gap: 24px; }
     }
   </style>
 </head>
 <body>
   <header>
     <div class="container header-inner">
-      <a href="/" class="logo">GliaTwin <span>AI</span></a>
+      <a href="/" class="logo">GliaTwin <em>AI</em></a>
       <nav>
-        <a href="#opportunity">Market</a>
+        <a href="#market">Market</a>
         <a href="#competitors">Competitors</a>
         <a href="#pricing">Pricing</a>
         <a href="#growth">Growth</a>
@@ -324,95 +429,25 @@
   <main>
     <section class="hero">
       <div class="container">
-        <h1>Market Research</h1>
-        <p class="subtitle">GliaTwin AI — Digital Twin of Microglia for Predictive Neuroprotection. Market sizing, competitive analysis, and growth strategy.</p>
+        <h1>Market Analysis</h1>
+        <p class="subtitle">Digital twin of microglia for predictive neuroprotection. Market sizing, competitive landscape, and growth strategy for longevity-focused AI healthcare.</p>
         
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-value">$600B+</div>
-            <div class="stat-label">Longevity Market by 2030</div>
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-value">$600B</div>
+            <div class="stat-label">Longevity Market (2030)</div>
           </div>
-          <div class="stat-card">
-            <div class="stat-value">$50B+</div>
-            <div class="stat-label">Neurodegenerative Disease</div>
+          <div class="stat-item">
+            <div class="stat-value">$50B</div>
+            <div class="stat-label">Neurodegenerative</div>
           </div>
-          <div class="stat-card">
+          <div class="stat-item">
             <div class="stat-value">$180B</div>
             <div class="stat-label">AI in Healthcare</div>
           </div>
-          <div class="stat-card highlight">
-            <div class="stat-value">$10M+</div>
-            <div class="stat-label">Our Target ARR</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="opportunity">
-      <div class="container">
-        <h2>Market Opportunity</h2>
-        <p class="section-subtitle">Three target segments for GliaTwin AI products and services</p>
-        
-        <div class="grid">
-          <div class="card">
-            <h3>B2B — Pharma R&D</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 16px;">Early detection for clinical trials, patient stratification</p>
-            <table>
-              <tr><th>Market Size</th><td>$10B</td></tr>
-              <tr><th>Our Target</th><td class="highlight">$2-5M</td></tr>
-              <tr><th>CAC</th><td>$5K-20K</td></tr>
-            </table>
-          </div>
-          
-          <div class="card">
-            <h3>B2B2C — Longevity Clinics</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 16px;">Clinics, wellness programs, preventive care</p>
-            <table>
-              <tr><th>Market Size</th><td>$5B</td></tr>
-              <tr><th>Our Target</th><td class="highlight">$1-3M</td></tr>
-              <tr><th>CAC</th><td>$500-2K</td></tr>
-            </table>
-          </div>
-          
-          <div class="card">
-            <h3>D2C — Premium Enthusiasts</h3>
-            <p style="color: var(--text-secondary); margin-bottom: 16px;">Direct to consumer, biohackers, longevityfocused</p>
-            <table>
-              <tr><th>Market Size</th><td>$2B</td></tr>
-              <tr><th>Our Target</th><td class="highlight">$500K-2M</td></tr>
-              <tr><th>CAC</th><td>$100-500</td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="competitors" style="background: var(--bg-secondary);">
-      <div class="container">
-        <h2>Competitor Landscape</h2>
-        <p class="section-subtitle">Main players in the longevity & AI healthcare space</p>
-        
-        <div class="grid">
-          <div class="card">
-            <h3>Big Tech</h3>
-            <table>
-              <tr><th>Company</th><th>Focus</th><th>Strength</th></tr>
-              <tr><td>Google/Alphabet</td><td>Longevity research</td><td>Resources, AI</td></tr>
-              <tr><td>Microsoft</td><td>Healthcare AI</td><td>Enterprise</td></tr>
-              <tr><td>Amazon</td><td>AWS Health</td><td>Infrastructure</td></tr>
-              <tr><td>NVIDIA</td><td>BioNGC</td><td>AI Hardware</td></tr>
-            </table>
-          </div>
-          
-          <div class="card">
-            <h3>SMESpecialization</h3>
-            <table>
-              <tr><th>Company</th><th>Focus</th><th>ARR</th></tr>
-              <tr><td>Human Longevity</td><td>Early detection</td><td>$50M</td></tr>
-              <tr><td>InsideTracker</td><td>Biomarkers</td><td>$20M</td></tr>
-              <tr><td class="highlight">GliaTwin AI</td><td>Microglia Twin</td><td>TARGET</td></tr>
-              <tr><td>TruDiagnostic</td><td>Epigenetics</td><td>$10M</td></tr>
-            </table>
+          <div class="stat-item">
+            <div class="stat-value highlight-cell">$10M+</div>
+            <div class="stat-label">Target ARR</div>
           </div>
         </div>
       </div>
@@ -420,68 +455,106 @@
 
     <section id="market">
       <div class="container">
-        <h2>Market Flow Sankey</h2>
-        <p class="section-subtitle">Money flow from science to market — where GliaTwin AI captures value</p>
+        <h2>Target Markets</h2>
+        <p class="section-intro">Three customer segments with distinct go-to-market strategies and unit economics.</p>
         
-        <div class="sankey-container">
-          <canvas id="marketSankey" width="1100" height="400"></canvas>
-        </div>
-        
-        <div class="legend">
-          <div class="legend-item"><div class="legend-dot" style="background: #3b82f6;"></div>🔬 Science/Research</div>
-          <div class="legend-item"><div class="legend-dot" style="background: #8b5cf6;"></div>🏢 BigTech</div>
-          <div class="legend-item"><div class="legend-dot" style="background: #22c55e;"></div>⭐ SME (Us)</div>
-          <div class="legend-item"><div class="legend-dot" style="background: #f59e0b;"></div>🎯 Target Markets</div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>B2B — Pharma R&D</h3>
+            <table>
+              <tr><th>Metric</th><th>Value</th></tr>
+              <tr><td>Addressable Market</td><td>$10B</td></tr>
+              <tr><td>Target Share</td><td class="highlight-cell">$2–5M</td></tr>
+              <tr><td>Customer Acquisition</td><td>$5K–20K</td></tr>
+              <tr><td>Lifetime Value</td><td>$50K–500K</td></tr>
+            </table>
+          </div>
+          
+          <div class="card">
+            <h3>B2B2C — Longevity Clinics</h3>
+            <table>
+              <tr><th>Metric</th><th>Value</th></tr>
+              <tr><td>Addressable Market</td><td>$5B</td></tr>
+              <tr><td>Target Share</td><td class="highlight-cell">$1–3M</td></tr>
+              <tr><td>Customer Acquisition</td><td>$500–2K</td></tr>
+              <tr><td>Lifetime Value</td><td>$5K–50K</td></tr>
+            </table>
+          </div>
+          
+          <div class="card">
+            <h3>D2C — Premium Consumers</h3>
+            <table>
+              <tr><th>Metric</th><th>Value</th></tr>
+              <tr><td>Addressable Market</td><td>$2B</td></tr>
+              <tr><td>Target Share</td><td class="highlight-cell">$500K–2M</td></tr>
+              <tr><td>Customer Acquisition</td><td>$100–500</td></tr>
+              <tr><td>Lifetime Value</td><td>$1K–10K</td></tr>
+            </table>
+          </div>
         </div>
       </div>
     </section>
 
-    <section style="background: var(--bg-secondary);">
+    <section id="competitors" style="background: var(--off-white);">
       <div class="container">
-        <h2>Value Chain — Revenue Streams</h2>
-        <p class="section-subtitle">Where we make money in the GliaTwin AI platform</p>
+        <h2>Competitive Landscape</h2>
+        <p class="section-intro">Key players in the longevity and AI-powered healthcare ecosystem.</p>
         
-        <div class="diagram-container">
-          <pre class="mermaid">
-flowchart LR
-    subgraph INBOUND["📥 INBOUND"]
-        I1[Blood Test]
-        I2[Genetic Data]
-        I3[Wearable Sensors]
-        I4[Research Data]
-    end
-    
-    subgraph PROCESS["⚙️ PROCESSING"]
-        P1[Data Validation]
-        P2[Multi-omics]
-        P3[TF-Network Analysis]
-        P4[Digital Twin Engine]
-    end
-    
-    subgraph REVENUE["💰 REVENUE STREAMS"]
-        R1[Analysis Fee<br/>$100-1000/test]
-        R2[Subscription<br/>$50-500/mo]
-        R3[Protocol Service<br/>$100-1000/plan]
-        R4[Enterprise API<br/>$10K-100K/yr]
-    end
-    
-    I1 & I2 & I3 & I4 --> P1
-    P1 --> P2 --> P3 --> P4
-    P4 --> R1 & R2 & R3 & R4
-    
-    style REVENUE fill:#22c55e,color:#fff
-          </pre>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Big Tech & Research</h3>
+            <table>
+              <tr><th>Company</th><th>Focus</th><th>Advantage</th></tr>
+              <tr><td>Alphabet (Calico)</td><td>Longevity R&D</td><td>Resources, AI</td></tr>
+              <tr><td>Microsoft</td><td>Healthcare AI</td><td>Enterprise</td></tr>
+              <tr><td>Amazon</td><td>AWS Health</td><td>Infrastructure</td></tr>
+              <tr><td>NVIDIA</td><td>BioNGC</td><td>Compute</td></tr>
+            </table>
+          </div>
+          
+          <div class="card">
+            <h3>SME Specialization</h3>
+            <table>
+              <tr><th>Company</th><th>Focus</th><th>ARR</th></tr>
+              <tr><td>Human Longevity</td><td>Early detection</td><td>$50M</td></tr>
+              <tr><td>InsideTracker</td><td>Biomarkers</td><td>$20M</td></tr>
+              <tr><td>TruDiagnostic</td><td>Epigenetics</td><td>$10M</td></tr>
+              <tr><td class="highlight-cell">GliaTwin AI</td><td>Microglia Twin</td><td>Target</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="flow">
+      <div class="container">
+        <h2>Value Chain</h2>
+        <p class="section-intro">Revenue flow from data ingestion through user-facing products.</p>
+        
+        <div class="flow-diagram">
+          <pre>┌─────────────┐    ┌─────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  📥 INBOUND  │    │ ⚙️ PROCESS  │    │  💰 REVENUE    │    │  📤 OUTBOUND   │
+├─────────────┤    ├─────────────┤    ├─────────────────┤    ├─────────────────┤
+│ Blood Test │───▶│Data Valid.│───▶│ Analysis Fee    │───▶│   Dashboard    │
+│ Genetic   │    │Multi-omics│    │ $100-1000/test │    │               │
+│ Wearables │    │TF-Network │    │ Subscription  │    │   Protocols    │
+│ Research  │    │Twin Engine│    │ $50-500/mo     │    │               │
+│    Data   │    │          │    │ Protocol Srvc  │    │   Reports     │
+│           │    │          │    │ $100-1000/plan │    │               │
+│           │    │          │    │ Enterprise API │    │   Alerts      │
+│           │    │          │    │ $10K-100K/yr   │    │               │
+└─────────────┘    └─────────────┘    └─────────────────┘    └─────────────────┘</pre>
         </div>
         
-        <div class="grid" style="margin-top: 24px;">
+        <div class="grid-2" style="margin-top: 32px;">
           <div class="card">
-            <h3>Priority Revenue</h3>
+            <h3>Revenue Streams</h3>
             <table>
               <tr><th>Stream</th><th>Revenue</th><th>Type</th></tr>
-              <tr><td class="highlight">Digital Twin Subscription</td><td>$50-500/mo</td><td>Recurring</td></tr>
-              <tr><td>Analysis Fees</td><td>$100-1000/test</td><td>Volume</td></tr>
-              <tr><td>Protocol Service</td><td>$100-1000/plan</td><td>High Margin</td></tr>
-              <tr><td>Enterprise API</td><td>$10K-100K/yr</td><td>B2B</td></tr>
+              <tr><td>Digital Twin</td><td>$50–500/mo</td><td>Recurring</td></tr>
+              <tr><td>Analysis</td><td>$100–1000/test</td><td>Transaction</td></tr>
+              <tr><td>Protocol</td><td>$100–1000/plan</td><td>Service</td></tr>
+              <tr><td>API</td><td>$10K–100K/yr</td><td>Enterprise</td></tr>
             </table>
           </div>
           
@@ -489,26 +562,44 @@ flowchart LR
             <h3>Unit Economics</h3>
             <table>
               <tr><th>Segment</th><th>LTV:CAC</th><th>Margin</th></tr>
-              <tr><td>B2B</td><td>10:1</td><td>70-85%</td></tr>
-              <tr><td>B2B2C</td><td>10:1</td><td>60-75%</td></tr>
-              <tr><td>D2C</td><td>10:1</td><td>50-70%</td></tr>
+              <tr><td>B2B</td><td>10:1</td><td>70–85%</td></tr>
+              <tr><td>B2B2C</td><td>10:1</td><td>60–75%</td></tr>
+              <tr><td>D2C</td><td>10:1</td><td>50–70%</td></tr>
             </table>
           </div>
         </div>
       </div>
     </section>
 
+    <section style="background: var(--off-white);">
+      <div class="container">
+        <h2>Market Flow</h2>
+        <p class="section-intro">Capital and value flow from basic research through commercialization.</p>
+        
+        <div class="sankey-box">
+          <canvas id="marketSankey" width="1050" height="350"></canvas>
+        </div>
+        
+        <div class="legend-row">
+          <div class="legend-item"><div class="legend-dot" style="background: #0066cc;"></div>Research</div>
+          <div class="legend-item"><div class="legend-dot" style="background: #6f42c1;"></div>Big Tech</div>
+          <div class="legend-item"><div class="legend-dot" style="background: #d63384;"></div>SME (Us)</div>
+          <div class="legend-item"><div class="legend-dot" style="background: #fd7e14;"></div>Target Markets</div>
+        </div>
+      </div>
+    </section>
+
     <section id="pricing">
       <div class="container">
-        <h2>Pricing Matrix</h2>
-        <p class="section-subtitle">Three tiers across three customer segments</p>
+        <h2>Pricing Tiers</h2>
+        <p class="section-intro">Three plans designed for different customer segments.</p>
         
         <div class="pricing-grid">
           <div class="pricing-card">
             <div class="pricing-tier">Basic</div>
-            <div class="pricing-price">$50<span style="font-size: 16px; color: var(--text-secondary);">/mo</span></div>
+            <div class="pricing-price">$50<span>/month</span></div>
             <ul class="pricing-features">
-              <li>Basic biomarker analysis</li>
+              <li>Core biomarker analysis</li>
               <li>Standard dashboard</li>
               <li>Email support</li>
               <li>Web access only</li>
@@ -517,7 +608,7 @@ flowchart LR
           
           <div class="pricing-card featured">
             <div class="pricing-tier">Pro</div>
-            <div class="pricing-price">$150<span style="font-size: 16px; color: var(--text-secondary);">/mo</span></div>
+            <div class="pricing-price">$150<span>/month</span></div>
             <ul class="pricing-features">
               <li>Full digital twin</li>
               <li>Multi-omics integration</li>
@@ -540,50 +631,50 @@ flowchart LR
       </div>
     </section>
 
-    <section id="growth" style="background: var(--bg-secondary);">
+    <section id="growth" style="background: var(--off-white);">
       <div class="container">
         <h2>Growth Projections</h2>
-        <p class="section-subtitle">Revenue and customer targets over 3 years</p>
+        <p class="section-intro">Three-year revenue and customer acquisition targets.</p>
         
         <table class="growth-table">
           <thead>
             <tr>
               <th>Metric</th>
-              <th>Year 1 (MVP)</th>
-              <th>Year 2 (Scale)</th>
-              <th>Year 3 (Growth)</th>
+              <th>Year 1 — MVP</th>
+              <th>Year 2 — Scale</th>
+              <th>Year 3 — Growth</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>Revenue</strong></td>
-              <td>$500K-1M</td>
-              <td>$3-5M</td>
-              <td class="highlight">$15-30M</td>
+              <td>Revenue</td>
+              <td>$500K–1M</td>
+              <td>$3–5M</td>
+              <td class="highlight-cell">$15–30M</td>
             </tr>
             <tr>
-              <td><strong>B2B Customers</strong></td>
+              <td>B2B Customers</td>
               <td>50</td>
               <td>200</td>
               <td>500</td>
             </tr>
             <tr>
-              <td><strong>B2B2C Customers</strong></td>
+              <td>B2B2C Customers</td>
               <td>500</td>
-              <td>5K</td>
-              <td>20K</td>
+              <td>5,000</td>
+              <td>20,000</td>
             </tr>
             <tr>
-              <td><strong>D2C Customers</strong></td>
-              <td>5K</td>
-              <td>50K</td>
-              <td>200K</td>
+              <td>D2C Customers</td>
+              <td>5,000</td>
+              <td>50,000</td>
+              <td>200,000</td>
             </tr>
-            <tr>
-              <td><strong>EBITDA</strong></td>
-              <td>-$1-2M (burn)</td>
+            <tr class="highlight-row">
+              <td>EBITDA</td>
+              <td>–$1–2M (burn)</td>
               <td>Break-even</td>
-              <td class="highlight">$5-10M</td>
+              <td class="highlight-cell">$5–10M</td>
             </tr>
           </tbody>
         </table>
@@ -591,95 +682,88 @@ flowchart LR
     </section>
 
     <section>
-      <div class="container" style="text-align: center;">
-        <h2>Ready to Partner?</h2>
-        <p class="section-subtitle">Let's bring predictive neuroprotection to market</p>
-        <a href="mailto:business@gliatwin.ai" style="display: inline-block; background: var(--accent-green); color: var(--bg-primary); padding: 16px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 16px;">Contact Us</a>
+      <div class="container">
+        <div class="cta-box">
+          <h3>Partner With Us</h3>
+          <p>Bring predictive neuroprotection to market. Let's discuss collaboration.</p>
+          <a href="mailto:business@gliatwin.ai" class="cta-btn">Contact Business Team</a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="container">
-      <p>GliaTwin AI — Digital Twin of Microglia for Predictive Neuroprotection</p>
-      <p style="margin-top: 8px;">business@gliatwin.ai</p>
+      <p>GliaTwin AI — Digital Twin of Microglia</p>
+      <p style="margin-top: 4px;">business@gliatwin.ai</p>
     </div>
   </footer>
 
   <script>
-    // Market Sankey Chart
     async function renderMarketSankey() {
       const canvas = document.getElementById('marketSankey');
       if (!canvas) return;
       
-      // Register Sankey
       const { SankeyController } = Chart;
       
-      // Data: Science → BigTech → SME → Target Markets
-      const scienceItems = [
+      const science = [
         { name: 'Academic Research', value: 2 },
         { name: 'PubMed/Clinical', value: 0.5 },
         { name: 'Biobanks', value: 1 },
         { name: 'Gov Grants', value: 5 },
         { name: 'Pharma R&D', value: 10 }
       ];
-      const bigtechItems = [
+      const bigtech = [
         { name: 'Google/Calico', value: 1 },
         { name: 'Microsoft', value: 0.5 },
         { name: 'Amazon', value: 0.3 },
         { name: 'Apple', value: 0.2 },
         { name: 'NVIDIA', value: 0.5 }
       ];
-      const smeItems = [
+      const sme = [
         { name: 'Human Longevity', value: 0.05 },
         { name: 'InsideTracker', value: 0.02 },
         { name: 'GliaTwin AI ⭐', value: 0.01, highlight: true },
         { name: 'TruDiagnostic', value: 0.01 },
         { name: 'BioAge Labs', value: 0.03 }
       ];
-      const targetItems = [
+      const target = [
         { name: 'Pharma R&D', value: 2 },
         { name: 'Longevity Clinics', value: 1 },
         { name: 'D2C Premium', value: 0.5 }
       ];
 
-      // Build flows
       const flows = [];
       const nodeColors = {};
 
-      // Science → BigTech
-      scienceItems.forEach(s => {
-        bigtechItems.forEach(b => {
+      science.forEach(s => {
+        bigtech.forEach(b => {
           flows.push({ from: s.name, to: b.name, flow: Math.round(s.value * b.value * 3) });
         });
       });
 
-      // BigTech → SME
-      bigtechItems.forEach(b => {
-        smeItems.forEach(s => {
+      bigtech.forEach(b => {
+        sme.forEach(s => {
           flows.push({ from: b.name, to: s.name, flow: Math.round(b.value * 20) });
         });
       });
 
-      // SME → Target
-      smeItems.forEach(s => {
-        targetItems.forEach(t => {
+      sme.forEach(s => {
+        target.forEach(t => {
           flows.push({ from: s.name, to: t.name, flow: Math.round(s.value * 50) });
         });
       });
 
-      // Colors
-      scienceItems.forEach(s => nodeColors[s.name] = '#3b82f6');
-      bigtechItems.forEach(b => nodeColors[b.name] = '#8b5cf6');
-      smeItems.forEach(s => nodeColors[s.name] = s.highlight ? '#22c55e' : '#10b981');
-      targetItems.forEach(t => nodeColors[t.name] = '#f59e0b');
+      science.forEach(s => nodeColors[s.name] = '#0066cc');
+      bigtech.forEach(b => nodeColors[b.name] = '#6f42c1');
+      sme.forEach(s => nodeColors[s.name] = s.highlight ? '#d63384' : '#28a745');
+      target.forEach(t => nodeColors[t.name] = '#fd7e14');
 
-      // Column assignments
       const columnAssignments = {};
-      scienceItems.forEach((s, i) => columnAssignments[s.name] = 0);
-      bigtechItems.forEach((b, i) => columnAssignments[b.name] = 1);
-      smeItems.forEach((s, i) => columnAssignments[s.name] = 2);
-      targetItems.forEach((t, i) => columnAssignments[t.name] = 3);
+      science.forEach((s, i) => columnAssignments[s.name] = 0);
+      bigtech.forEach((b, i) => columnAssignments[b.name] = 1);
+      sme.forEach((s, i) => columnAssignments[s.name] = 2);
+      target.forEach((t, i) => columnAssignments[t.name] = 3);
 
       new Chart(canvas, {
         type: 'sankey',
@@ -691,16 +775,16 @@ flowchart LR
             column: columnAssignments,
             colorFrom: (c) => {
               const from = c?.dataset?.data?.[c.dataIndex]?.from;
-              return nodeColors[from] || '#58A6FF';
+              return nodeColors[from] || '#0066cc';
             },
             colorTo: (c) => {
               const to = c?.dataset?.data?.[c.dataIndex]?.to;
-              return nodeColors[to] || '#58A6FF';
+              return nodeColors[to] || '#0066cc';
             },
             labels: {
               display: true,
-              color: '#8B949E',
-              font: { size: 9, weight: '500' },
+              color: '#495057',
+              font: { size: 9, family: 'Inter, sans-serif' },
               padding: 4
             }
           }]
@@ -713,16 +797,14 @@ flowchart LR
             legend: { display: false },
             tooltip: {
               enabled: true,
-              backgroundColor: 'rgba(13, 17, 23, 0.95)',
-              titleColor: '#F0F6FC',
-              bodyColor: '#8B949E',
-              borderColor: '#30363D',
-              borderWidth: 1,
-              cornerRadius: 6,
+              backgroundColor: 'rgba(33, 37, 41, 0.95)',
+              titleColor: '#fff',
+              bodyColor: '#e9ecef',
+              cornerRadius: 4,
               callbacks: {
                 title: (ctx) => {
                   const d = ctx[0].dataset.data[ctx[0].dataIndex];
-                  return `${d.from} → ${d.to}`;
+                  return d.from + ' → ' + d.to;
                 },
                 label: () => '$M flow'
               }
