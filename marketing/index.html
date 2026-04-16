@@ -9,30 +9,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
-  <script>
-    console.log('Plotly loaded:', typeof Plotly);
-    
-    // Simple test demo
-    setTimeout(() => {
-      const testCanvas = document.createElement('div');
-      testCanvas.id = 'test-plot';
-      document.body.insertBefore(testCanvas, document.body.firstChild);
-      
-      Plotly.newPlot('test-plot', [{
-        x: [1, 2, 3],
-        y: [1, 2, 3],
-        type: 'scatter',
-        mode: 'lines+markers'
-      }], { title: 'Test Plot' });
-      
-      // Now render main charts
-      renderMarketSankeyPlotly();
-      renderValueChainSankeyPlotly();
-    }, 1000);
-
-    function renderMarketSankeyPlotly() {
-      const canvas = document.getElementById('marketSankey');
+  <style>
+/* Diagram styles */
+.diagram-container { width: 100%; overflow-x: auto; }
+.diagram-title { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; fill: #212529; }
+.diagram-node { font-family: 'Inter', sans-serif; font-size: 9px; fill: #495057; }
+.diagram-label { font-family: 'JetBrains Mono', monospace; font-size: 8px; fill: #6c757d; }
+.diagram-link { fill-opacity: 0.3; stroke: none; }
+</style>
+</head>
+<body>
       if (!canvas || typeof Plotly === 'undefined') {
         console.log('Market Sankey: canvas or Plotly not found');
         return;
@@ -760,7 +746,110 @@
         <p class="section-intro">Revenue flow from data ingestion through user-facing products.</p>
         
         <div class="sankey-box">
-          <div id="valueChainSankey" style="width:1050px;height:280px;"></div>
+          <div class="diagram-container">
+      <div class="diagram-title">Value Chain: Inbound → Processing → Revenue → Output</div>
+      <svg id="valueChainSankey" viewBox="0 0 1100 280" style="width:100%;height:280px;">
+        <defs>
+          <linearGradient id="gradInbound" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#6c757d" stop-opacity="0.3"/><stop offset="100%" stop-color="#6c757d" stop-opacity="0.1"/>
+          </linearGradient>
+          <linearGradient id="gradProcess" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0066cc" stop-opacity="0.4"/><stop offset="100%" stop-color="#0066cc" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="gradRevenueVC" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#28a745" stop-opacity="0.4"/><stop offset="100%" stop-color="#28a745" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="gradOutput" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fd7e14" stop-opacity="0.4"/><stop offset="100%" stop-color="#fd7e14" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Column 1: Inbound -->
+        <g class="diagram-nodes">
+          <rect x="10" y="20" width="140" height="22" rx="4" fill="url(#gradInbound)" stroke="#6c757d" stroke-width="1"/>
+          <text x="80" y="35" text-anchor="middle" class="diagram-node" fill="#495057">Blood Test</text>
+          
+          <rect x="10" y="50" width="140" height="22" rx="4" fill="url(#gradInbound)" stroke="#6c757d" stroke-width="1"/>
+          <text x="80" y="65" text-anchor="middle" class="diagram-node" fill="#495057">Genetic Data</text>
+          
+          <rect x="10" y="80" width="140" height="22" rx="4" fill="url(#gradInbound)" stroke="#6c757d" stroke-width="1"/>
+          <text x="80" y="95" text-anchor="middle" class="diagram-node" fill="#495057">Wearable Sensors</text>
+          
+          <rect x="10" y="110" width="140" height="22" rx="4" fill="url(#gradInbound)" stroke="#6c757d" stroke-width="1"/>
+          <text x="80" y="125" text-anchor="middle" class="diagram-node" fill="#495057">Research Data</text>
+        </g>
+        
+        <!-- Column 2: Processing -->
+        <g class="diagram-nodes">
+          <rect x="210" y="20" width="140" height="22" rx="4" fill="#0066cc" fill-opacity="0.15" stroke="#0066cc" stroke-width="1"/>
+          <text x="280" y="35" text-anchor="middle" class="diagram-node" fill="#0066cc">Data Validation</text>
+          
+          <rect x="210" y="50" width="140" height="22" rx="4" fill="#0066cc" fill-opacity="0.15" stroke="#0066cc" stroke-width="1"/>
+          <text x="280" y="65" text-anchor="middle" class="diagram-node" fill="#0066cc">Multi-omics</text>
+          
+          <rect x="210" y="80" width="140" height="22" rx="4" fill="#0066cc" fill-opacity="0.15" stroke="#0066cc" stroke-width="1"/>
+          <text x="280" y="95" text-anchor="middle" class="diagram-node" fill="#0066cc">TF-Network</text>
+          
+          <rect x="210" y="110" width="140" height="22" rx="4" fill="#0066cc" fill-opacity="0.15" stroke="#0066cc" stroke-width="1"/>
+          <text x="280" y="125" text-anchor="middle" class="diagram-node" fill="#0066cc">Twin Engine</text>
+        </g>
+        
+        <!-- Column 3: Revenue -->
+        <g class="diagram-nodes">
+          <rect x="410" y="20" width="160" height="22" rx="4" fill="#28a745" fill-opacity="0.15" stroke="#28a745" stroke-width="1"/>
+          <text x="490" y="35" text-anchor="middle" class="diagram-node" fill="#28a745">Analysis Fee</text>
+          <text x="560" y="35" text-anchor="end" class="diagram-label" fill="#28a745">$100-1000</text>
+          
+          <rect x="410" y="50" width="160" height="22" rx="4" fill="#28a745" fill-opacity="0.2" stroke="#28a745" stroke-width="2"/>
+          <text x="490" y="65" text-anchor="middle" class="diagram-node" font-weight="600" fill="#28a745">Subscription</text>
+          <text x="560" y="65" text-anchor="end" class="diagram-label" fill="#28a745">$50-500/mo</text>
+          
+          <rect x="410" y="80" width="160" height="22" rx="4" fill="#28a745" fill-opacity="0.15" stroke="#28a745" stroke-width="1"/>
+          <text x="490" y="95" text-anchor="middle" class="diagram-node" fill="#28a745">Protocol Srvc</text>
+          <text x="560" y="95" text-anchor="end" class="diagram-label" fill="#28a745">$100-1000</text>
+          
+          <rect x="410" y="110" width="160" height="22" rx="4" fill="#28a745" fill-opacity="0.15" stroke="#28a745" stroke-width="1"/>
+          <text x="490" y="125" text-anchor="middle" class="diagram-node" fill="#28a745">Enterprise API</text>
+          <text x="560" y="125" text-anchor="end" class="diagram-label" fill="#28a745">$10K-100K/yr</text>
+        </g>
+        
+        <!-- Column 4: Output -->
+        <g class="diagram-nodes">
+          <rect x="640" y="30" width="120" height="22" rx="4" fill="#fd7e14" fill-opacity="0.15" stroke="#fd7e14" stroke-width="1"/>
+          <text x="700" y="45" text-anchor="middle" class="diagram-node" fill="#fd7e14">Dashboard</text>
+          
+          <rect x="640" y="60" width="120" height="22" rx="4" fill="#fd7e14" fill-opacity="0.15" stroke="#fd7e14" stroke-width="1"/>
+          <text x="700" y="75" text-anchor="middle" class="diagram-node" fill="#fd7e14">Protocols</text>
+          
+          <rect x="640" y="90" width="120" height="22" rx="4" fill="#fd7e14" fill-opacity="0.15" stroke="#fd7e14" stroke-width="1"/>
+          <text x="700" y="105" text-anchor="middle" class="diagram-node" fill="#fd7e14">Reports</text>
+          
+          <rect x="640" y="120" width="120" height="22" rx="4" fill="#fd7e14" fill-opacity="0.15" stroke="#fd7e14" stroke-width="1"/>
+          <text x="700" y="135" text-anchor="middle" class="diagram-node" fill="#fd7e14">Alerts</text>
+        </g>
+        
+        <!-- Flow arrows -->
+        <g class="diagram-links" fill-opacity="0.25">
+          <!-- Inbound → Processing -->
+          <path d="M150 31 L205 31" stroke="#6c757d" stroke-width="2"/>
+          <path d="M150 60 L205 60" stroke="#6c757d" stroke-width="2"/>
+          <path d="M150 90 L205 90" stroke="#6c757d" stroke-width="2"/>
+          <path d="M150 121 L205 121" stroke="#6c757d" stroke-width="2"/>
+          
+          <!-- Processing → Revenue -->
+          <path d="M350 31 L405 31" stroke="#0066cc" stroke-width="2"/>
+          <path d="M350 60 L405 60" stroke="#0066cc" stroke-width="2"/>
+          <path d="M350 90 L405 90" stroke="#0066cc" stroke-width="2"/>
+          <path d="M350 121 L405 121" stroke="#0066cc" stroke-width="2"/>
+          
+          <!-- Revenue → Output -->
+          <path d="M570 35 L635 40" stroke="#28a745" stroke-width="2"/>
+          <path d="M570 63 L635 71" stroke="#28a745" stroke-width="2"/>
+          <path d="M570 95 L635 100" stroke="#28a745" stroke-width="2"/>
+          <path d="M570 127 L635 130" stroke="#28a745" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
         </div>
         
         <div class="legend-row">
@@ -801,7 +890,126 @@
         <p class="section-intro">Capital and value flow from basic research through commercialization.</p>
         
         <div class="sankey-box">
-          <div id="marketSankey" style="width:1050px;height:350px;"></div>
+          <div class="diagram-container">
+      <div class="diagram-title">Market Flow: Science → Domains → SME → Target Markets</div>
+      <svg id="marketSankey" viewBox="0 0 1100 320" style="width:100%;height:320px;">
+        <defs>
+          <linearGradient id="gradScience" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0066cc" stop-opacity="0.4"/><stop offset="100%" stop-color="#0066cc" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="gradDomains" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#6f42c1" stop-opacity="0.4"/><stop offset="100%" stop-color="#6f42c1" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="gradSME" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#28a745" stop-opacity="0.4"/><stop offset="100%" stop-color="#28a745" stop-opacity="0.15"/>
+          </linearGradient>
+          <linearGradient id="gradTarget" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#fd7e14" stop-opacity="0.4"/><stop offset="100%" stop-color="#fd7e14" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Column 1: Science -->
+        <g class="diagram-nodes">
+          <rect x="10" y="20" width="120" height="22" rx="4" fill="#0066cc" fill-opacity="0.15" stroke="#0066cc" stroke-width="1"/>
+          <text x="70" y="35" text-anchor="middle" class="diagram-node" fill="#0066cc">Academic Research</text>
+          <text x="120" y="35" text-anchor="end" class="diagram-label" fill="#6c757d">$2B</text>
+          
+          <rect x="10" y="48" width="120" height="22" rx="4" fill="#0066cc" fill-opacity="0.15" stroke="#0066cc" stroke-width="1"/>
+          <text x="70" y="63" text-anchor="middle" class="diagram-node" fill="#0066cc">PubMed/Clinical</text>
+          <text x="120" y="63" text-anchor="end" class="diagram-label" fill="#6c757d">$0.5B</text>
+          
+          <rect x="10" y="76" width="120" height="22" rx="4" fill="#0066cc" fill-opacity="0.15" stroke="#0066cc" stroke-width="1"/>
+          <text x="70" y="91" text-anchor="middle" class="diagram-node" fill="#0066cc">Biobanks</text>
+          <text x="120" y="91" text-anchor="end" class="diagram-label" fill="#6c757d">$1B</text>
+          
+          <rect x="10" y="104" width="120" height="22" rx="4" fill="#0066cc" fill-opacity="0.15" stroke="#0066cc" stroke-width="1"/>
+          <text x="70" y="119" text-anchor="middle" class="diagram-node" fill="#0066cc">Gov Grants</text>
+          <text x="120" y="119" text-anchor="end" class="diagram-label" fill="#6c757d">$5B</text>
+          
+          <rect x="10" y="132" width="120" height="22" rx="4" fill="#0066cc" fill-opacity="0.15" stroke="#0066cc" stroke-width="1"/>
+          <text x="70" y="147" text-anchor="middle" class="diagram-node" fill="#0066cc">Pharma R&D</text>
+          <text x="120" y="147" text-anchor="end" class="diagram-label" fill="#6c757d">$10B</text>
+        </g>
+        
+        <!-- Column 2: Domains -->
+        <g class="diagram-nodes">
+          <rect x="200" y="20" width="140" height="22" rx="4" fill="#6f42c1" fill-opacity="0.15" stroke="#6f42c1" stroke-width="1"/>
+          <text x="270" y="35" text-anchor="middle" class="diagram-node" fill="#6f42c1">Supplements/Pharma</text>
+          <text x="330" y="35" text-anchor="end" class="diagram-label" fill="#6c757d">$50B</text>
+          
+          <rect x="200" y="48" width="140" height="22" rx="4" fill="#6f42c1" fill-opacity="0.15" stroke="#6f42c1" stroke-width="1"/>
+          <text x="270" y="63" text-anchor="middle" class="diagram-node" fill="#6f42c1">Nutrition/Diet</text>
+          <text x="330" y="63" text-anchor="end" class="diagram-label" fill="#6c757d">$30B</text>
+          
+          <rect x="200" y="76" width="140" height="22" rx="4" fill="#6f42c1" fill-opacity="0.15" stroke="#6f42c1" stroke-width="1"/>
+          <text x="270" y="91" text-anchor="middle" class="diagram-node" fill="#6f42c1">Exercise/Fitness</text>
+          <text x="330" y="91" text-anchor="end" class="diagram-label" fill="#6c757d">$25B</text>
+          
+          <rect x="200" y="104" width="140" height="22" rx="4" fill="#6f42c1" fill-opacity="0.15" stroke="#6f42c1" stroke-width="1"/>
+          <text x="270" y="119" text-anchor="middle" class="diagram-node" fill="#6f42c1">Sleep/Recovery</text>
+          <text x="330" y="119" text-anchor="end" class="diagram-label" fill="#6c757d">$15B</text>
+          
+          <rect x="200" y="132" width="140" height="22" rx="4" fill="#6f42c1" fill-opacity="0.15" stroke="#6f42c1" stroke-width="1"/>
+          <text x="270" y="147" text-anchor="middle" class="diagram-node" fill="#6f42c1">Diagnostics</text>
+          <text x="330" y="147" text-anchor="end" class="diagram-label" fill="#6c757d">$10B</text>
+        </g>
+        
+        <!-- Column 3: SME -->
+        <g class="diagram-nodes">
+          <rect x="410" y="20" width="140" height="22" rx="4" fill="#28a745" fill-opacity="0.15" stroke="#28a745" stroke-width="1"/>
+          <text x="480" y="35" text-anchor="middle" class="diagram-node" fill="#28a745">Human Longevity</text>
+          <text x="540" y="35" text-anchor="end" class="diagram-label" fill="#6c757d">$50M</text>
+          
+          <rect x="410" y="48" width="140" height="22" rx="4" fill="#28a745" fill-opacity="0.15" stroke="#28a745" stroke-width="1"/>
+          <text x="480" y="63" text-anchor="middle" class="diagram-node" fill="#28a745">InsideTracker</text>
+          <text x="540" y="63" text-anchor="end" class="diagram-label" fill="#6c757d">$20M</text>
+          
+          <rect x="410" y="76" width="140" height="22" rx="4" fill="#d63384" fill-opacity="0.2" stroke="#d63384" stroke-width="2"/>
+          <text x="480" y="91" text-anchor="middle" class="diagram-node" font-weight="600" fill="#d63384">GliaTwin AI *</text>
+          <text x="540" y="91" text-anchor="end" class="diagram-label" fill="#d63384">Target</text>
+          
+          <rect x="410" y="104" width="140" height="22" rx="4" fill="#28a745" fill-opacity="0.15" stroke="#28a745" stroke-width="1"/>
+          <text x="480" y="119" text-anchor="middle" class="diagram-node" fill="#28a745">TruDiagnostic</text>
+          <text x="540" y="119" text-anchor="end" class="diagram-label" fill="#6c757d">$10M</text>
+          
+          <rect x="410" y="132" width="140" height="22" rx="4" fill="#28a745" fill-opacity="0.15" stroke="#28a745" stroke-width="1"/>
+          <text x="480" y="147" text-anchor="middle" class="diagram-node" fill="#28a745">BioAge Labs</text>
+          <text x="540" y="147" text-anchor="end" class="diagram-label" fill="#6c757d">$30M</text>
+        </g>
+        
+        <!-- Column 4: Target -->
+        <g class="diagram-nodes">
+          <rect x="620" y="40" width="130" height="28" rx="4" fill="#fd7e14" fill-opacity="0.15" stroke="#fd7e14" stroke-width="1"/>
+          <text x="685" y="58" text-anchor="middle" class="diagram-node" fill="#fd7e14">Pharma R&D</text>
+          <text x="740" y="58" text-anchor="end" class="diagram-label" fill="#fd7e14">$2B</text>
+          
+          <rect x="620" y="80" width="130" height="28" rx="4" fill="#fd7e14" fill-opacity="0.15" stroke="#fd7e14" stroke-width="1"/>
+          <text x="685" y="98" text-anchor="middle" class="diagram-node" fill="#fd7e14">Longevity Clinics</text>
+          <text x="740" y="98" text-anchor="end" class="diagram-label" fill="#fd7e14">$1B</text>
+          
+          <rect x="620" y="120" width="130" height="28" rx="4" fill="#fd7e14" fill-opacity="0.15" stroke="#fd7e14" stroke-width="1"/>
+          <text x="685" y="138" text-anchor="middle" class="diagram-node" fill="#fd7e14">D2C Premium</text>
+          <text x="740" y="138" text-anchor="end" class="diagram-label" fill="#fd7e14">$0.5B</text>
+        </g>
+        
+        <!-- Flow arrows -->
+        <g class="diagram-links" fill-opacity="0.25">
+          <path d="M130 31 C180 31 190 31 200 31" stroke="#0066cc" stroke-width="3" fill="none"/>
+          <path d="M130 55 C180 55 190 55 200 55" stroke="#0066cc" stroke-width="3" fill="none"/>
+          <path d="M130 83 C180 83 190 83 200 83" stroke="#0066cc" stroke-width="3" fill="none"/>
+          <path d="M130 107 C180 107 190 107 200 107" stroke="#0066cc" stroke-width="3" fill="none"/>
+          <path d="M130 143 C180 143 190 143 200 143" stroke="#0066cc" stroke-width="3" fill="none"/>
+          
+          <path d="M340 55 C380 50 390 50 410 35" stroke="#6f42c1" stroke-width="3" fill="none"/>
+          <path d="M340 55 C380 35 390 35 410 55" stroke="#6f42c1" stroke-width="3" fill="none"/>
+          <path d="M340 55 C380 45 390 45 410 91" stroke="#6f42c1" stroke-width="3" fill="none"/>
+          
+          <path d="M550 31 C580 35 590 35 620 52" stroke="#28a745" stroke-width="2" fill="none"/>
+          <path d="M550 67 C580 65 590 65 620 80" stroke="#28a745" stroke-width="2" fill="none"/>
+          <path d="M550 91 C580 85 590 85 620 108" stroke="#d63384" stroke-width="3" fill="none"/>
+        </g>
+      </svg>
+    </div>
         </div>
         
         <div class="legend-row">
