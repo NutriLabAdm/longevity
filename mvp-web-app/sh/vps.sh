@@ -1,36 +1,58 @@
 #!/bin/bash
-# VPS Setup Script for longevity.startupassist.ru
-# Run on Beget server with Nginx + SSL
+# VPS Setup Script for Beget
+# Run this on your Beget server via SSH
 
-set -e
+echo "=== VPS Setup for longevity.startupassist.ru ==="
+echo "Detecting OS..."
+echo ""
 
-DOMAIN="longevity.startupassist.ru"
-EMAIL="admin@startupassist.ru"
-APP_DIR="/var/www/longevity"
-SSL_DIR="/etc/nginx/ssl"
+# Detect OS
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    echo "OS: $PRETTY_NAME"
+fi
 
-echo "=== VPS Configuration for $DOMAIN ==="
-
-# Update system
-echo "[1/8] Updating system..."
-apt update && apt upgrade -y
-
-# Install Nginx
-echo "[2/8] Installing Nginx..."
-apt install -y nginx certbot python3-certbot-nginx
-
-# Create app directory
-echo "[3/8] Creating app directory..."
-mkdir -p $APP_DIR
-chown -R www-data:www-data $APP_DIR
-
-# Generate SSL certificates
-echo "[4/8] Generating SSL certificate..."
-certbot --nginx -d $DOMAIN --non-interactive --agree-tos --email $EMAIL
-
-# Create Nginx config
-echo "[5/8] Creating Nginx configuration..."
-cat > /etc/nginx/sites-available/longevity << 'EOF'
+# Check if it's Beget (CentOS/RHEL)
+if command -v dnf &> /dev/null; then
+    echo "Package manager: dnf (CentOS/RHEL)"
+    
+    echo ""
+    echo "Installing Nginx..."
+    sudo dnf install -y nginx
+    
+    echo ""
+    echo "Creating app directory..."
+    sudo mkdir -p /var/www/longevity
+    sudo chown -R $USER:$USER /var/www/longevity
+    
+    echo ""
+    echo "Nginx installed. Now configure in Beget panel:"
+    echo "1. Go to Websites > longevity.startupassist.ru"
+    echo "2. Enable SSL in CDN & SSL settings"
+    echo "3. Point document root to /var/www/longevity"
+    echo ""
+    echo "Then run: sudo nginx -t && sudo systemctl restart nginx"
+    
+elif command -v apt &> /dev/null; then
+    echo "Package manager: apt (Debian/Ubuntu)"
+    
+    echo ""
+    echo "Installing Nginx and certbot..."
+    sudo apt update
+    sudo apt install -y nginx certbot python3-certbot-nginx
+    
+    echo ""
+    echo "Creating app directory..."
+    sudo mkdir -p /var/www/longevity
+    sudo chown -R www-data:www-data /var/www/longevity
+    
+    echo ""
+    echo "Getting SSL certificate..."
+    sudo certbot --nginx -d longevity.startupassist.ru --non-interactive --agree-tos --email admin@startupassist.ru
+    
+    echo ""
+    echo "Creating Nginx config..."
+    sudo tee /etc/nginx/sites-available/longevity << 'EOF'
 server {
     listen 80;
     server_name longevity.startupassist.ru;
@@ -43,57 +65,25 @@ server {
 
     ssl_certificate /etc/letsencrypt/live/longevity.startupassist.ru/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/longevity.startupassist.ru/privkey.pem;
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers HIGH:!aNULL:!MD5;
 
     root /var/www/longevity;
     index index.html;
 
-    # Security headers
-    add_header X-Frame-Options "SAMEORIGIN" always;
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header X-XSS-Protection "1; mode=block" always;
-
-    # Gzip
-    gzip on;
-    gzip_types text/plain text/css application/json application/javascript text/xml application/xml;
-
     location / {
         try_files $uri $uri/ =404;
-    }
-
-    # API proxy (future)
-    location /api/ {
-        proxy_pass http://localhost:8000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-
-    # Static assets
-    location /assets/ {
-        expires 30d;
-        add_header Cache-Control "public, immutable";
     }
 }
 EOF
 
-# Enable site
-echo "[6/8] Enabling Nginx site..."
-ln -sf /etc/nginx/sites-available/longevity /etc/nginx/sites-enabled/
-nginx -t
-
-# Restart Nginx
-echo "[7/8] Restarting Nginx..."
-systemctl restart nginx
-
-# Setup auto-renewal for SSL
-echo "[8/8] Setting up SSL auto-renewal..."
-(crontab -l 2>/dev/null; echo "0 0 * * * certbot renew --quiet --deploy-hook 'systemctl reload nginx'") | crontab -
-
-echo "=== VPS Setup Complete ==="
-echo "Domain: $DOMAIN"
-echo "App directory: $APP_DIR"
-echo "SSL: Enabled with auto-renewal"
+    echo ""
+    echo "Enabling site and restarting Nginx..."
+    sudo ln -sf /etc/nginx/sites-available/longevity /etc/nginx/sites-enabled/
+    sudo nginx -t
+    sudo systemctl restart nginx
+    
+    echo ""
+    echo "=== DONE ==="
+    echo "Upload files to /var/www/longevity"
+else
+    echo "Unknown OS. Please configure manually via Beget panel."
+fi
