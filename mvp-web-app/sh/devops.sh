@@ -5,7 +5,7 @@
 set -e
 
 REMOTE_HOST="217.114.8.5"
-REMOTE_USER="your_username"
+REMOTE_USER="root"
 REMOTE_DIR="/var/www/longevity.startupassist.ru"
 DOMAIN="longevity.startupassist.ru"
 
