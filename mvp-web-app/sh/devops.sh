@@ -4,9 +4,9 @@
 
 set -e
 
-REMOTE_HOST="startupassist.ru"
-REMOTE_USER="startupassist"
-REMOTE_DIR="/var/www/longevity"
+REMOTE_HOST="217.114.8.5"
+REMOTE_USER="your_beget_username"
+REMOTE_DIR="/var/www/longevity.startupassist.ru"
 DOMAIN="longevity.startupassist.ru"
 
 # Colors for output
@@ -21,6 +21,14 @@ log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
 show_menu() {
     echo "=== DevOps for $DOMAIN ==="
+    echo "Server: $REMOTE_HOST"
+    echo ""
+    echo "PREREQUISITE: First SSH to server and run:"
+    echo "  cat > ~/setup.sh << 'SETUP_EOF'"
+    echo "  # Paste content of ssh-setup.sh here"
+    echo "  SETUP_EOF"
+    echo "  chmod +x ~/setup.sh && sudo ~/setup.sh"
+    echo ""
     echo "1) Deploy local files to remote server"
     echo "2) Pull latest from GitHub"
     echo "3) Backup current deployment"
@@ -45,9 +53,13 @@ deploy_local() {
     log_info "Creating backup..."
     ssh $REMOTE_USER@$REMOTE_HOST "mkdir -p $REMOTE_DIR/backups/$(date +%Y%m%d_%H%M%S) && cp -r $REMOTE_DIR/* \$_ || true"
     
-    # Sync files
+    # Sync files - try rsync first, fallback to scp
     log_info "Syncing files..."
-    rsync -avz --delete www/longevity.startupassist.ru/ $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/
+    if command -v rsync &> /dev/null; then
+        rsync -avz --delete www/longevity.startupassist.ru/ $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/
+    else
+        scp -r www/longevity.startupassist.ru/* $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/
+    fi
     
     # Set permissions
     ssh $REMOTE_USER@$REMOTE_HOST "chown -R www-data:www-data $REMOTE_DIR && find $REMOTE_DIR -type f -exec chmod 644 {} \; && find $REMOTE_DIR -type d -exec chmod 755 {} \;"
