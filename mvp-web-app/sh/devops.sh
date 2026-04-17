@@ -5,7 +5,7 @@
 set -e
 
 REMOTE_HOST="217.114.8.5"
-REMOTE_USER="your_beget_username"
+REMOTE_USER="your_username"
 REMOTE_DIR="/var/www/longevity.startupassist.ru"
 DOMAIN="longevity.startupassist.ru"
 
@@ -20,22 +20,25 @@ log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
 show_menu() {
-    echo "=== DevOps for $DOMAIN ==="
+    echo "=============================================="
+    echo "  DevOps CI/CD - longevity.startupassist.ru"
+    echo "=============================================="
+    echo ""
     echo "Server: $REMOTE_HOST"
+    echo "Web Root: $REMOTE_DIR"
     echo ""
-    echo "PREREQUISITE: First SSH to server and run:"
-    echo "  cat > ~/setup.sh << 'SETUP_EOF'"
-    echo "  # Paste content of ssh-setup.sh here"
-    echo "  SETUP_EOF"
-    echo "  chmod +x ~/setup.sh && sudo ~/setup.sh"
+    echo "BEFORE FIRST DEPLOY:"
+    echo "  1. SSH to server: ssh $REMOTE_USER@$REMOTE_HOST"
+    echo "  2. Run: sudo bash vps.sh (or paste vps.sh content)"
     echo ""
-    echo "1) Deploy local files to remote server"
-    echo "2) Pull latest from GitHub"
-    echo "3) Backup current deployment"
-    echo "4) Rollback to previous version"
-    echo "5) Check server status (nginx, SSL)"
-    echo "6) View server logs"
-    echo "7) Exit"
+    echo "COMMANDS:"
+    echo "  1) Deploy to production   (rsync/scp files)"
+    echo "  2) Pull from GitHub      (git clone/pull)"
+    echo "  3) Backup current        (copy to backups/)"
+    echo "  4) Rollback              (restore backup)"
+    echo "  5) Check status          (nginx, SSL)"
+    echo "  6) View logs             (tail access log)"
+    echo "  7) Exit"
     echo ""
     read -p "Select option [1-7]: " choice
 }
