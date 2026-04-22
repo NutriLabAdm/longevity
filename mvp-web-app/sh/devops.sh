@@ -4,6 +4,11 @@
 
 set -e
 
+# Find project root (parent of mvp-web-app)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+WEB_ROOT="$PROJECT_ROOT/www/longevity.startupassist.ru"
+
 REMOTE_HOST="217.114.8.5"
 REMOTE_USER="root"
 REMOTE_DIR="/var/www/longevity.startupassist.ru"
@@ -26,13 +31,14 @@ show_menu() {
     echo ""
     echo "Server: $REMOTE_HOST"
     echo "Web Root: $REMOTE_DIR"
+    echo "Local: $WEB_ROOT"
     echo ""
     echo "BEFORE FIRST DEPLOY:"
     echo "  1. SSH to server: ssh $REMOTE_USER@$REMOTE_HOST"
     echo "  2. Run: sudo bash vps.sh (or paste vps.sh content)"
     echo ""
     echo "COMMANDS:"
-    echo "  1) Deploy to production   (rsync/scp files)"
+    echo "  1) Deploy prod ($REMOTE_DIR/)"
     echo "  2) Pull from GitHub      (git clone/pull)"
     echo "  3) Backup current        (copy to backups/)"
     echo "  4) Rollback              (restore backup)"
@@ -47,8 +53,8 @@ deploy_local() {
     log_info "Deploying local files to $REMOTE_HOST:$REMOTE_DIR"
     
     # Check local files exist
-    if [ ! -d "www/longevity.startupassist.ru" ]; then
-        log_error "www/longevity.startupassist.ru not found"
+    if [ ! -d "$WEB_ROOT" ]; then
+        log_error "$WEB_ROOT not found"
         return
     fi
     
@@ -59,9 +65,9 @@ deploy_local() {
     # Sync files - try rsync first, fallback to scp
     log_info "Syncing files..."
     if command -v rsync &> /dev/null; then
-        rsync -avz --delete www/longevity.startupassist.ru/ $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/
+        rsync -avz --delete "$WEB_ROOT/" $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/
     else
-        scp -r www/longevity.startupassist.ru/* $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/
+        scp -r "$WEB_ROOT/"* $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/
     fi
     
     # Set permissions

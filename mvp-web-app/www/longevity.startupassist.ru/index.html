@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GliaTwin AI — Digital Twin for Longevity</title>
+  <title>Longivia — Digital Twin for Longevity</title>
   <meta name="description" content="AI-powered digital twin of microglia for predictive neuroprotection and personalized longevity protocols">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script><style id="plotly.js-style-global"></style>
   <style>
     :root {
       --white: #ffffff;
       --off-white: #fafafa;
-      --light: #f0f0f0;
+      --light: #9ba9b1;
       --gray: #888;
       --charcoal: #222;
       --accent: #2a5f3c;
@@ -42,16 +41,30 @@
       text-decoration: none;
     }
     .logo em { font-style: normal; color: var(--accent); }
+    .nav { display: flex; gap: 24px; }
+    .nav a {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: var(--accent); }
     
     main { padding: 60px 0; }
     
     .hero { text-align: center; padding: 40px 0 60px; }
     .hero h1 {
       font-size: 48px;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
     }
-    .hero p {
-      font-size: 22px;
+    .hero .subtitle {
+      font-size: 24px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .hero .subsubtitle {
+      font-size: 18px;
       color: var(--gray);
       max-width: 600px;
       margin: 0 auto;
@@ -74,14 +87,17 @@
     }
     .flow-step .num {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      font-size: 22px;
       color: var(--accent);
       margin-bottom: 10px;
     }
-    .flow-step h3 { font-size: 18px; margin-bottom: 8px; }
-    .flow-step p { font-size: 14px; color: var(--gray); }
+    .flow-step h3 { font-size: 28px; margin-bottom: 8px; }
+    .flow-step p { font-size: 24px; color: var(--gray); line-height: 1.6; }
+    .flow-step ul { text-align: left; padding-left: 16px; margin: 8px 0 0; font-size: 24px; color: var(--gray); }
+    .flow-step li { margin-bottom: 4px; }
+    .flow-step .highlight { color: var(--accent); font-weight: 500; }
     .flow-arrow {
-      font-size: 24px;
+      font-size: 34px;
       color: var(--light);
     }
     
@@ -127,6 +143,66 @@
       font-size: 14px;
     }
     
+    .demo-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+      border-radius: 16px;
+      padding: 15px 30px;
+      margin: 9px 0;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .demo-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+    .demo-banner > * { position: relative; z-index: 1; }
+    .demo-banner h2 {
+      font-size: 32px;
+      margin-bottom: 16px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .demo-banner p {
+      color: rgba(200, 220, 255, 0.85);
+      margin-bottom: 32px;
+      font-size: 18px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .demo-btn {
+      display: inline-block;
+      padding: 18px 48px;
+      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4), 0 0 0 0 rgba(59, 130, 246, 0.5);
+    }
+    .demo-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 40px rgba(59, 130, 246, 0.5), 0 0 0 4px rgba(59, 130, 246, 0.2);
+    }
+    
     footer {
       padding: 30px 0;
       border-top: 1px solid var(--light);
@@ -135,88 +211,433 @@
       color: var(--gray);
     }
     
+    .diagram-section {
+      background: var(--off-white);
+      padding: 40px;
+      border-radius: 8px;
+      margin: 40px 0;
+    }
+    .diagram-section h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+    }
+    .modal-content {
+      background: var(--white);
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 40px;
+      border-radius: 12px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-content h2 { margin-bottom: 10px; }
+    .modal-content p { color: var(--gray); margin-bottom: 20px; }
+    .close {
+      float: right;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--gray);
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--light);
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .modal-content button {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .modal-content button:hover { opacity: 0.9; }
+    .icon { display: inline-block; width: 20px; height: 20px; vertical-align: middle; margin-right: 4px; }
+    .icon-sm { width: 16px; height: 16px; }
+    
     @media (max-width: 600px) {
       .hero h1 { font-size: 32px; }
       .flow { flex-direction: column; }
       .flow-arrow { transform: rotate(90deg); }
+      .flow-step { padding: 24px 20px; min-width: 100%; }
+      .flow-step .num { font-size: 20px; }
+      .flow-step h3 { font-size: 36px; }
+      .flow-step li { font-size: 22px; margin-bottom: 8px; }
+      .flow-step .highlight { font-size: 24px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <a href="/" class="logo">GliaTwin <em>AI</em></a>
-      <span style="font-size: 14px; color: var(--gray);">Digital Twin of Microglia</span>
+      <a href="/" class="logo">Longivia <em>AI</em></a>
+      <nav class="nav">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#technology">Technology</a>
+        <a href="#market">Market</a>
+        <a href="#science">Science</a>
+        <a href="#diagram">Longevity Path</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </header>
     
     <main>
       <section class="hero">
-        <h1>Predictive Neuroprotection</h1>
-        <p>AI-powered digital twin of microglia for personalized longevity protocols</p>
+        <h1>Your Personal Longevity Path</h1>
+        <p class="subtitle">Deep Science for Healthy Years</p>
+        <p class="subsubtitle">AI-powered digital twin of microglia — multi-omics + AI protocols for personalized longevity</p>
       </section>
       
-      <section class="flow">
+      <section class="flow" id="how-it-works">
         <div class="flow-step">
           <div class="num">01</div>
-          <h3>GenTest</h3>
-          <p>Blood analysis<br/>Genetic data<br/>Biomarkers</p>
+          <h3>Input Data</h3>
+          <ul>
+            <li>Blood test results</li>
+            <li>Genetic testing (DNA)</li>
+            <li>Medical history</li>
+            <li>Wearable device data</li>
+            <li>Lifestyle questionnaire</li>
+            <li class="highlight">→ All biomarkers analyzed</li>
+          </ul>
         </div>
         <div class="flow-arrow">→</div>
         
         <div class="flow-step">
           <div class="num">02</div>
           <h3>Digital Twin</h3>
-          <p>Multi-omics<br/>TF-Network<br/>Microglial state</p>
+          <ul>
+            <li>Multi-omics integration</li>
+            <li>TF-gene network analysis</li>
+            <li>Microglial state mapping</li>
+            <li>Epigenetic age calculation</li>
+            <li>Biomarker clustering</li>
+            <li class="highlight">→ Your digital twin model</li>
+          </ul>
         </div>
         <div class="flow-arrow">→</div>
         
         <div class="flow-step">
           <div class="num">03</div>
           <h3>Longevity Path</h3>
-          <p>Personalized<br/>protocol<br/>Predictions</p>
+          <ul>
+            <li>Personalized protocols</li>
+            <li>Nutrition recommendations</li>
+            <li>Fitness optimization</li>
+            <li>Supplement stack</li>
+            <li>Health predictions</li>
+            <li class="highlight">→ Your action plan</li>
+          </ul>
         </div>
       </section>
       
-      <section class="data-sources">
-        <h2>Data Sources for Digital Twin</h2>
+      <section class="demo-banner">
+        <h2>See the Digital Twin Process</h2>
+        <p>Watch how we extract a personalized Digital Twin from call transcripts in real-time</p>
+        <a href="demo.html" class="demo-btn">Start Interactive Demo</a>
+      </section>
+      
+      <section class="data-sources" id="technology">
+        <h2>Technology Stack</h2>
         <div class="sources-grid">
           <div class="source-item">
-            <strong>🩸 Blood Analyses</strong>
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"></path></svg>LLM</strong>
+            Large Language Models for natural communication with users
+          </div>
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M9 9h6v6H9z"></path></svg>ML / AI</strong>
+            Machine Learning for Digital Twin creation &amp; Longevity Path prediction
+          </div>
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"></path></svg>RAG</strong>
+            Retrieval-Augmented Generation for up-to-date scientific knowledge
+          </div>
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>Prompt Eng.</strong>
+            Advanced prompting for tuned, accurate responses
+          </div>
+        </div>
+      </section>
+        <div class="sources-grid">
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 6v6l4 2"></path></svg>Blood Analyses</strong>
             Epigenetic markers, cytokines, metabolites
           </div>
           <div class="source-item">
-            <strong>🧠 Mental Tests</strong>
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#9b59b6" stroke-width="2"><path d="M12 2a10 10 0 0110 10c0 6-8 12-10 12S2 18 2 12 8 2 12 2z"></path><path d="M12 6a6 6 0 016 6c0 4-6 10-6 10s-6-6-6-10a6 6 0 016-6z"></path><circle cx="12" cy="12" r="2"></circle></svg>Mental Tests</strong>
             Cognitive assessments, memory tests
           </div>
           <div class="source-item">
-            <strong>📊 Health Tracker</strong>
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 2v4M16 2v4"></path></svg>Health Tracker</strong>
             Wearables, sleep, activity, HRV
           </div>
           <div class="source-item">
-            <strong>📓 Diary</strong>
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2"><path d="M4 4h16v16H4z"></path><path d="M4 9h16M9 4v16"></path></svg>Diary</strong>
             Nutrition, stress, mood daily logs
           </div>
           <div class="source-item">
-            <strong>🏥 Anamnesis</strong>
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>Anamnesis</strong>
             Medical history, family background
           </div>
           <div class="source-item">
-            <strong>💊 Intervention</strong>
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#1abc9c" stroke-width="2"><path d="M10.5 20.5L3.5 13.5a4.95 4.95 0 117 7l7-7a4.95 4.95 0 00-7-7z"></path><path d="M8.5 8.5l7 7"></path></svg>Intervention</strong>
             Supplements, protocols, responses
+          </div>
+        </div>
+      
+      
+      <section class="data-sources" id="market">
+        <h2>Market Research &amp; Trends</h2>
+        <div class="sources-grid">
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2"><path d="M23 6l-9.5 9.5-5-5L1 18"></path><path d="M17 6h6v6"></path></svg>$800B+ Market</strong>
+            Global longevity economy projected to reach $800B by 2030
+          </div>
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#8e44ad" stroke-width="2"><path d="M12 2v20M2 12h20"></path><circle cx="12" cy="12" r="4"></circle><path d="M4.93 4.93l14.14 14.14"></path></svg>Longevity Tech</strong>
+            AI-powered diagnostics and personalized interventions driving growth
+          </div>
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2"><circle cx="12" cy="8" r="4"></circle><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="5" cy="15" r="2"></circle><circle cx="19" cy="15" r="2"></circle></svg>2B+ Over 60</strong>
+            Global population over 60 will double by 2050
+          </div>
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><path d="M10.5 20.5L3.5 13.5a4.95 4.95 0 117 7l7-7a4.95 4.95 0 00-7-7z"></path><path d="M8.5 8.5l7 7"></path></svg>Preventive Focus</strong>
+            Shift from treatment to prevention and healthspan extension
           </div>
         </div>
       </section>
       
-      <section class="cta">
+      <section class="data-sources" id="science">
+        <h2>Scientific Foundation</h2>
+        <div class="sources-grid">
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M12 9v6M9 12h6"></path></svg>Medical Research</strong>
+            Epigenetic clocks, senolytics, NAD+ metabolism, caloric restriction mimetics
+          </div>
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#9b59b6" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v10l7 4"></path></svg>Bioinformatics</strong>
+            Multi-omics integration: genomics, proteomics, metabolomics, transcriptomics
+          </div>
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M9 9h6v6H9z"></path></svg>AI / ML</strong>
+            Neural networks for biomarker discovery, digital twin modeling, outcome prediction
+          </div>
+          <div class="source-item">
+            <strong><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#f39c12" stroke-width="2"><path d="M6 3h12l2 4v14a2 2 0 01-2 2H6a2 2 0 01-2-2V5l2-2z"></path><path d="M9 12h6M9 16h6"></path></svg>Clinical Trials</strong>
+            Evidence-based protocols with continuous monitoring and optimization
+          </div>
+        </div>
+      </section>
+      
+      <section class="diagram-section" id="diagram">
+        <h2>Longevity Path: From Data to Decisions</h2>
+        <div id="longevitySankey" style="width:100%;height:400px;" class="js-plotly-plot"><div class="plot-container plotly"><div class="user-select-none svg-container" style="position: relative; width: 100%; height: 100%;"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="740" height="400" style="background: rgb(255, 255, 255);"><defs id="defs-d5878c"><g class="clips"></g><g class="gradients"></g><g class="patterns"></g></defs><g class="bglayer"></g><g class="draglayer"><rect class="bgsankey-1b2c58-0 bgsankey" width="720" height="360" x="10" y="20" style="pointer-events: all; fill: transparent; stroke-width: 0;"></rect></g><g class="layer-below"><g class="imagelayer"></g><g class="shapelayer"></g></g><g class="cartesianlayer"></g><g class="polarlayer"></g><g class="smithlayer"></g><g class="ternarylayer"></g><g class="geolayer"></g><g class="funnelarealayer"></g><g class="pielayer"></g><g class="iciclelayer"></g><g class="treemaplayer"></g><g class="sunburstlayer"></g><g class="glimages"></g><g class="sankey" transform="translate(10,20)matrix(1 0 0 1 0 0)" style="box-sizing: content-box; position: absolute; left: 0px; shape-rendering: geometricprecision; pointer-events: auto;"><g class="sankey-links" style="fill: none;"><path class="sankey-link" d="M25,144.5391599375203C186.25,144.5391599375203 186.25,136.58097607292083 347.5,136.58097607292083L347.5,181.87239294067328C186.25,181.87239294067328 186.25,189.83057680527276 25,189.83057680527276Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(255, 107, 107); fill-opacity: 0.501961; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M25,77.25194621249307C186.25,77.25194621249307 186.25,84.29376234789366 347.5,84.29376234789366L347.5,136.58097607292083C186.25,136.58097607292083 186.25,129.53915993752022 25,129.53915993752022Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(78, 205, 196); fill-opacity: 0.501961; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M25,7.194862476639177C186.25,7.194862476639177 186.25,29.236678612039714 347.5,29.236678612039714L347.5,84.29376234789366C186.25,84.29376234789366 186.25,62.251946212493124 25,62.251946212493124Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(69, 183, 209); fill-opacity: 0.501961; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M25,204.83057680527264C186.25,204.83057680527264 186.25,181.87239294067328 347.5,181.87239294067328L347.5,229.39784682712101C186.25,229.39784682712101 186.25,252.35603069172038 25,252.35603069172038Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(150, 206, 180); fill-opacity: 0.501961; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M25,323.80895241908615C186.25,323.80895241908615 186.25,270.8507685544868 347.5,270.8507685544868L347.5,307.04181613540067C186.25,307.04181613540067 186.25,360 25,360Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(255, 234, 167); fill-opacity: 0.501961; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M25,267.3560306917204C186.25,267.3560306917204 186.25,229.39784682712101 347.5,229.39784682712101L347.5,270.8507685544868C186.25,270.8507685544868 186.25,308.8089524190862 25,308.8089524190862Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(221, 160, 221); fill-opacity: 0.501961; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M372.5,29.23667861203971C533.75,29.23667861203971 533.75,4.263256414560601e-14 695,4.263256414560601e-14L695,75.10012873231248C533.75,75.10012873231248 533.75,104.33680734435215 372.5,104.33680734435215Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(255, 159, 67); fill-opacity: 0.564706; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M372.5,168.38101969848975C533.75,168.38101969848975 533.75,169.1443410864502 695,169.1443410864502L695,228.77679380289766C533.75,228.77679380289766 533.75,228.0134724149372 372.5,228.0134724149372Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(84, 160, 255); fill-opacity: 0.564706; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M372.5,104.33680734435214C533.75,104.33680734435214 533.75,90.10012873231247 695,90.10012873231247L695,154.1443410864501C533.75,154.1443410864501 533.75,168.38101969848978 372.5,168.38101969848978Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(95, 39, 205); fill-opacity: 0.564706; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M372.5,282.1039227897912C533.75,282.1039227897912 533.75,312.86724417775145 695,312.86724417775145L695,360C533.75,360 533.75,329.2366786120398 372.5,329.2366786120398Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(1, 200, 82); fill-opacity: 0.564706; stroke-width: 0; opacity: 1;"></path><path class="sankey-link" d="M372.5,228.0134724149372C533.75,228.0134724149372 533.75,243.77679380289757 695,243.77679380289757L695,297.86724417775156C533.75,297.86724417775156 533.75,282.1039227897912 372.5,282.1039227897912Z" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(255, 82, 82); fill-opacity: 0.564706; stroke-width: 0; opacity: 1;"></path></g><g class="sankey-node-set" style="cursor: move;"><g class="sankey-node" transform="translate(0.000,144.539)" style="opacity: 1;"><rect class="node-rect" width="25" height="45.29141686775233" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(255, 107, 107); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Blood Test" data-math="N" x="0" y="0" text-anchor="start" transform="translate(28.25,26.495708433876167)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Blood Test</text></g><g class="sankey-node" transform="translate(0.000,77.252)" style="opacity: 1;"><rect class="node-rect" width="25" height="52.28721372502724" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(78, 205, 196); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Genetic Data" data-math="N" x="0" y="0" text-anchor="start" transform="translate(28.25,29.993606862513623)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Genetic Data</text></g><g class="sankey-node" transform="translate(0.000,7.195)" style="opacity: 1;"><rect class="node-rect" width="25" height="55.057083735853894" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(69, 183, 209); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Health Tracker" data-math="N" x="0" y="0" text-anchor="start" transform="translate(28.25,31.37854186792695)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Health Tracker</text></g><g class="sankey-node" transform="translate(0.000,204.831)" style="opacity: 1;"><rect class="node-rect" width="25" height="47.525453886447735" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(150, 206, 180); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Mental Tests" data-math="N" x="0" y="0" text-anchor="start" transform="translate(28.25,27.61272694322387)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Mental Tests</text></g><g class="sankey-node" transform="translate(0.000,323.809)" style="opacity: 1;"><rect class="node-rect" width="25" height="36.191047580913846" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(255, 234, 167); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Daily Diary" data-math="N" x="0" y="0" text-anchor="start" transform="translate(28.25,21.945523790456924)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Daily Diary</text></g><g class="sankey-node" transform="translate(0.000,267.356)" style="opacity: 1;"><rect class="node-rect" width="25" height="41.452921727365776" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(221, 160, 221); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Anamnesis" data-math="N" x="0" y="0" text-anchor="start" transform="translate(28.25,24.57646086368289)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Anamnesis</text></g><g class="sankey-node" transform="translate(347.500,29.237)" style="opacity: 1;"><rect class="node-rect" width="25" height="299.99999999999994" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(34, 34, 34); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Digital Twin" data-math="N" x="0" y="0" text-anchor="start" transform="translate(28.25,153.84999999999997)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Digital Twin</text></g><g class="sankey-node" transform="translate(695.000,0.000)" style="opacity: 1;"><rect class="node-rect" width="25" height="75.10012873231243" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(255, 159, 67); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Clinic Protocol" data-math="N" x="0" y="0" text-anchor="end" transform="translate(-3.25,41.400064366156215)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Clinic Protocol</text></g><g class="sankey-node" transform="translate(695.000,169.144)" style="opacity: 1;"><rect class="node-rect" width="25" height="59.6324527164474" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(84, 160, 255); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Fitness Coach" data-math="N" x="0" y="0" text-anchor="end" transform="translate(-3.25,33.6662263582237)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Fitness Coach</text></g><g class="sankey-node" transform="translate(695.000,90.100)" style="opacity: 1;"><rect class="node-rect" width="25" height="64.04421235413773" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(95, 39, 205); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Nutritionist" data-math="N" x="0" y="0" text-anchor="end" transform="translate(-3.25,35.872106177068865)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Nutritionist</text></g><g class="sankey-node" transform="translate(695.000,312.867)" style="opacity: 1;"><rect class="node-rect" width="25" height="47.132755822248555" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(1, 200, 82); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Personal Health" data-math="N" x="0" y="0" text-anchor="end" transform="translate(-3.25,27.41637791112428)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Personal Health</text></g><g class="sankey-node" transform="translate(695.000,243.777)" style="opacity: 1;"><rect class="node-rect" width="25" height="54.090450374853845" style="stroke-width: 0.5; stroke: rgb(68, 68, 68); stroke-opacity: 1; fill: rgb(255, 82, 82); fill-opacity: 1;"></rect><text class="node-label" data-notex="1" data-unformatted="Research Data" data-math="N" x="0" y="0" text-anchor="end" transform="translate(-3.25,30.895225187426924)" style="cursor: default; font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 11px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; text-shadow: rgb(255, 255, 255) 1px 1px 1px, rgb(255, 255, 255) -1px -1px 1px, rgb(255, 255, 255) 1px -1px 1px, rgb(255, 255, 255) -1px 1px 1px;">Research Data</text></g></g></g></svg><div class="gl-container"></div><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="740" height="400"><defs id="topdefs-d5878c"><g class="clips"></g></defs><g class="indicatorlayer"></g><g class="layer-above"><g class="imagelayer"></g><g class="shapelayer"></g></g><g class="selectionlayer"></g><g class="infolayer"><g class="g-gtitle"></g><g class="first-render"></g></g><g class="menulayer"></g><g class="zoomlayer"></g></svg><div class="modebar-container" style="position: absolute; top: 0px; right: 0px; width: 100%;"></div><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="740" height="400"><g class="hoverlayer"></g></svg></div></div></div>
+      </section>
+      
+      <section class="diagram-section">
+        <h2>Longevity Factors: Impact Analysis</h2>
+        <div id="longevityScatter" style="width:100%;height:450px;" class="js-plotly-plot"><div class="plot-container plotly"><div class="user-select-none svg-container" style="position: relative; width: 100%; height: 100%;"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="740" height="450" style="background: rgb(255, 255, 255);"><defs id="defs-e34937"><g class="clips"><clipPath id="clipe34937xyplot" class="plotclip"><rect width="640" height="350"></rect></clipPath><clipPath class="axesclip" id="clipe34937x"><rect x="60" y="0" width="640" height="450"></rect></clipPath><clipPath class="axesclip" id="clipe34937y"><rect x="0" y="40" width="740" height="350"></rect></clipPath><clipPath class="axesclip" id="clipe34937xy"><rect x="60" y="40" width="640" height="350"></rect></clipPath></g><g class="gradients"></g><g class="patterns"></g></defs><g class="bglayer"></g><g class="draglayer cursor-crosshair"><g class="xy"><rect class="nsewdrag drag" data-subplot="xy" x="60" y="40" width="640" height="350" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="nwdrag drag cursor-nw-resize" data-subplot="xy" x="40" y="20" width="20" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="nedrag drag cursor-ne-resize" data-subplot="xy" x="700" y="20" width="20" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="swdrag drag cursor-sw-resize" data-subplot="xy" x="40" y="390" width="20" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="sedrag drag cursor-se-resize" data-subplot="xy" x="700" y="390" width="20" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="ewdrag drag cursor-ew-resize" data-subplot="xy" x="124" y="390.5" width="512" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="wdrag drag cursor-w-resize" data-subplot="xy" x="60" y="390.5" width="64" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="edrag drag cursor-e-resize" data-subplot="xy" x="636" y="390.5" width="64" height="20" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="nsdrag drag cursor-ns-resize" data-subplot="xy" x="39.5" y="75" width="20" height="280" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="sdrag drag cursor-s-resize" data-subplot="xy" x="39.5" y="355" width="20" height="35" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect><rect class="ndrag drag cursor-n-resize" data-subplot="xy" x="39.5" y="40" width="20" height="35" style="fill: transparent; stroke-width: 0; pointer-events: all;"></rect></g></g><g class="layer-below"><g class="imagelayer"></g><g class="shapelayer"></g></g><g class="cartesianlayer"><g class="subplot xy"><g class="layer-subplot"><g class="shapelayer"></g><g class="imagelayer"></g></g><g class="minor-gridlayer"><g class="x"></g><g class="y"></g></g><g class="gridlayer"><g class="x"><path class="xgrid crisp" transform="translate(188,0)" d="M0,40v350" style="stroke: rgb(240, 240, 240); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(316,0)" d="M0,40v350" style="stroke: rgb(240, 240, 240); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(444,0)" d="M0,40v350" style="stroke: rgb(240, 240, 240); stroke-opacity: 1; stroke-width: 1px;"></path><path class="xgrid crisp" transform="translate(572,0)" d="M0,40v350" style="stroke: rgb(240, 240, 240); stroke-opacity: 1; stroke-width: 1px;"></path></g><g class="y"><path class="ygrid crisp" transform="translate(0,320)" d="M60,0h640" style="stroke: rgb(240, 240, 240); stroke-opacity: 1; stroke-width: 1px;"></path><path class="ygrid crisp" transform="translate(0,250)" d="M60,0h640" style="stroke: rgb(240, 240, 240); stroke-opacity: 1; stroke-width: 1px;"></path><path class="ygrid crisp" transform="translate(0,180)" d="M60,0h640" style="stroke: rgb(240, 240, 240); stroke-opacity: 1; stroke-width: 1px;"></path><path class="ygrid crisp" transform="translate(0,110)" d="M60,0h640" style="stroke: rgb(240, 240, 240); stroke-opacity: 1; stroke-width: 1px;"></path></g></g><g class="zerolinelayer"><path class="xzl zl crisp" transform="translate(60,0)" d="M0,40v350" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; stroke-width: 1px;"></path><path class="yzl zl crisp" transform="translate(0,390)" d="M60,0h640" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; stroke-width: 1px;"></path></g><path class="xlines-below"></path><path class="ylines-below"></path><g class="overlines-below"></g><g class="xaxislayer-below"></g><g class="yaxislayer-below"></g><g class="overaxes-below"></g><g class="plot" transform="translate(60,40)" clip-path="url(#clipe34937xyplot)"><g class="scatterlayer mlayer"><g class="trace scatter trace66ecca" style="stroke-miterlimit: 2; opacity: 1;"><g class="fills"></g><g class="errorbars"></g><g class="lines"></g><g class="points"><path class="point" transform="translate(576,35)" d="M15,0A15,15 0 1,1 0,-15A15,15 0 0,1 15,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(42, 95, 60); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(544,52.5)" d="M14,0A14,14 0 1,1 0,-14A14,14 0 0,1 14,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(69, 183, 209); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(512,70)" d="M13,0A13,13 0 1,1 0,-13A13,13 0 0,1 13,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(255, 107, 107); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(480,87.5)" d="M12,0A12,12 0 1,1 0,-12A12,12 0 0,1 12,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(78, 205, 196); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(448,105)" d="M11,0A11,11 0 1,1 0,-11A11,11 0 0,1 11,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(150, 206, 180); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(608,42)" d="M12.5,0A12.5,12.5 0 1,1 0,-12.5A12.5,12.5 0 0,1 12.5,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(221, 160, 221); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(563.2,63)" d="M11.5,0A11.5,11.5 0 1,1 0,-11.5A11.5,11.5 0 0,1 11.5,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(255, 234, 167); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(524.8,84)" d="M10.5,0A10.5,10.5 0 1,1 0,-10.5A10.5,10.5 0 0,1 10.5,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(255, 159, 67); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(499.2,105)" d="M9.5,0A9.5,9.5 0 1,1 0,-9.5A9.5,9.5 0 0,1 9.5,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(84, 160, 255); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(460.8,122.5)" d="M9,0A9,9 0 1,1 0,-9A9,9 0 0,1 9,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(95, 39, 205); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(416,140)" d="M8,0A8,8 0 1,1 0,-8A8,8 0 0,1 8,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(1, 200, 82); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(384,157.5)" d="M7,0A7,7 0 1,1 0,-7A7,7 0 0,1 7,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(255, 82, 82); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(352,175)" d="M6,0A6,6 0 1,1 0,-6A6,6 0 0,1 6,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(255, 217, 61); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(320,192.5)" d="M5,0A5,5 0 1,1 0,-5A5,5 0 0,1 5,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(108, 92, 231); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path><path class="point" transform="translate(288,210)" d="M4,0A4,4 0 1,1 0,-4A4,4 0 0,1 4,0Z" style="opacity: 0.8; stroke-width: 2px; fill: rgb(162, 155, 254); fill-opacity: 1; stroke: rgb(255, 255, 255); stroke-opacity: 1;"></path></g><g class="text"><g class="textpoint" transform="translate(0,-22.25)"><text x="576" y="35" data-unformatted="Sleep Quality" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Sleep Quality</text></g><g class="textpoint" transform="translate(0,-21)"><text x="544" y="52.5" data-unformatted="Exercise" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Exercise</text></g><g class="textpoint" transform="translate(0,-19.75)"><text x="512" y="70" data-unformatted="Nutrition" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Nutrition</text></g><g class="textpoint" transform="translate(0,-18.5)"><text x="480" y="87.5" data-unformatted="Stress Management" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Stress Management</text></g><g class="textpoint" transform="translate(0,-17.25)"><text x="448" y="105" data-unformatted="Social Connections" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Social Connections</text></g><g class="textpoint" transform="translate(0,-19.125)"><text x="608" y="42" data-unformatted="Genetics" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Genetics</text></g><g class="textpoint" transform="translate(0,-17.875)"><text x="563.2" y="63" data-unformatted="Blood Markers" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Blood Markers</text></g><g class="textpoint" transform="translate(0,-16.625)"><text x="524.8" y="84" data-unformatted="Heart Health" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Heart Health</text></g><g class="textpoint" transform="translate(0,-15.375)"><text x="499.2" y="105" data-unformatted="Brain Activity" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Brain Activity</text></g><g class="textpoint" transform="translate(0,-14.75)"><text x="460.8" y="122.5" data-unformatted="Metabolism" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Metabolism</text></g><g class="textpoint" transform="translate(0,-13.5)"><text x="416" y="140" data-unformatted="BMI" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">BMI</text></g><g class="textpoint" transform="translate(0,-12.25)"><text x="384" y="157.5" data-unformatted="Blood Pressure" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Blood Pressure</text></g><g class="textpoint" transform="translate(0,-11)"><text x="352" y="175" data-unformatted="Cholesterol" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Cholesterol</text></g><g class="textpoint" transform="translate(0,-9.75)"><text x="320" y="192.5" data-unformatted="Inflammation" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Inflammation</text></g><g class="textpoint" transform="translate(0,-8.5)"><text x="288" y="210" data-unformatted="Oxidative Stress" data-math="N" text-anchor="middle" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 10px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre;">Oxidative Stress</text></g></g></g></g></g><g class="overplot"></g><path class="xlines-above crisp" d="M0,0" style="fill: none;"></path><path class="ylines-above crisp" d="M0,0" style="fill: none;"></path><g class="overlines-above"></g><g class="xaxislayer-above"><g class="xtick"><text text-anchor="middle" x="0" y="403" data-unformatted="0" data-math="N" transform="translate(60,0)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;">0</text></g><g class="xtick"><text text-anchor="middle" x="0" y="403" data-unformatted="0.2" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(188,0)">0.2</text></g><g class="xtick"><text text-anchor="middle" x="0" y="403" data-unformatted="0.4" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(316,0)">0.4</text></g><g class="xtick"><text text-anchor="middle" x="0" y="403" data-unformatted="0.6" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(444,0)">0.6</text></g><g class="xtick"><text text-anchor="middle" x="0" y="403" data-unformatted="0.8" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(572,0)">0.8</text></g><g class="xtick"><text text-anchor="middle" x="0" y="403" data-unformatted="1" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(700,0)">1</text></g></g><g class="yaxislayer-above"><g class="ytick"><text text-anchor="end" x="59" y="4.199999999999999" data-unformatted="0" data-math="N" transform="translate(0,390)" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;">0</text></g><g class="ytick"><text text-anchor="end" x="59" y="4.199999999999999" data-unformatted="0.2" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(0,320)">0.2</text></g><g class="ytick"><text text-anchor="end" x="59" y="4.199999999999999" data-unformatted="0.4" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(0,250)">0.4</text></g><g class="ytick"><text text-anchor="end" x="59" y="4.199999999999999" data-unformatted="0.6" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(0,180)">0.6</text></g><g class="ytick"><text text-anchor="end" x="59" y="4.199999999999999" data-unformatted="0.8" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(0,110)">0.8</text></g><g class="ytick"><text text-anchor="end" x="59" y="4.199999999999999" data-unformatted="1" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 12px; fill: rgb(68, 68, 68); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(0,40)">1</text></g></g><g class="overaxes-above"></g></g></g><g class="polarlayer"></g><g class="smithlayer"></g><g class="ternarylayer"></g><g class="geolayer"></g><g class="funnelarealayer"></g><g class="pielayer"></g><g class="iciclelayer"></g><g class="treemaplayer"></g><g class="sunburstlayer"></g><g class="glimages"></g></svg><div class="gl-container"></div><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="740" height="450"><defs id="topdefs-e34937"><g class="clips"></g></defs><g class="indicatorlayer"></g><g class="layer-above"><g class="imagelayer"></g><g class="shapelayer"></g></g><g class="selectionlayer"></g><g class="infolayer"><g class="g-gtitle"></g><g class="g-xtitle"><text class="xtitle" x="380" y="442" text-anchor="middle" data-unformatted="Impact on Healthspan (Years)" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 14px; fill: rgb(68, 68, 68); opacity: 1; font-weight: normal; white-space: pre;">Impact on Healthspan (Years)</text></g><g class="g-ytitle"><text class="ytitle" transform="rotate(-90,22,215)" x="22" y="215" text-anchor="middle" data-unformatted="Impact on Lifespan (Years)" data-math="N" style="font-family: &quot;Open Sans&quot;, verdana, arial, sans-serif; font-size: 14px; fill: rgb(68, 68, 68); opacity: 1; font-weight: normal; white-space: pre;">Impact on Lifespan (Years)</text></g></g><g class="menulayer"></g><g class="zoomlayer"></g></svg><div class="modebar-container" style="position: absolute; top: 0px; right: 0px; width: 100%;"></div><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="740" height="450"><g class="hoverlayer"></g></svg></div></div></div>
+      </section>
+      
+      <section class="cta" id="contact">
         <p>Start your longevity journey with AI-powered predictions</p>
-        <a href="mailto:info@startupassist.ru">Begin Assessment</a>
+        <a href="#" onclick="openForm(event)">Begin Assessment</a>
       </section>
     </main>
     
+    <!-- Assessment Form Modal -->
+    <div id="formModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeForm()">×</span>
+        <h2>Begin Your Longevity Assessment</h2>
+        <p>Upload your data to create your personal digital twin</p>
+        <form id="assessmentForm">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" name="name" required="" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required="" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label>Upload Blood Test Results</label>
+            <input type="file" name="bloodTest" accept=".pdf,.jpg,.png,.csv">
+          </div>
+          <div class="form-group">
+            <label>Upload Genetic Test</label>
+            <input type="file" name="geneticTest" accept=".pdf,.jpg,.png,.csv">
+          </div>
+          <div class="form-group">
+            <label>Upload Health Records / Medical Issues</label>
+            <input type="file" name="medicalRecords" accept=".pdf,.jpg,.png">
+          </div>
+          <div class="form-group">
+            <label>Upload Wearable Data (CSV/JSON)</label>
+            <input type="file" name="wearableData" accept=".csv,.json">
+          </div>
+          <div class="form-group">
+            <label>Additional Notes / Concerns</label>
+            <textarea name="notes" rows="4" placeholder="Describe any health concerns, symptoms, or goals..."></textarea>
+          </div>
+          <button type="submit">Submit Assessment</button>
+        </form>
+      </div>
+    </div>
+    
     <footer>
-      <p>GliaTwin AI — Predictive Neuroprotection</p>
-      <p style="margin-top: 8px; font-size: 13px;">longevity.startupassist.ru</p>
+      <p>Longivia — Predictive Neuroprotection</p>
+<p style="margin-top: 8px; font-size: 13px;">longevity.startupassist.ru</p>
     </footer>
-  </div>
-</body>
-</html>
+
+  <script>
+    // Longevity Path Sankey Diagram
+    const inputs = [
+      'Blood Test',
+      'Genetic Data', 
+      'Health Tracker',
+      'Mental Tests',
+      'Daily Diary',
+      'Anamnesis'
+    ];
+    
+    const digitalTwin = ['Digital Twin Model'];
+    
+    const outputs = [
+      'Clinic Protocol',
+      'Fitness Coach',
+      'Nutritionist',
+      'Personal Health',
+      'Research Data'
+    ];
+    
+    // Input colors - vibrant palette
+    const inputColors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD'];
+    const outputColors = ['#FF9F43', '#54A0FF', '#5F27CD', '#01C852', '#FF5252'];
+    
+    const source = [];
+    const target = [];
+    const value = [];
+    const colors = [];
+    
+    // Inputs → Digital Twin - colorful links
+    inputs.forEach((inp, i) => {
+      source.push(i);
+      target.push(inputs.length);
+      value.push(15 + Math.random() * 10);
+      colors.push(inputColors[i] + '80'); // 50% opacity
+    });
+    
+    // Digital Twin → Outputs - colorful links
+    outputs.forEach((out, i) => {
+      source.push(inputs.length);
+      target.push(inputs.length + 1 + i);
+      value.push(20 + Math.random() * 15);
+      colors.push(outputColors[i] + '90');
+    });
+    
+    const labels = [...inputs, 'Digital Twin', ...outputs];
+    const nodeColors = [...inputColors, '#222222', ...outputColors];
+    
+    Plotly.newPlot('longevitySankey', [{
+      type: 'sankey',
+      orientation: 'h',
+      node: {
+        pad: 15,
+        thickness: 25,
+        label: labels,
+        color: nodeColors,
+        font: { size: 11, color: '#222' }
+      },
+      link: {
+        source: source,
+        target: target,
+        value: value,
+        color: colors
+      }
+    }], {
+      font: { size: 11 },
+      paperBg: '#fafafa',
+      plotBg: '#fafafa',
+      margin: { l: 10, r: 10, t: 20, b: 20 }
+    }, { responsive: true, displayModeBar: false });
+    
+    // Scatter plot - Longevity Factors
+    const factors = {
+      x: [0.9, 0.85, 0.8, 0.75, 0.7, 0.95, 0.88, 0.82, 0.78, 0.72, 0.65, 0.6, 0.55, 0.5, 0.45],
+      y: [0.9, 0.85, 0.8, 0.75, 0.7, 0.88, 0.82, 0.76, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4],
+      text: ['Sleep Quality', 'Exercise', 'Nutrition', 'Stress Management', 'Social Connections',
+             'Genetics', 'Blood Markers', 'Heart Health', 'Brain Activity', 'Metabolism',
+             'BMI', 'Blood Pressure', 'Cholesterol', 'Inflammation', 'Oxidative Stress'],
+      size: [30, 28, 26, 24, 22, 25, 23, 21, 19, 18, 16, 14, 12, 10, 8],
+      color: ['#2a5f3c', '#45B7D1', '#FF6B6B', '#4ECDC4', '#96CEB4',
+              '#DDA0DD', '#FFEAA7', '#FF9F43', '#54A0FF', '#5F27CD',
+              '#01C852', '#FF5252', '#FFD93D', '#6C5CE7', '#A29BFE']
+    };
+    
+    Plotly.newPlot('longevityScatter', [{
+      x: factors.x,
+      y: factors.y,
+      mode: 'markers+text',
+      text: factors.text,
+      textposition: 'top center',
+      textfont: { size: 10 },
+      marker: {
+        size: factors.size,
+        color: factors.color,
+        opacity: 0.8,
+        line: { color: '#fff', width: 2 }
+      }
+    }], {
+      xaxis: { 
+        title: 'Impact on Healthspan (Years)', 
+        range: [0, 1],
+        gridcolor: '#f0f0f0'
+      },
+      yaxis: { 
+        title: 'Impact on Lifespan (Years)', 
+        range: [0, 1],
+        gridcolor: '#f0f0f0'
+      },
+      paperBg: '#fafafa',
+      plotBg: '#fafafa',
+      margin: { l: 60, r: 40, t: 40, b: 60 },
+      hovermode: 'closest'
+    }, { responsive: true, displayModeBar: false });
+    
+    // Modal functions
+    function openForm(e) {
+      e.preventDefault();
+      document.getElementById('formModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeForm() {
+      document.getElementById('formModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you! Your assessment request has been submitted. We will contact you shortly.');
+      closeForm();
+    });
+  </script>
+
+</div><svg id="js-plotly-tester" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position: absolute; left: -10000px; top: -10000px; width: 9000px; height: 9000px; z-index: 1;"><path class="js-reference-point" d="M0,0H1V1H0Z" style="stroke-width: 0; fill: black;"></path></svg></body></html>
