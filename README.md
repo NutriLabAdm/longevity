@@ -37,6 +37,7 @@ healora/
 │   ├── entities/                   # Entity definitions
 │   │   ├── INTERVENTION_DB.md      # 93 interventions database
 │   │   ├── biomedical_surveys.md   # Survey instruments
+│   │   ├── biomedical_surveys.json # Survey data (JSON)
 │   │   └── INTERVENTION.md         # Intervention reference
 │   ├── product/                     # Product specs
 │   │   ├── PRODUCT_DESCRIPTION.md  # Full product description
