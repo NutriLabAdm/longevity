@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-Healora AI creates a digital twin of microglia for predictive neuroprotection, longevity protocols, and personalized health optimization. The platform integrates multi-omics data, AI/ML models, and RAG-based scientific knowledge to generate individualized longevity paths.
+Healora AI creates a digital twin for obesity treatment and longevity optimization. The platform integrates multi-omics data, AI/ML models, and RAG-based scientific knowledge to generate individualized longevity paths.
 
 ## Recent Updates
 

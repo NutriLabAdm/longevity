@@ -1,6 +1,6 @@
 # Product Documentation
 
-This folder contains complete product documentation for GliaTwin AI.
+This folder contains complete product documentation for Healora AI.
 
 ## Files
 
@@ -13,7 +13,7 @@ This folder contains complete product documentation for GliaTwin AI.
 
 ## Product Overview
 
-GliaTwin AI is a digital twin of microglia for predictive neuroprotection. It uses AI to analyze multi-omics data, create personalized models, and generate longevity protocols.
+Healora AI is a digital twin for obesity treatment and longevity. It uses AI to analyze multi-omics data, create personalized models, and generate longevity protocols.
 
 ## Key Features
 
