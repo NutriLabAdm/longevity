@@ -1,4 +1,9 @@
 @startuml
+
+left to right direction
+hide stereotypes
+
+
 skinparam shadowing false
 skinparam defaultTextAlignment center
 skinparam roundcorner 6
@@ -180,9 +185,14 @@ package "EMOTION TRACK" {
   rectangle "Engagement" as Em3 <<emotion>>
   rectangle "Trust" as Em4 <<emotion>>
   rectangle "Empowerment" as Em5 <<emotion>>
-  
-  Em1 -[dotted]-> Em2 -> Em3 -> Em4 -> Em5
+    
+  Em1 ..> Em2
+Em2 --> Em3
+Em3 --> Em4
+Em4 --> Em5
+
 }
+
 
 ' =========================
 ' METRICS
@@ -206,7 +216,8 @@ endlegend
 ' =========================
 ' FOOTNOTE
 ' =========================
-note bottom of diagram
+note bottom
+
 GOAL: From obesity diagnosis to personalized longevity path
 USER: Health-conscious individuals seeking weight management
 VALUE: AI-powered Digital Twin for personalized interventions

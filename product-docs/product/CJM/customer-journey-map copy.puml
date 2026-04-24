@@ -1,0 +1,174 @@
+@startuml
+
+'left to right direction
+hide stereotypes
+skinparam stereotypeDisplay none
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam roundcorner 4
+skinparam ArrowColor #2a5f3c
+skinparam LineColor #455a64
+skinparam BackgroundColor white
+skinparam packageFontSize 10
+skinparam rectangleFontSize 9
+skinparam nodesep 20
+skinparam ranksep 30
+
+' =========================
+' CUSTOM STYLES
+' =========================
+skinparam rectangle<<stage>> {
+  BorderColor #2a5f3c
+  BackgroundColor #e8f5e9
+  FontSize 10
+}
+
+skinparam rectangle<<action>> {
+  BorderColor #1976d2
+  BackgroundColor #e3f2fd
+}
+
+skinparam rectangle<<intervention>> {
+  BorderColor #f57c00
+  BackgroundColor #fff3e0
+  FontSize 8
+}
+
+skinparam rectangle<<emotion>> {
+  BorderColor #c62828
+  BorderStyle dashed
+  BackgroundColor #ffebee
+  FontSize 8
+}
+
+skinparam rectangle<<metric>> {
+  BorderColor #455a64
+  BackgroundColor #eceff1
+  FontSize 8
+}
+
+title Healora AI - Customer Journey Map
+
+' =========================
+' MAIN FLOW
+' =========================
+package "1. REGISTRATION" <<stage>> {
+  rectangle "Landing Page" as R1 <<action>>
+  rectangle "Sign Up" as R2 <<action>>
+  rectangle "Email Verify" as R3 <<action>>
+  rectangle "Account Active" as R4 <<action>>
+  R1 -d-> R2
+  R2 -d-> R3
+  R3 -d-> R4
+}
+
+package "2. ONBOARDING" <<stage>> {
+  rectangle "Health Profile" as O1 <<action>>
+  rectangle "Health Quiz" as O2 <<action>>
+  rectangle "Wearable Connect" as O3 <<action>>
+  rectangle "Blood Test/Labs" as O4 <<action>>
+  rectangle "Digital Twin Init" as O5 <<action>>
+  O1 -d-> O2
+  O2 -d--> O3
+  O3 -d-> O4
+  O4 -d-> O5
+}
+
+package "3. ENRICHING" <<stage>> {
+  rectangle "Daily Diary" as E1 <<action>>
+  rectangle "Weekly Check-in" as E2 <<action>>
+  rectangle "Wearable Sync" as E3 <<action>>
+  rectangle "Diet Track" as E4 <<action>>
+  rectangle "Twin Update" as E5 <<action>>
+  E1 --> E2
+  E2 --> E3
+  E3 --> E4
+  E4 --> E5
+  E5 -[dotted]-> E1 : cycle
+}
+
+package "4. RECOMMENDATIONS" <<stage>> {
+  rectangle "AI/ML Generation" as RecGen <<action>>
+  
+  package "Short-term (1-4w)" <<intervention>> {
+    rectangle "Sleep: 22-23h" as RT1
+    rectangle "Nutrition" as RT2
+    rectangle "10k steps" as RT3
+    rectangle "Meditation 10m" as RT4
+  }
+  
+  package "Long-term (3-12m)" <<intervention>> {
+    rectangle "IF 16:8" as LT1
+    rectangle "Supplements" as LT2
+    rectangle "HIIT 2x" as LT3
+    rectangle "Quarterly labs" as LT4
+  }
+
+  "Short-term (1-4w)" -d-> "Long-term (3-12m)"
+
+  rectangle "Review & Select" as RecReview <<action>>
+  rectangle "Track Progress" as RecTrack <<action>>
+  
+  RecGen --> RecReview 
+  RecReview --> RecTrack
+}
+
+package "5. OPTIMIZATION" <<stage>> {
+  rectangle "Week 1-4" as Opt1
+  rectangle "Week 5-8" as Opt2
+  rectangle "Week 9-12" as Opt3
+  rectangle "Month 3-6" as Opt4
+  rectangle "Month 6-12" as Opt5
+  Opt1 --> Opt2 
+  Opt2 --> Opt3 
+  Opt3 --> Opt4 
+  Opt4 --> Opt5
+}
+
+' Connections
+"1. REGISTRATION" -r-> "2. ONBOARDING"
+"2. ONBOARDING" -r-> "3. ENRICHING"
+"3. ENRICHING" -r-> "4. RECOMMENDATIONS"
+"4. RECOMMENDATIONS" -r-> "5. OPTIMIZATION"
+
+'O5 -r-> E1
+'E5 --> RecGen
+'RecTrack --> Opt1
+
+' =========================
+' SIDE PANELS
+' =========================
+rectangle "EMOTIONS" {
+  rectangle "Curiosity" as Em1 <<emotion>>
+  rectangle "Anticipation" as Em2 <<emotion>>
+  rectangle "Engagement" as Em3 <<emotion>>
+  rectangle "Trust" as Em4 <<emotion>>
+  rectangle "Empowerment" as Em5 <<emotion>>
+  Em1 ..> Em2
+  Em2 ..> Em3
+  Em3 ..> Em4
+  Em4 ..> Em5
+}
+
+rectangle "METRICS" <<metric>> {
+  rectangle "Sign-up: 30%\nCompletion: 70%\nAdherence: 80%\nRetention: 50%" as Metrics
+}
+
+' Align emotions with stages
+'R1 -[hidden]d-> Em1
+'O1 -[hidden]d-> Em2
+'E1 -[hidden]d-> Em3
+RecGen -[hidden]d-> Em4
+Opt1 -[hidden]d-> Em5
+
+' =========================
+' INFO BOX
+' =========================
+rectangle "<b>GOAL:</b> Obesity diagnosis → Longevity path\n<b>USER:</b> Health-conscious individuals\n<b>VALUE:</b> AI Digital Twin for personalized interventions" as Info <<metric>>
+
+' Legend
+legend right
+|= <back:#e8f5e9>Stage</back> | <back:#e3f2fd>Action</back> | <back:#fff3e0>Intervention</back> | <back:#ffebee>Emotion</back> |
+endlegend
+
+@enduml
