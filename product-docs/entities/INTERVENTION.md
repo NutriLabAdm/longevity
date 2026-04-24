@@ -234,7 +234,7 @@ Sunday: Review — Weekly reflection
 
 **Intervention Prompt:**
 > "How do you view this stressful situation?"
-- [ ] Threat ��� I can't handle this
+- [ ] Threat - I can't handle this
 - [ ] Challenge — This is an opportunity
 - [ ] Neutral — Just a normal part of life
 
