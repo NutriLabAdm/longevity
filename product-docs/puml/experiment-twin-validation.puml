@@ -156,16 +156,17 @@ IntB --> T3_Input
 IntC --> T3_Input
 IntD --> T3_Input
 
+
 ' =========================
 ' FOOTNOTE
 ' =========================
 note bottom of diagram
-**HYPOTHESIS:** DT trained on multi-feature profiles will predict:
-  • Diary content with ≥75% accuracy
-  • Interview responses with ≥75% semantic similarity  
-  • Intervention reactions with ≥85% direction accuracy
-  
-**N = 50 participants | Duration: 12 weeks**
+HYPOTHESIS: DT trained on multi-feature profiles will predict:
+  - Diary content with >= 75% accuracy
+  - Interview responses with >= 75% semantic similarity
+  - Intervention reactions with >= 85% direction accuracy
+
+N = 50 participants | Duration: 12 weeks
 end note
 
 @enduml
