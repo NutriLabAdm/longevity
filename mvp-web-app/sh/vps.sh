@@ -3,46 +3,27 @@
 # VPS Setup - Connect via SSH and configure
 # ===========================================
 # Usage: ./vps.sh
-# Will SSH to server and run configuration
 
 SERVER="root@217.114.8.5"
-DOMAIN="longevity.startupassist.ru"
-WEBROOT="/var/www/longevity.startupassist.ru"
 
 echo "=== Connecting to $SERVER ==="
 
-# SSH and run configuration commands
 ssh $SERVER << 'EOF'
 
-echo "=== Configuring Nginx + SSL for longevity.startupassist.ru ==="
+echo "=== Configuring Nginx for longevity.startupassist.ru ==="
 
 # 1. Create web directory
-echo "[1/5] Creating web directory..."
+echo "[1/4] Creating web directory..."
 mkdir -p /var/www/longevity.startupassist.ru
 chown -R www-data:www-data /var/www/longevity.startupassist.ru
 chmod -R 755 /var/www/longevity.startupassist.ru
 
-# 2. Get SSL certificate
-echo "[2/5] Getting SSL certificate..."
-certbot certonly --webroot -w /var/www/longevity.startupassist.ru -d longevity.startupassist.ru --non-interactive --agree-tos --email admin@startupassist.ru
-
-# 3. Create Nginx config
-echo "[3/5] Creating Nginx config..."
+# 2. Create Nginx config (HTTP only for now, SSL after DNS points to server)
+echo "[2/4] Creating Nginx config..."
 cat > /etc/nginx/sites-available/longevity << 'NGINX'
 server {
     listen 80;
     server_name longevity.startupassist.ru;
-    return 301 https://$server_name$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    server_name longevity.startupassist.ru;
-
-    ssl_certificate /etc/letsencrypt/live/longevity.startupassist.ru/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/longevity.startupassist.ru/privkey.pem;
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers HIGH:!aNULL:!MD5;
 
     root /var/www/longevity.startupassist.ru;
     index index.html index.htm;
@@ -64,20 +45,24 @@ server {
 }
 NGINX
 
-# 4. Enable site
-echo "[4/5] Enabling site..."
+# 3. Enable site
+echo "[3/4] Enabling site..."
 ln -sf /etc/nginx/sites-available/longevity /etc/nginx/sites-enabled/
 
-# 5. Test and reload
-echo "[5/5] Testing and reloading Nginx..."
+# 4. Test and reload
+echo "[4/4] Testing and reloading Nginx..."
 nginx -t && systemctl reload nginx
 
 echo ""
-echo "=== DONE ==="
+echo "=== DONE (HTTP) ==="
 echo "Web root: /var/www/longevity.startupassist.ru"
-echo "Upload files to continue..."
+echo ""
+echo "NEXT STEPS:"
+echo "1. Ensure DNS A record points to this server"
+echo "2. Test: curl http://longevity.startupassist.ru"
+echo "3. Then run SSL setup after domain resolves"
+echo ""
 
 EOF
 
-echo ""
 echo "=== SSH session complete ==="

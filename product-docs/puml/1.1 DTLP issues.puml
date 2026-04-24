@@ -1,0 +1,164 @@
+@startuml
+top to bottom direction
+hide stereotypes
+
+' =========================
+' GLOBAL STYLE (IEEE CLEAN)
+' =========================
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam roundcorner 8
+skinparam ArrowColor black
+skinparam LineColor black
+skinparam BackgroundColor white
+
+skinparam rectangle<<comment>> {
+  BorderStyle dashed
+  BackgroundColor lightyellow
+  FolderFontName courier
+}
+
+skinparam rectangle<<aiml>> {
+  BorderColor black
+  BackgroundColor #ffb444 
+}
+
+skinparam actor<<hitl>> {
+  BorderColor black
+  BackgroundColor #ffccdd
+  FolderFontName courier
+  FolderFontSize 10 
+}
+
+skinparam rectangle<<prompt>> {
+  BorderStyle dashed
+  BackgroundColor lightcyan
+  FolderFontName courier
+}
+
+skinparam rectangle {
+  BorderColor black
+}
+
+' =========================
+' PIPELINE LAYER
+' =========================
+rectangle "Data Collection\n(Interviews)" as Interview
+rectangle "Transcription\n(ASR)" as Transcription
+rectangle "Feature Extraction\n(NLP + Psycholinguistics)" as Feature
+rectangle "RAG NLP" as RagNLP <<aiml>>
+RagNLP -u-> Feature
+
+rectangle "Digital Twin\n(LLM/ML Inference)" as Twin<<aiml>>
+rectangle "RAG Normalizer" as RagNorm <<aiml>>
+
+rectangle "Construct\nValidity\n(Psychometric\nScales)" as Construct
+rectangle "Predictive\nValidity\n(Behavioral\nForecast)" as Predictive
+rectangle "Internal\nConsistency\n(Logical Constraints)" as Consistency
+rectangle "Temporal\nStability\n(Longitudinal\nDynamics)" as Temporal
+
+rectangle "Composite\nValidity Score\n(Composite Validity Score)" as Score
+
+rectangle "Model Calibration\n(Fine-tuning / Prompt Tuning)" as Calibration <<aiml>>
+
+actor "Digital Twin Expert" as CalibrationHilt <<hitl>>
+CalibrationHilt -u-> Calibration : "Human-in-the-loop
+
+actor "Prompt designer" as PromptDesigner <<hitl>>
+
+
+
+' =========================
+' MULTIMODAL DATA SOURCES
+' (from Sankey diagram)
+' =========================
+package "Multimodal Data Sources" {
+  rectangle "Blood Test" as Blood
+  rectangle "RAG Blood" as RagBlood <<aiml>>
+  Blood <-u- RagBlood
+
+  rectangle "Genetic Data" as Genetic
+  rectangle "RAG GenD" as RagGenD <<aiml>>
+  Genetic <-u- RagGenD
+
+  rectangle "Health Tracker\n(Wearables)" as Tracker
+  rectangle "RAG Tracker" as RagTracker <<aiml>>
+  Tracker <-u- RagTracker
+
+  rectangle "Mental Tests" as Mental
+  rectangle "RAG Mental" as RagMental <<aiml>>
+  Mental <-u- RagMental
+
+  rectangle "Daily Diary" as Diary
+  rectangle "RAG Diary" as RagDiary <<aiml>>
+  Diary <-u- RagDiary
+
+  rectangle "Anamnesis\n(Clinical History)" as Anamnesis
+  rectangle "RAG Anamnesis" as RagAnamnesis <<aiml>>
+  Anamnesis <-u- RagAnamnesis
+}
+
+' =========================
+' MAIN FLOW (Interview branch)
+' =========================
+Interview --> Transcription
+Transcription --> Feature
+Feature --> Twin
+
+' =========================
+' MULTIMODAL FLOW → Twin
+' =========================
+Blood --> Twin
+Genetic --> Twin
+Tracker --> Twin
+Mental --> Twin
+Diary --> Twin
+Anamnesis --> Twin
+RagNorm -r-> Twin 
+
+
+' =========================
+' VALIDATION LAYER
+' =========================
+Twin --> Construct
+Twin --> Predictive
+Twin --> Consistency
+Twin --> Temporal
+
+Construct --> Score
+Predictive --> Score
+Consistency --> Score
+Temporal --> Score
+
+Score -l-> Calibration
+Calibration -l-> Twin
+
+' =========================
+' ANNEX (METHOD LEGEND)
+' =========================
+package "Methodological Annex (Feature Extraction)" {
+  rectangle "A. Psycholinguistics (LIWC), Emotions\nCognition, Social Markers\n• Analytic Thinking\n• Clout / Authenticity" as AnnexA <<comment>>
+
+  rectangle "B. NLP Methods: n-grams, TF-IDF,\nEmbeddings, Sentiment Analysis" as AnnexB <<comment>>
+
+  rectangle "C. LLM-Inference, Motivation\nSelf-Efficacy, Behavioral Patterns\nLatent Features" as AnnexC <<comment>>
+
+  rectangle "D. Prompt-Based Extraction\nEmotions (0–1), Stress\n• Behavior, Big Five (probabilities)\nOutput: JSON feature vector" as AnnexD <<prompt>>
+}
+
+' =========================
+' LEGEND CONNECTIONS (DASHED)
+' =========================
+Feature <.u. AnnexA : method
+Feature <.u. AnnexB : method
+Feature <.r. AnnexC : method
+Feature <.r. AnnexD : prompt
+
+AnnexA .d[hidden].> AnnexB
+AnnexB .d[hidden].> AnnexC
+AnnexC .d[hidden].> AnnexD
+
+PromptDesigner --> AnnexD : "Human-in-the-loop\nfor prompt design"
+
+
+@enduml

@@ -1,0 +1,1362 @@
+[
+  {
+    "interview_id": "MED001",
+    "date": "2025-03-15",
+    "location": "Moscow Medical Center",
+    "demographics": {
+      "age": 34,
+      "gender": "Female",
+      "height_cm": 168,
+      "weight_kg": 62,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "118/76",
+      "heart_rate_bpm": 72,
+      "blood_glucose_mgdL": 92,
+      "total_cholesterol_mgdL": 195,
+      "hdl_cholesterol_mgdL": 58,
+      "ldl_cholesterol_mgdL": 118,
+      "triglycerides_mgdL": 95,
+      "hemoglobin_gdL": 13.5,
+      "wbc_10e3_uL": 6.8,
+      "platelets_10e3_uL": 245,
+      "creatinine_mgdL": 0.85,
+      "alt_uL": 22,
+      "ast_uL": 24,
+      "tsh_miuL": 2.1,
+      "vitamin_d_ngmL": 28,
+      "iron_ugdL": 85,
+      "ferritin_ngmL": 45,
+      "bmi": 22.0,
+      "waist_cm": 72,
+      "hematocrit_pct": 41,
+      "mcv_fL": 92
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Occasional",
+      "exercise_frequency": "3-4 times/week",
+      "exercise_type": "Running, Yoga",
+      "sleep_hours": "7-8",
+      "stress_level": 6,
+      "diet_type": "Balanced omnivore",
+      "coffee_cups_day": 2,
+      "water_L_day": 2.0,
+      "screen_time_hours": 6,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "C677T (heterozygous)",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Father (age 55)",
+      "diabetes": "Maternal grandmother",
+      "cancer": "None reported",
+      "hypertension": "Mother"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "Appendectomy (age 12)",
+      "medications": "None",
+      "allergies": "Penicillin"
+    },
+    "additional_notes": "No known allergies."
+  },
+  {
+    "interview_id": "MED002",
+    "date": "2025-03-15",
+    "location": "Saint Petersburg Medical Center",
+    "demographics": {
+      "age": 52,
+      "gender": "Male",
+      "height_cm": 180,
+      "weight_kg": 92,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "138/88",
+      "heart_rate_bpm": 78,
+      "blood_glucose_mgdL": 108,
+      "total_cholesterol_mgdL": 245,
+      "hdl_cholesterol_mgdL": 42,
+      "ldl_cholesterol_mgdL": 165,
+      "triglycerides_mgdL": 190,
+      "hemoglobin_gdL": 15.2,
+      "wbc_10e3_uL": 7.2,
+      "platelets_10e3_uL": 230,
+      "creatinine_mgdL": 1.05,
+      "alt_uL": 35,
+      "ast_uL": 30,
+      "tsh_miuL": 2.8,
+      "vitamin_d_ngmL": 18,
+      "iron_ugdL": 95,
+      "ferritin_ngmL": 120,
+      "bmi": 28.4,
+      "waist_cm": 98,
+      "hematocrit_pct": 46,
+      "mcv_fL": 88
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Former smoker (quit 5 years ago)",
+      "alcohol_consumption": "Moderate",
+      "exercise_frequency": "1-2 times/week",
+      "exercise_type": "Walking",
+      "sleep_hours": 6,
+      "stress_level": 7,
+      "diet_type": "Mixed diet, high meat consumption",
+      "coffee_cups_day": 3,
+      "water_L_day": 1.5,
+      "screen_time_hours": 8,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε4",
+      "mthfr": "C677T (homozygous)",
+      "lactase_persistence": false,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Father, Mother",
+      "diabetes": "Father",
+      "cancer": "Grandmother (breast)",
+      "hypertension": "Both parents"
+    },
+    "medical_history": {
+      "chronic_conditions": "Hypertension, Hypercholesterolemia",
+      "surgeries": "None",
+      "medications": "Statins, ACE inhibitors",
+      "allergies": "None"
+    },
+    "additional_notes": "Reports occasional chest discomfort."
+  },
+  {
+    "interview_id": "MED003",
+    "date": "2025-03-16",
+    "location": "Ekaterinburg Medical Center",
+    "demographics": {
+      "age": 28,
+      "gender": "Female",
+      "height_cm": 165,
+      "weight_kg": 55,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "105/68",
+      "heart_rate_bpm": 68,
+      "blood_glucose_mgdL": 85,
+      "total_cholesterol_mgdL": 175,
+      "hdl_cholesterol_mgdL": 65,
+      "ldl_cholesterol_mgdL": 98,
+      "triglycerides_mgdL": 60,
+      "hemoglobin_gdL": 12.8,
+      "wbc_10e3_uL": 6.2,
+      "platelets_10e3_uL": 260,
+      "creatinine_mgdL": 0.72,
+      "alt_uL": 18,
+      "ast_uL": 20,
+      "tsh_miuL": 1.8,
+      "vitamin_d_ngmL": 35,
+      "iron_ugdL": 70,
+      "ferritin_ngmL": 28,
+      "bmi": 20.2,
+      "waist_cm": 65,
+      "hematocrit_pct": 38,
+      "mcv_fL": 90
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Rare",
+      "exercise_frequency": "5-6 times/week",
+      "exercise_type": "HIIT, Gym",
+      "sleep_hours": 8,
+      "stress_level": 4,
+      "diet_type": "Vegetarian",
+      "coffee_cups_day": 1,
+      "water_L_day": 2.5,
+      "screen_time_hours": 4,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "No variant",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "None",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "None"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "Vitamin D supplements",
+      "allergies": "None"
+    },
+    "additional_notes": "Iron deficiency noted - considering supplementation."
+  },
+  {
+    "interview_id": "MED004",
+    "date": "2025-03-16",
+    "location": "Novosibirsk Medical Center",
+    "demographics": {
+      "age": 45,
+      "gender": "Male",
+      "height_cm": 175,
+      "weight_kg": 88,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "130/82",
+      "heart_rate_bpm": 76,
+      "blood_glucose_mgdL": 102,
+      "total_cholesterol_mgdL": 220,
+      "hdl_cholesterol_mgdL": 45,
+      "ldl_cholesterol_mgdL": 148,
+      "triglycerides_mgdL": 135,
+      "hemoglobin_gdL": 14.8,
+      "wbc_10e3_uL": 6.9,
+      "platelets_10e3_uL": 235,
+      "creatinine_mgdL": 0.98,
+      "alt_uL": 28,
+      "ast_uL": 26,
+      "tsh_miuL": 2.4,
+      "vitamin_d_ngmL": 22,
+      "iron_ugdL": 90,
+      "ferritin_ngmL": 85,
+      "bmi": 28.7,
+      "waist_cm": 95,
+      "hematocrit_pct": 44,
+      "mcv_fL": 86
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Current smoker (10/day)",
+      "alcohol_consumption": "Moderate-heavy",
+      "exercise_frequency": "Once a week",
+      "exercise_type": "None regular",
+      "sleep_hours": "5-6",
+      "stress_level": 8,
+      "diet_type": "Omnivore, processed foods",
+      "coffee_cups_day": 4,
+      "water_L_day": 1.2,
+      "screen_time_hours": 7,
+      "work_schedule": "Shift work"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "C677T (heterozygous)",
+      "lactase_persistence": true,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Father (MI, age 50)",
+      "diabetes": "None",
+      "cancer": "Aunt (lung)",
+      "hypertension": "Father"
+    },
+    "medical_history": {
+      "chronic_conditions": "Pre-hypertension",
+      "surgeries": "None",
+      "medications": "None",
+      "allergies": "None"
+    },
+    "additional_notes": "High risk lifestyle factors. Recommended lifestyle modifications."
+  },
+  {
+    "interview_id": "MED005",
+    "date": "2025-03-17",
+    "location": "Kazan Medical Center",
+    "demographics": {
+      "age": 39,
+      "gender": "Female",
+      "height_cm": 170,
+      "weight_kg": 68,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "112/74",
+      "heart_rate_bpm": 70,
+      "blood_glucose_mgdL": 94,
+      "total_cholesterol_mgdL": 188,
+      "hdl_cholesterol_mgdL": 60,
+      "ldl_cholesterol_mgdL": 110,
+      "triglycerides_mgdL": 90,
+      "hemoglobin_gdL": 13.2,
+      "wbc_10e3_uL": 6.5,
+      "platelets_10e3_uL": 250,
+      "creatinine_mgdL": 0.80,
+      "alt_uL": 20,
+      "ast_uL": 22,
+      "tsh_miuL": 2.2,
+      "vitamin_d_ngmL": 32,
+      "iron_ugdL": 78,
+      "ferritin_ngmL": 38,
+      "bmi": 23.5,
+      "waist_cm": 74,
+      "hematocrit_pct": 40,
+      "mcv_fL": 91
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Occasional",
+      "exercise_frequency": "3 times/week",
+      "exercise_type": "Swimming, Pilates",
+      "sleep_hours": 7,
+      "stress_level": 5,
+      "diet_type": "Mediterranean",
+      "coffee_cups_day": 1,
+      "water_L_day": 2.2,
+      "screen_time_hours": 5,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "No variant",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Mother (hypertension)",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "Mother"
+    },
+    "medical_history": {
+      "chronic_conditions": "Mild thyroiditis (resolved)",
+      "surgeries": "C-section (age 32)",
+      "medications": "None",
+      "allergies": "None"
+    },
+    "additional_notes": "Generally healthy lifestyle."
+  },
+  {
+    "interview_id": "MED006",
+    "date": "2025-03-17",
+    "location": "Sochi Medical Center",
+    "demographics": {
+      "age": 58,
+      "gender": "Male",
+      "height_cm": 178,
+      "weight_kg": 95,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "145/92",
+      "heart_rate_bpm": 82,
+      "blood_glucose_mgdL": 115,
+      "total_cholesterol_mgdL": 260,
+      "hdl_cholesterol_mgdL": 38,
+      "ldl_cholesterol_mgdL": 180,
+      "triglycerides_mgdL": 210,
+      "hemoglobin_gdL": 14.5,
+      "wbc_10e3_uL": 7.5,
+      "platelets_10e3_uL": 225,
+      "creatinine_mgdL": 1.12,
+      "alt_uL": 40,
+      "ast_uL": 35,
+      "tsh_miuL": 3.2,
+      "vitamin_d_ngmL": 15,
+      "iron_ugdL": 88,
+      "ferritin_ngmL": 150,
+      "bmi": 30.0,
+      "waist_cm": 102,
+      "hematocrit_pct": 45,
+      "mcv_fL": 85
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Former smoker (quit 10 years ago)",
+      "alcohol_consumption": "Moderate",
+      "exercise_frequency": "2 times/week",
+      "exercise_type": "Walking, Light weights",
+      "sleep_hours": 6,
+      "stress_level": 6,
+      "diet_type": "Standard omnivore",
+      "coffee_cups_day": 2,
+      "water_L_day": 1.8,
+      "screen_time_hours": 5,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε4/ε4",
+      "mthfr": "C677T (heterozygous)",
+      "lactase_persistence": false,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Father, Uncle",
+      "diabetes": "Mother, Brother",
+      "cancer": "Father (prostate)",
+      "hypertension": "Both parents"
+    },
+    "medical_history": {
+      "chronic_conditions": "Type 2 Diabetes, Hypertension, Hyperlipidemia",
+      "surgeries": "Hernia repair (age 50)",
+      "medications": "Metformin, Statins, Beta-blockers, Aspirin",
+      "allergies": "None"
+    },
+    "additional_notes": "Multiple cardiovascular risk factors. Family history significant for CAD."
+  },
+  {
+    "interview_id": "MED007",
+    "date": "2025-03-18",
+    "location": "Krasnodar Medical Center",
+    "demographics": {
+      "age": 25,
+      "gender": "Female",
+      "height_cm": 162,
+      "weight_kg": 52,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "102/65",
+      "heart_rate_bpm": 66,
+      "blood_glucose_mgdL": 82,
+      "total_cholesterol_mgdL": 165,
+      "hdl_cholesterol_mgdL": 62,
+      "ldl_cholesterol_mgdL": 88,
+      "triglycerides_mgdL": 75,
+      "hemoglobin_gdL": 12.5,
+      "wbc_10e3_uL": 5.8,
+      "platelets_10e3_uL": 270,
+      "creatinine_mgdL": 0.70,
+      "alt_uL": 16,
+      "ast_uL": 18,
+      "tsh_miuL": 1.9,
+      "vitamin_d_ngmL": 42,
+      "iron_ugdL": 65,
+      "ferritin_ngmL": 22,
+      "bmi": 19.8,
+      "waist_cm": 62,
+      "hematocrit_pct": 37,
+      "mcv_fL": 93
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Rare",
+      "exercise_frequency": "4 times/week",
+      "exercise_type": "Dance, Yoga",
+      "sleep_hours": 8,
+      "stress_level": 5,
+      "diet_type": "Vegan",
+      "coffee_cups_day": 0,
+      "water_L_day": 2.8,
+      "screen_time_hours": 3,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "No variant",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "None",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "None"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "B12 supplements",
+      "allergies": "None"
+    },
+    "additional_notes": "Excellent health markers. Vegan diet well-planned."
+  },
+  {
+    "interview_id": "MED008",
+    "date": "2025-03-18",
+    "location": "Samara Medical Center",
+    "demographics": {
+      "age": 47,
+      "gender": "Male",
+      "height_cm": 182,
+      "weight_kg": 84,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "128/80",
+      "heart_rate_bpm": 74,
+      "blood_glucose_mgdL": 98,
+      "total_cholesterol_mgdL": 205,
+      "hdl_cholesterol_mgdL": 48,
+      "ldl_cholesterol_mgdL": 135,
+      "triglycerides_mgdL": 110,
+      "hemoglobin_gdL": 15.0,
+      "wbc_10e3_uL": 6.6,
+      "platelets_10e3_uL": 240,
+      "creatinine_mgdL": 0.95,
+      "alt_uL": 26,
+      "ast_uL": 24,
+      "tsh_miuL": 2.5,
+      "vitamin_d_ngmL": 25,
+      "iron_ugdL": 92,
+      "ferritin_ngmL": 75,
+      "bmi": 25.3,
+      "waist_cm": 88,
+      "hematocrit_pct": 45,
+      "mcv_fL": 87
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Daily (1-2 drinks)",
+      "exercise_frequency": "2-3 times/week",
+      "exercise_type": "Cycling",
+      "sleep_hours": 7,
+      "stress_level": 5,
+      "diet_type": "Balanced",
+      "coffee_cups_day": 2,
+      "water_L_day": 2.0,
+      "screen_time_hours": 6,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "A1298C (heterozygous)",
+      "lactase_persistence": true,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Father (stroke, age 60)",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "Father"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "None",
+      "allergies": "None"
+    },
+    "additional_notes": "Father had stroke - moderate risk."
+  },
+  {
+    "interview_id": "MED009",
+    "date": "2025-03-19",
+    "location": "Voronezh Medical Center",
+    "demographics": {
+      "age": 62,
+      "gender": "Female",
+      "height_cm": 158,
+      "weight_kg": 72,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "140/85",
+      "heart_rate_bpm": 76,
+      "blood_glucose_mgdL": 105,
+      "total_cholesterol_mgdL": 235,
+      "hdl_cholesterol_mgdL": 55,
+      "ldl_cholesterol_mgdL": 155,
+      "triglycerides_mgdL": 125,
+      "hemoglobin_gdL": 13.0,
+      "wbc_10e3_uL": 6.4,
+      "platelets_10e3_uL": 255,
+      "creatinine_mgdL": 0.88,
+      "alt_uL": 24,
+      "ast_uL": 22,
+      "tsh_miuL": 4.5,
+      "vitamin_d_ngmL": 20,
+      "iron_ugdL": 72,
+      "ferritin_ngmL": 55,
+      "bmi": 28.8,
+      "waist_cm": 82,
+      "hematocrit_pct": 39,
+      "mcv_fL": 89
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Rare",
+      "exercise_frequency": "2 times/week",
+      "exercise_type": "Walking, Tai Chi",
+      "sleep_hours": "6-7",
+      "stress_level": 4,
+      "diet_type": "Low-fat, high fiber",
+      "coffee_cups_day": 1,
+      "water_L_day": 1.8,
+      "screen_time_hours": 4,
+      "work_schedule": "Retired"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε4",
+      "mthfr": "C677T (heterozygous)",
+      "lactase_persistence": false,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Mother (stroke)",
+      "diabetes": "Brother",
+      "cancer": "Aunt (breast)",
+      "hypertension": "Mother, Brother"
+    },
+    "medical_history": {
+      "chronic_conditions": "Osteoporosis, Hypothyroidism",
+      "surgeries": "Hysterectomy (age 45)",
+      "medications": "Levothyroxine, Calcium, Vitamin D",
+      "allergies": "None"
+    },
+    "additional_notes": "Post-menopausal. Bone density reduced."
+  },
+  {
+    "interview_id": "MED010",
+    "date": "2025-03-19",
+    "location": "Krasnoyarsk Medical Center",
+    "demographics": {
+      "age": 41,
+      "gender": "Male",
+      "height_cm": 176,
+      "weight_kg": 86,
+      "ethnicity": "Asian"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "125/80",
+      "heart_rate_bpm": 75,
+      "blood_glucose_mgdL": 96,
+      "total_cholesterol_mgdL": 198,
+      "hdl_cholesterol_mgdL": 44,
+      "ldl_cholesterol_mgdL": 132,
+      "triglycerides_mgdL": 110,
+      "hemoglobin_gdL": 15.5,
+      "wbc_10e3_uL": 7.0,
+      "platelets_10e3_uL": 238,
+      "creatinine_mgdL": 1.0,
+      "alt_uL": 30,
+      "ast_uL": 28,
+      "tsh_miuL": 2.0,
+      "vitamin_d_ngmL": 30,
+      "iron_ugdL": 100,
+      "ferritin_ngmL": 95,
+      "bmi": 27.8,
+      "waist_cm": 86,
+      "hematocrit_pct": 47,
+      "mcv_fL": 84
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Occasional",
+      "exercise_frequency": "4 times/week",
+      "exercise_type": "Gym, Martial arts",
+      "sleep_hours": 7,
+      "stress_level": 6,
+      "diet_type": "High protein",
+      "coffee_cups_day": 2,
+      "water_L_day": 2.5,
+      "screen_time_hours": 5,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "No variant",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "None",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "None"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "None",
+      "allergies": "None"
+    },
+    "additional_notes": "Athlete profile. Good metabolic health."
+  },
+  {
+    "interview_id": "MED011",
+    "date": "2025-03-20",
+    "location": "Tyumen Medical Center",
+    "demographics": {
+      "age": 36,
+      "gender": "Female",
+      "height_cm": 172,
+      "weight_kg": 70,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "115/75",
+      "heart_rate_bpm": 71,
+      "blood_glucose_mgdL": 90,
+      "total_cholesterol_mgdL": 182,
+      "hdl_cholesterol_mgdL": 56,
+      "ldl_cholesterol_mgdL": 108,
+      "triglycerides_mgdL": 90,
+      "hemoglobin_gdL": 13.8,
+      "wbc_10e3_uL": 6.4,
+      "platelets_10e3_uL": 248,
+      "creatinine_mgdL": 0.82,
+      "alt_uL": 21,
+      "ast_uL": 23,
+      "tsh_miuL": 2.0,
+      "vitamin_d_ngmL": 30,
+      "iron_ugdL": 82,
+      "ferritin_ngmL": 42,
+      "bmi": 23.7,
+      "waist_cm": 75,
+      "hematocrit_pct": 41,
+      "mcv_fL": 92
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Rare",
+      "exercise_frequency": "3 times/week",
+      "exercise_type": "Yoga, Running",
+      "sleep_hours": 7,
+      "stress_level": 5,
+      "diet_type": "Balanced",
+      "coffee_cups_day": 1,
+      "water_L_day": 2.2,
+      "screen_time_hours": 5,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "No variant",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "None",
+      "diabetes": "None",
+      "cancer": "Grandmother (colon)",
+      "hypertension": "None"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "None",
+      "allergies": "None"
+    },
+    "additional_notes": "Healthy individual."
+  },
+  {
+    "interview_id": "MED012",
+    "date": "2025-03-20",
+    "location": "Perm Medical Center",
+    "demographics": {
+      "age": 49,
+      "gender": "Male",
+      "height_cm": 177,
+      "weight_kg": 91,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "135/85",
+      "heart_rate_bpm": 80,
+      "blood_glucose_mgdL": 105,
+      "total_cholesterol_mgdL": 230,
+      "hdl_cholesterol_mgdL": 40,
+      "ldl_cholesterol_mgdL": 160,
+      "triglycerides_mgdL": 150,
+      "hemoglobin_gdL": 15.0,
+      "wbc_10e3_uL": 7.0,
+      "platelets_10e3_uL": 232,
+      "creatinine_mgdL": 1.02,
+      "alt_uL": 32,
+      "ast_uL": 28,
+      "tsh_miuL": 2.6,
+      "vitamin_d_ngmL": 18,
+      "iron_ugdL": 95,
+      "ferritin_ngmL": 110,
+      "bmi": 29.0,
+      "waist_cm": 96,
+      "hematocrit_pct": 45,
+      "mcv_fL": 86
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Former smoker (quit 3 years ago)",
+      "alcohol_consumption": "Moderate",
+      "exercise_frequency": "2 times/week",
+      "exercise_type": "Swimming",
+      "sleep_hours": "6-7",
+      "stress_level": 6,
+      "diet_type": "Western diet",
+      "coffee_cups_day": 3,
+      "water_L_day": 1.6,
+      "screen_time_hours": 7,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε4",
+      "mthfr": "C677T (heterozygous)",
+      "lactase_persistence": false,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Father (MI, age 55)",
+      "diabetes": "Mother",
+      "cancer": "None",
+      "hypertension": "Father"
+    },
+    "medical_history": {
+      "chronic_conditions": "Hypertension, Pre-diabetes",
+      "surgeries": "None",
+      "medications": "ACE inhibitors",
+      "allergies": "None"
+    },
+    "additional_notes": "Moderate cardiovascular risk."
+  },
+  {
+    "interview_id": "MED013",
+    "date": "2025-03-21",
+    "location": "Nizhny Novgorod Medical Center",
+    "demographics": {
+      "age": 31,
+      "gender": "Female",
+      "height_cm": 166,
+      "weight_kg": 58,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "108/70",
+      "heart_rate_bpm": 68,
+      "blood_glucose_mgdL": 88,
+      "total_cholesterol_mgdL": 178,
+      "hdl_cholesterol_mgdL": 62,
+      "ldl_cholesterol_mgdL": 100,
+      "triglycerides_mgdL": 80,
+      "hemoglobin_gdL": 13.0,
+      "wbc_10e3_uL": 6.0,
+      "platelets_10e3_uL": 265,
+      "creatinine_mgdL": 0.75,
+      "alt_uL": 18,
+      "ast_uL": 20,
+      "tsh_miuL": 1.7,
+      "vitamin_d_ngmL": 38,
+      "iron_ugdL": 72,
+      "ferritin_ngmL": 30,
+      "bmi": 21.1,
+      "waist_cm": 66,
+      "hematocrit_pct": 39,
+      "mcv_fL": 91
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Occasional",
+      "exercise_frequency": "4 times/week",
+      "exercise_type": "Gym, Cardio",
+      "sleep_hours": 8,
+      "stress_level": 4,
+      "diet_type": "High protein, low carb",
+      "coffee_cups_day": 2,
+      "water_L_day": 2.6,
+      "screen_time_hours": 4,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "No variant",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "None",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "None"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "Iron supplements",
+      "allergies": "None"
+    },
+    "additional_notes": "Optimal health profile."
+  },
+  {
+    "interview_id": "MED014",
+    "date": "2025-03-21",
+    "location": "Rostov-on-Don Medical Center",
+    "demographics": {
+      "age": 55,
+      "gender": "Male",
+      "height_cm": 174,
+      "weight_kg": 89,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "142/88",
+      "heart_rate_bpm": 78,
+      "blood_glucose_mgdL": 110,
+      "total_cholesterol_mgdL": 250,
+      "hdl_cholesterol_mgdL": 40,
+      "ldl_cholesterol_mgdL": 175,
+      "triglycerides_mgdL": 175,
+      "hemoglobin_gdL": 14.8,
+      "wbc_10e3_uL": 7.2,
+      "platelets_10e3_uL": 228,
+      "creatinine_mgdL": 1.08,
+      "alt_uL": 38,
+      "ast_uL": 32,
+      "tsh_miuL": 2.9,
+      "vitamin_d_ngmL": 16,
+      "iron_ugdL": 90,
+      "ferritin_ngmL": 130,
+      "bmi": 29.4,
+      "waist_cm": 98,
+      "hematocrit_pct": 44,
+      "mcv_fL": 85
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Current smoker (15/day)",
+      "alcohol_consumption": "Heavy",
+      "exercise_frequency": "None",
+      "exercise_type": "None",
+      "sleep_hours": 5,
+      "stress_level": 7,
+      "diet_type": "Standard",
+      "coffee_cups_day": 4,
+      "water_L_day": 1.2,
+      "screen_time_hours": 6,
+      "work_schedule": "Shift work"
+    },
+    "genetic_markers": {
+      "apoe": "ε4/ε4",
+      "mthfr": "C677T (homozygous)",
+      "lactase_persistence": false,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Father, Brother",
+      "diabetes": "Father",
+      "cancer": "Uncle (lung)",
+      "hypertension": "Father, Brother"
+    },
+    "medical_history": {
+      "chronic_conditions": "Type 2 Diabetes, Hypertension, Hyperlipidemia, COPD",
+      "surgeries": "None",
+      "medications": "Metformin, Statins, BP medications",
+      "allergies": "None"
+    },
+    "additional_notes": "High risk patient. Smoking cessation recommended."
+  },
+  {
+    "interview_id": "MED015",
+    "date": "2025-03-22",
+    "location": "Ufa Medical Center",
+    "demographics": {
+      "age": 29,
+      "gender": "Female",
+      "height_cm": 164,
+      "weight_kg": 54,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "105/68",
+      "heart_rate_bpm": 66,
+      "blood_glucose_mgdL": 84,
+      "total_cholesterol_mgdL": 170,
+      "hdl_cholesterol_mgdL": 64,
+      "ldl_cholesterol_mgdL": 95,
+      "triglycerides_mgdL": 55,
+      "hemoglobin_gdL": 12.6,
+      "wbc_10e3_uL": 5.9,
+      "platelets_10e3_uL": 272,
+      "creatinine_mgdL": 0.72,
+      "alt_uL": 16,
+      "ast_uL": 18,
+      "tsh_miuL": 1.8,
+      "vitamin_d_ngmL": 40,
+      "iron_ugdL": 68,
+      "ferritin_ngmL": 24,
+      "bmi": 20.1,
+      "waist_cm": 64,
+      "hematocrit_pct": 38,
+      "mcv_fL": 92
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Rare",
+      "exercise_frequency": "5 times/week",
+      "exercise_type": "CrossFit, Running",
+      "sleep_hours": 8,
+      "stress_level": 3,
+      "diet_type": "Balanced, high protein",
+      "coffee_cups_day": 1,
+      "water_L_day": 2.8,
+      "screen_time_hours": 3,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "No variant",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "None",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "None"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "None",
+      "allergies": "None"
+    },
+    "additional_notes": "Excellent health. Athlete."
+  },
+  {
+    "interview_id": "MED016",
+    "date": "2025-03-22",
+    "location": "Saratov Medical Center",
+    "demographics": {
+      "age": 43,
+      "gender": "Male",
+      "height_cm": 179,
+      "weight_kg": 82,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "125/80",
+      "heart_rate_bpm": 74,
+      "blood_glucose_mgdL": 95,
+      "total_cholesterol_mgdL": 200,
+      "hdl_cholesterol_mgdL": 46,
+      "ldl_cholesterol_mgdL": 135,
+      "triglycerides_mgdL": 95,
+      "hemoglobin_gdL": 15.2,
+      "wbc_10e3_uL": 6.8,
+      "platelets_10e3_uL": 242,
+      "creatinine_mgdL": 0.96,
+      "alt_uL": 28,
+      "ast_uL": 26,
+      "tsh_miuL": 2.3,
+      "vitamin_d_ngmL": 26,
+      "iron_ugdL": 92,
+      "ferritin_ngmL": 78,
+      "bmi": 25.6,
+      "waist_cm": 85,
+      "hematocrit_pct": 46,
+      "mcv_fL": 87
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Occasional",
+      "exercise_frequency": "3 times/week",
+      "exercise_type": "Weight training, Running",
+      "sleep_hours": 7,
+      "stress_level": 5,
+      "diet_type": "Balanced omnivore",
+      "coffee_cups_day": 2,
+      "water_L_day": 2.2,
+      "screen_time_hours": 6,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "A1298C (heterozygous)",
+      "lactase_persistence": true,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Father",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "Father"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "None",
+      "allergies": "None"
+    },
+    "additional_notes": "Good health markers overall."
+  },
+  {
+    "interview_id": "MED017",
+    "date": "2025-03-23",
+    "location": "Volgograd Medical Center",
+    "demographics": {
+      "age": 37,
+      "gender": "Female",
+      "height_cm": 169,
+      "weight_kg": 64,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "110/72",
+      "heart_rate_bpm": 69,
+      "blood_glucose_mgdL": 88,
+      "total_cholesterol_mgdL": 185,
+      "hdl_cholesterol_mgdL": 58,
+      "ldl_cholesterol_mgdL": 110,
+      "triglycerides_mgdL": 85,
+      "hemoglobin_gdL": 13.4,
+      "wbc_10e3_uL": 6.3,
+      "platelets_10e3_uL": 252,
+      "creatinine_mgdL": 0.78,
+      "alt_uL": 19,
+      "ast_uL": 21,
+      "tsh_miuL": 2.1,
+      "vitamin_d_ngmL": 32,
+      "iron_ugdL": 76,
+      "ferritin_ngmL": 36,
+      "bmi": 22.4,
+      "waist_cm": 70,
+      "hematocrit_pct": 40,
+      "mcv_fL": 91
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Rare",
+      "exercise_frequency": "4 times/week",
+      "exercise_type": "Pilates, Swimming",
+      "sleep_hours": "7-8",
+      "stress_level": 5,
+      "diet_type": "Mediterranean",
+      "coffee_cups_day": 1,
+      "water_L_day": 2.4,
+      "screen_time_hours": 4,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "No variant",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Mother (hypertension)",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "Mother"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "None",
+      "allergies": "None"
+    },
+    "additional_notes": "Healthy lifestyle."
+  },
+  {
+    "interview_id": "MED018",
+    "date": "2025-03-23",
+    "location": "Chelyabinsk Medical Center",
+    "demographics": {
+      "age": 51,
+      "gender": "Male",
+      "height_cm": 181,
+      "weight_kg": 90,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "132/84",
+      "heart_rate_bpm": 77,
+      "blood_glucose_mgdL": 102,
+      "total_cholesterol_mgdL": 215,
+      "hdl_cholesterol_mgdL": 44,
+      "ldl_cholesterol_mgdL": 145,
+      "triglycerides_mgdL": 130,
+      "hemoglobin_gdL": 15.2,
+      "wbc_10e3_uL": 6.9,
+      "platelets_10e3_uL": 235,
+      "creatinine_mgdL": 1.0,
+      "alt_uL": 30,
+      "ast_uL": 27,
+      "tsh_miuL": 2.5,
+      "vitamin_d_ngmL": 20,
+      "iron_ugdL": 92,
+      "ferritin_ngmL": 100,
+      "bmi": 27.5,
+      "waist_cm": 92,
+      "hematocrit_pct": 46,
+      "mcv_fL": 86
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Former smoker (quit 8 years ago)",
+      "alcohol_consumption": "Moderate",
+      "exercise_frequency": "2-3 times/week",
+      "exercise_type": "Cycling, Gym",
+      "sleep_hours": 7,
+      "stress_level": 5,
+      "diet_type": "Balanced",
+      "coffee_cups_day": 2,
+      "water_L_day": 1.9,
+      "screen_time_hours": 6,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε4",
+      "mthfr": "C677T (heterozygous)",
+      "lactase_persistence": true,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Father (MI)",
+      "diabetes": "None",
+      "cancer": "Aunt (prostate)",
+      "hypertension": "Father"
+    },
+    "medical_history": {
+      "chronic_conditions": "Pre-hypertension, Hyperlipidemia",
+      "surgeries": "None",
+      "medications": "Statins",
+      "allergies": "None"
+    },
+    "additional_notes": "Moderate risk - improving lifestyle."
+  },
+  {
+    "interview_id": "MED019",
+    "date": "2025-03-24",
+    "location": "Irkutsk Medical Center",
+    "demographics": {
+      "age": 27,
+      "gender": "Female",
+      "height_cm": 163,
+      "weight_kg": 56,
+      "ethnicity": "Asian"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "104/66",
+      "heart_rate_bpm": 65,
+      "blood_glucose_mgdL": 84,
+      "total_cholesterol_mgdL": 172,
+      "hdl_cholesterol_mgdL": 60,
+      "ldl_cholesterol_mgdL": 98,
+      "triglycerides_mgdL": 70,
+      "hemoglobin_gdL": 12.9,
+      "wbc_10e3_uL": 6.0,
+      "platelets_10e3_uL": 268,
+      "creatinine_mgdL": 0.74,
+      "alt_uL": 17,
+      "ast_uL": 19,
+      "tsh_miuL": 1.9,
+      "vitamin_d_ngmL": 36,
+      "iron_ugdL": 70,
+      "ferritin_ngmL": 26,
+      "bmi": 21.1,
+      "waist_cm": 64,
+      "hematocrit_pct": 38,
+      "mcv_fL": 92
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Non-smoker",
+      "alcohol_consumption": "Rare",
+      "exercise_frequency": "4 times/week",
+      "exercise_type": "Dance, Yoga",
+      "sleep_hours": 8,
+      "stress_level": 4,
+      "diet_type": "Asian fusion",
+      "coffee_cups_day": 1,
+      "water_L_day": 2.2,
+      "screen_time_hours": 3,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "No variant",
+      "lactase_persistence": true,
+      "brca": "Negative",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "None",
+      "diabetes": "None",
+      "cancer": "None",
+      "hypertension": "None"
+    },
+    "medical_history": {
+      "chronic_conditions": "None",
+      "surgeries": "None",
+      "medications": "None",
+      "allergies": "None"
+    },
+    "additional_notes": "Very healthy profile."
+  },
+  {
+    "interview_id": "MED020",
+    "date": "2025-03-24",
+    "location": "Kaliningrad Medical Center",
+    "demographics": {
+      "age": 48,
+      "gender": "Female",
+      "height_cm": 167,
+      "weight_kg": 74,
+      "ethnicity": "European"
+    },
+    "biomedical_markers": {
+      "blood_pressure_mmhg": "122/78",
+      "heart_rate_bpm": 73,
+      "blood_glucose_mgdL": 96,
+      "total_cholesterol_mgdL": 205,
+      "hdl_cholesterol_mgdL": 52,
+      "ldl_cholesterol_mgdL": 135,
+      "triglycerides_mgdL": 90,
+      "hemoglobin_gdL": 13.2,
+      "wbc_10e3_uL": 6.5,
+      "platelets_10e3_uL": 250,
+      "creatinine_mgdL": 0.85,
+      "alt_uL": 23,
+      "ast_uL": 24,
+      "tsh_miuL": 2.6,
+      "vitamin_d_ngmL": 24,
+      "iron_ugdL": 75,
+      "ferritin_ngmL": 48,
+      "bmi": 26.5,
+      "waist_cm": 78,
+      "hematocrit_pct": 40,
+      "mcv_fL": 90
+    },
+    "lifestyle_factors": {
+      "smoking_status": "Former smoker (quit 5 years ago)",
+      "alcohol_consumption": "Occasional",
+      "exercise_frequency": "3 times/week",
+      "exercise_type": "Walking, Aqua aerobics",
+      "sleep_hours": 7,
+      "stress_level": 5,
+      "diet_type": "Low-fat, balanced",
+      "coffee_cups_day": 1,
+      "water_L_day": 2.0,
+      "screen_time_hours": 5,
+      "work_schedule": "Day shift"
+    },
+    "genetic_markers": {
+      "apoe": "ε3/ε3",
+      "mthfr": "C677T (heterozygous)",
+      "lactase_persistence": false,
+      "brca": "Not tested",
+      "factor_v_leiden": "No variant"
+    },
+    "family_history": {
+      "cvd": "Mother (stroke)",
+      "diabetes": "Father",
+      "cancer": "Aunt (breast)",
+      "hypertension": "Mother"
+    },
+    "medical_history": {
+      "chronic_conditions": "Hypothyroidism (well-controlled)",
+      "surgeries": "Cholecystectomy (age 40)",
+      "medications": "Levothyroxine",
+      "allergies": "None"
+    },
+    "additional_notes": "Stable health condition."
+  }
+]
