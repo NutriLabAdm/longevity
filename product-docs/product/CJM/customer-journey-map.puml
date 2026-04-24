@@ -1,0 +1,215 @@
+@startuml
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam roundcorner 6
+skinparam ArrowColor #2a5f3c
+skinparam LineColor #455a64
+skinparam BackgroundColor white
+skinparam packageFontSize 11
+skinparam rectangleFontSize 10
+
+' =========================
+' CUSTOM STYLES
+' =========================
+skinparam rectangle<<stage>> {
+  BorderColor #2a5f3c
+  BackgroundColor #e8f5e9
+  FontSize 11
+}
+
+skinparam rectangle<<action>> {
+  BorderColor #1976d2
+  BackgroundColor #e3f2fd
+}
+
+skinparam rectangle<<data>> {
+  BorderColor #7b1fa2
+  BackgroundColor #f3e5f5
+  FontSize 9
+}
+
+skinparam rectangle<<intervention>> {
+  BorderColor #f57c00
+  BackgroundColor #fff3e0
+  FontSize 9
+}
+
+skinparam rectangle<<emotion>> {
+  BorderColor #c62828
+  BorderStyle dashed
+  BackgroundColor #ffebee
+  FontSize 9
+}
+
+skinparam rectangle<<metric>> {
+  BorderColor #455a64
+  BackgroundColor #eceff1
+  FontSize 9
+}
+
+' =========================
+' TITLE
+' =========================
+title Healora AI - Customer Journey Map\n(Registration -> Onboarding -> Enriching -> Recommendations -> Longevity)
+
+' =========================
+' STAGE 1: REGISTRATION
+' =========================
+package "STAGE 1: REGISTRATION" <<stage>> {
+  rectangle "Landing Page Visit" as R1 <<action>>
+  rectangle "Sign Up / Register" as R2 <<action>>
+  rectangle "Email Verification" as R3 <<action>>
+  rectangle "Account Activated" as R4 <<action>>
+  
+  R1 --> R2
+  R2 --> R3
+  R3 --> R4
+  
+  note bottom of R4
+    DATA: Email, Name, Password
+    CHANNEL: Web, Mobile
+    TIME: < 5 min
+  end note
+}
+
+' =========================
+' STAGE 2: ONBOARDING
+' =========================
+package "STAGE 2: ONBOARDING" <<stage>> {
+  rectangle "Health Profile Setup" as O1 <<action>>
+  rectangle "Initial Health Quiz" as O2 <<action>>
+  rectangle "Wearable Connection" as O3 <<action>>
+  rectangle "Blood Test / Labs" as O4 <<action>>
+  rectangle "Digital Twin Init" as O5 <<action>>
+  
+  O1 --> O2
+  O2 --> O3
+  O3 --> O4
+  O4 --> O5
+  
+  note bottom of O5
+    DATA: Age, Gender, Weight, Height
+         Medical history, Lifestyle
+         HRV, Sleep, Activity
+         Biomarkers (CRP, HbA1c, etc.)
+    TIME: 24-48 hours for Twin generation
+  end note
+}
+
+' =========================
+' STAGE 3: ENRICHING
+' =========================
+package "STAGE 3: ENRICHING" <<stage>> {
+  rectangle "Daily Diary Entries" as E1 <<action>>
+  rectangle "Weekly Check-ins" as E2 <<action>>
+  rectangle "Wearable Auto-sync" as E3 <<action>>
+  rectangle "Diet Tracking" as E4 <<action>>
+  rectangle "Twin Update Cycle" as E5 <<action>>
+  
+  E1 --> E2
+  E2 --> E3
+  E3 --> E4
+  E4 --> E5
+  E5 -l-> E1 : cycle
+  
+  note bottom of E5
+    DURATION: 2-4 weeks minimum
+    DATA: Mood, Sleep, Nutrition
+         HRV trends, Activity patterns
+         Supplements, Weight
+  end note
+}
+
+' =========================
+' STAGE 4: RECOMMENDATIONS
+' =========================
+package "STAGE 4: GENERATE RECOMMENDATIONS" <<stage>> {
+  
+  package "SHORT-TERM (1-4 weeks)" <<intervention>> {
+    rectangle "Sleep Protocol\nConsistent 22:00-23:00" as RT1
+    rectangle "Nutrition\nReduce late-night eating" as RT2
+    rectangle "Movement\n10,000 steps/day" as RT3
+    rectangle "Stress\nMeditation 10min/day" as RT4
+  }
+  
+  package "LONG-TERM (3-12 months)" <<intervention>> {
+    rectangle "IF Protocol 16:8\nWeight management" as LT1
+    rectangle "Metabolic\nPersonalized supplements" as LT2
+    rectangle "Cardio HIIT 2x\nVO2 max improvement" as LT3
+    rectangle "Longevity\nQuarterly lab review" as LT4
+  }
+  
+  rectangle "Recommendation\nGeneration AI/ML" as RecGen <<action>>
+  rectangle "User Review\n& Selection" as RecReview <<action>>
+  rectangle "Intervention\nTracking" as RecTrack <<action>>
+  
+  RecGen --> RecReview
+  RecReview --> RecTrack
+}
+
+' =========================
+' STAGE 5: OPTIMIZATION
+' =========================
+package "STAGE 5: ONGOING OPTIMIZATION" <<stage>> {
+  rectangle "Week 1-4\nShort-term cycle" as Opt1
+  rectangle "Week 5-8\nRe-assessment" as Opt2
+  rectangle "Week 9-12\nLong-term adjust" as Opt3
+  rectangle "Month 3-6\nDeep biomarkers" as Opt4
+  rectangle "Month 6-12\nLongevity focus" as Opt5
+  
+  Opt1 --> Opt2
+  Opt2 --> Opt3
+  Opt3 --> Opt4
+  Opt4 --> Opt5
+}
+
+' =========================
+' CONNECTIONS BETWEEN STAGES
+' =========================
+R4 --> O1 : "Start\nOnboarding"
+O5 --> E1 : "Begin\nEnriching"
+E5 --> RecGen : "Data Ready\nfor AI"
+RecTrack --> Opt1 : "Monitor\nProgress"
+
+' =========================
+' EMOTIONS
+' =========================
+package "EMOTION TRACK" {
+  rectangle "Curiosity" as Em1 <<emotion>>
+  rectangle "Anticipation" as Em2 <<emotion>>
+  rectangle "Engagement" as Em3 <<emotion>>
+  rectangle "Trust" as Em4 <<emotion>>
+  rectangle "Empowerment" as Em5 <<emotion>>
+  
+  Em1 -[dotted]-> Em2 -> Em3 -> Em4 -> Em5
+}
+
+' =========================
+' METRICS
+' =========================
+package "KEY METRICS" {
+  rectangle "Sign-up: 30%\nCompletion: 70%\nAdherence: 80%\nRetention 6mo: 50%" as Metrics <<metric>>
+}
+
+' =========================
+' LEGEND
+' =========================
+legend right
+|= Color |= Meaning |
+| <back:#e8f5e9>   </back> | Stage |
+| <back:#e3f2fd>   </back> | Action |
+| <back:#fff3e0>   </back> | Intervention |
+| <back:#ffebee>   </back> | Emotion |
+| <back:#f3e5f5>   </back> | Data |
+endlegend
+
+' =========================
+' FOOTNOTE
+' =========================
+note bottom of diagram
+GOAL: From obesity diagnosis to personalized longevity path
+USER: Health-conscious individuals seeking weight management
+VALUE: AI-powered Digital Twin for personalized interventions
+end note
+
+@enduml
