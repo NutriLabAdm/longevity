@@ -1,0 +1,171 @@
+@startuml
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam roundcorner 8
+skinparam ArrowColor black
+skinparam LineColor black
+skinparam BackgroundColor white
+skinparam packageFontSize 12
+
+' =========================
+' CUSTOM STYLES
+' =========================
+skinparam rectangle<<experiment>> {
+  BorderColor #2a5f3c
+  BackgroundColor #e8f5e9
+}
+
+skinparam rectangle<<input>> {
+  BorderColor #1976d2
+  BackgroundColor #e3f2fd
+}
+
+skinparam rectangle<<model>> {
+  BorderColor #7b1fa2
+  BackgroundColor #f3e5f5
+}
+
+skinparam rectangle<<output>> {
+  BorderColor #f57c00
+  BackgroundColor #fff3e0
+}
+
+skinparam rectangle<<metric>> {
+  BorderColor #c62828
+  BorderStyle dashed
+  BackgroundColor #ffebee
+}
+
+skinparam rectangle<<data>> {
+  BorderColor #455a64
+  BackgroundColor #eceff1
+}
+
+' =========================
+' TITLE
+' =========================
+title Digital Twin Validation Experiment\n(T1: Diary | T2: Interview | T3: Intervention)
+
+' =========================
+' LEFT SIDE: INPUT DATA
+' =========================
+package "INPUT DATA" {
+  rectangle "Demographics" as Demo <<data>>
+  rectangle "Genetics\n(Polygenic Risk)" as Genetics <<data>>
+  rectangle "Wearables\n(HRV, Sleep, Activity)" as Wearables <<data>>
+  rectangle "Psychological\n(Big Five, PSS, SWLS)" as Psych <<data>>
+  rectangle "Behavioral\n(Diet, Exercise Logs)" as Behavioral <<data>>
+  rectangle "Baseline Diary\n(14 days)" as DiaryBaseline <<data>>
+  rectangle "Baseline Interview\n(90 min)" as InterviewBaseline <<data>>
+}
+
+' =========================
+' CENTER: DIGITAL TWIN
+' =========================
+package "DIGITAL TWIN MODEL" <<model>> {
+  rectangle "Feature Fusion\n(512 features)" as Fusion
+  
+  rectangle "Transformer\nEncoder (6 layers)" as Transformer
+  
+  rectangle "Cross-Attention\n(4 heads)" as CrossAttn
+  
+  rectangle "Output Heads" as Heads {
+    rectangle "Diary Head" as DiaryHead
+    rectangle "Interview Head" as InterviewHead
+    rectangle "Intervention Head" as InterventionHead
+  }
+  
+  Fusion --> Transformer
+  Transformer --> CrossAttn
+  CrossAttn --> Heads
+}
+
+' =========================
+' RIGHT SIDE: EXPERIMENTS
+' =========================
+package "EXPERIMENT T1: Diary Prediction" <<experiment>> {
+  rectangle "User Profile\n+ Day Context" as T1_Input <<input>>
+  rectangle "DT Prediction\n(Daily Entry)" as T1_Output <<output>>
+  rectangle "Ground Truth\n(Actual Diary)" as T1_Truth <<data>>
+  
+  T1_Input --> T1_Output
+  T1_Truth --> T1_Output : compare
+}
+
+package "EXPERIMENT T2: Interview Prediction" <<experiment>> {
+  rectangle "User Profile\n+ Question" as T2_Input <<input>>
+  rectangle "DT Generated\nResponse" as T2_Output <<output>>
+  rectangle "Ground Truth\n(Actual Response)" as T2_Truth <<data>>
+  
+  T2_Input --> T2_Output
+  T2_Truth --> T2_Output : compare
+}
+
+package "EXPERIMENT T3: Intervention Response" <<experiment>> {
+  rectangle "User Profile\n+ Intervention" as T3_Input <<input>>
+  rectangle "DT Predicted\nReaction" as T3_Output <<output>>
+  rectangle "Ground Truth\n(Actual Outcome)" as T3_Truth <<data>>
+  
+  T3_Input --> T3_Output
+  T3_Truth --> T3_Output : compare
+}
+
+' =========================
+' BOTTOM: METRICS
+' =========================
+package "EVALUATION METRICS" {
+  rectangle "BERT-score ≥ 0.75" as M1 <<metric>>
+  rectangle "SBERT Similarity ≥ 0.75" as M2 <<metric>>
+  rectangle "Direction Accuracy ≥ 85%" as M3 <<metric>>
+  rectangle "RMSE < 20%" as M4 <<metric>>
+}
+
+' =========================
+' CONNECTIONS
+' =========================
+Demo --> Fusion
+Genetics --> Fusion
+Wearables --> Fusion
+Psych --> Fusion
+Behavioral --> Fusion
+
+DiaryBaseline --> T1_Truth
+InterviewBaseline --> T2_Truth
+
+DiaryHead --> T1_Output
+InterviewHead --> T2_Output
+InterventionHead --> T3_Output
+
+T1_Output --> M1
+T2_Output --> M2
+T3_Output --> M3
+T3_Output --> M4
+
+' =========================
+' INTERVENTIONS LEGEND
+' =========================
+package "Interventions (T3)" {
+  rectangle "T3A: Sleep\n(Consistent Bedtime)" as IntA
+  rectangle "T3B: HIIT\n(2x/week)" as IntB
+  rectangle "T3C: IF\n(16:8)" as IntC
+  rectangle "T3D: Meditation\n(10min/day)" as IntD
+}
+
+IntA --> T3_Input
+IntB --> T3_Input
+IntC --> T3_Input
+IntD --> T3_Input
+
+' =========================
+' FOOTNOTE
+' =========================
+note bottom of diagram
+**HYPOTHESIS:** DT trained on multi-feature profiles will predict:
+  • Diary content with ≥75% accuracy
+  • Interview responses with ≥75% semantic similarity  
+  • Intervention reactions with ≥85% direction accuracy
+  
+**N = 50 participants | Duration: 12 weeks**
+end note
+
+@enduml
