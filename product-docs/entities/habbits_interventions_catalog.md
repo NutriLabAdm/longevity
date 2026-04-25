@@ -128,101 +128,112 @@ The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) a
 
 ## Interventions Table
 
-| name | code_id | description | category | type | impact_power | regularity | data_source | evidence_level | sources |
-|------|---------|-------------|----------|------|--------------|------------|-------------|-----------------|---------|
-| **Sleep: Bedtime** | INT_001 | Fixed bedtime for circadian rhythm stabilization | sleep | behavior | 9.0 | daily | self-report, wearable | A | PMID: 31735704; whoop.com |
-| **Sleep: Blue Light Limit** | INT_002 | Screen avoidance 1-2 hours before bed for melatonin | sleep | behavior | 8.5 | daily | self-report, wearable | A | PMID: 32852159; nature.com |
-| **Sleep: Cool Temperature** | INT_003 | Bedroom temperature 18-21°C for optimal sleep | sleep | behavior | 7.5 | daily | wearable, device | B | PMID: 29621487 |
-| **Sleep: Dark Room** | INT_004 | Complete darkness for sleep quality | sleep | behavior | 7.0 | daily | self-report | B | sleepfoundation.org |
-| **Training: HIIT** | INT_005 | High-intensity interval training for cardio | physical | behavior | 9.0 | weekly | wearable, device | A | PMID: 29631804; whoop.com |
-| **Training: Strength** | INT_006 | Regular strength training for muscle mass | physical | behavior | 8.5 | weekly | wearable, device | A | PMID: 28615992 |
-| **Training: Aerobic** | INT_007 | Running, swimming, cycling | physical | behavior | 9.0 | weekly | wearable, device | A | PMID: 29631804 |
-| **Training: Stretching/Yoga** | INT_008 | Flexibility and mobility | physical | behavior | 7.0 | weekly | self-report | B | PMID: 28715760 |
-| **Training: Walking** | INT_009 | Daily walks for activity and HRV | physical | behavior | 7.5 | daily | wearable | B | whoop.com |
-| **Recovery: Nap** | INT_010 | Short nap (20-30 min) for recovery | sleep | behavior | 8.0 | on-demand | wearable | B | PMID: 24795612 |
-| **Recovery: Meditation** | INT_011 | Meditation and mindfulness for stress reduction | mental | behavior | 8.5 | daily | self-report, wearable | A | PMID: 24795612; ouraring.com |
-| **Recovery: Breathing** | INT_012 | Deep breathing, box breathing for parasympathetic activation | mental | behavior | 8.0 | daily | wearable | B | PMID: 29165047 |
-| **Recovery: Massage** | INT_013 | Massage for muscle recovery | physical | behavior | 6.5 | weekly | self-report | C | - |
-| **Nutrition: Calorie Limit** | INT_014 | Moderate calorie restriction for longevity | food | behavior | 8.5 | daily | self-report, lab | A | PMID: 29135908 |
-| **Nutrition: Intermittent Fasting** | INT_015 | 16:8 or 5:2 fasting protocols | food | behavior | 8.0 | daily | self-report, wearable | B | PMID: 29135908 |
-| **Nutrition: Protein** | INT_016 | Adequate protein intake (1.6-2.2 g/kg) | food | behavior | 8.0 | daily | self-report | A | ISSN; nutrition.org |
-| **Nutrition: Omega-3** | INT_017 | Omega-3 fatty acids (EPA/DHA) | food | supplement | 8.5 | daily | lab, self-report | A | PMID: 24860198 |
-| **Nutrition: Antioxidants** | INT_018 | Antioxidant-rich foods (berries, greens) | food | behavior | 7.5 | daily | self-report | B | - |
-| **Nutrition: Fiber** | INT_019 | Adequate fiber intake (25-35 g/day) | food | behavior | 8.0 | daily | self-report | A | - |
-| **Nutrition: Hydration** | INT_020 | 2-3 liters of water per day | food | behavior | 8.0 | daily | self-report, wearable | B | - |
-| **Nutrition: Sugar Limit** | INT_021 | Reduced added sugar | food | behavior | 8.5 | daily | self-report | A | - |
-| **Nutrition: Alcohol Limit** | INT_022 | Minimize or avoid alcohol | food | behavior | 9.0 | weekly | self-report, wearable | A | whoop.com; PMID: 30644556 |
-| **Nutrition: Caffeine** | INT_023 | Caffeine control (up to 400 mg/day) | food | behavior | 7.0 | daily | self-report, wearable | B | - |
-| **Nutrition: Micronutrients** | INT_024 | Multivitamins and micronutrients | food | supplement | 6.5 | daily | lab, self-report | C | - |
-| **Stress: Cold Shower** | INT_025 | Cryotherapy, cold shower for parasympathetic activation | physical | behavior | 7.0 | daily | self-report | C | - |
-| **Stress: Journaling** | INT_026 | Reflection and journaling for emotional regulation | mental | behavior | 7.5 | daily | self-report | B | PMID: 24860198 |
-| **Stress: Social Connections** | INT_027 | Close relationships and social contacts | social | behavior | 9.0 | weekly | self-report | A | PMID: 28715126 |
-| **Stress: Nature** | INT_028 | Time in nature for cortisol reduction | environmental | behavior | 7.5 | weekly | self-report | B | - |
-| **Stress: Digital Detox** | INT_029 | Technology breaks for mental health | mental | behavior | 7.0 | daily | self-report | C | - |
-| **Mental: Learning** | INT_030 | Continuous learning, cognitive training | mental | behavior | 8.0 | daily | self-report | B | - |
-| **Mental: Goals** | INT_031 | Setting and achieving personal goals | mental | behavior | 8.0 | weekly | self-report | B | - |
-| **Mental: Gratitude** | INT_032 | Daily gratitude practice | mental | behavior | 7.5 | daily | self-report | B | PMID: 24860198 |
-| **Mental: Creativity** | INT_033 | Creative activities (music, drawing) | mental | behavior | 7.0 | weekly | self-report | C | - |
-| **Medicine: Regular Checkup** | INT_034 | Annual medical examinations | medical | diagnostic | 9.0 | yearly | lab, medical | A | CDC; whoop.com/advanced-labs |
-| **Medicine: Screening** | INT_035 | Preventive screenings (BP, cholesterol, glucose) | medical | diagnostic | 9.0 | yearly | lab, device | A | AHA |
-| **Medicine: Vaccination** | INT_036 | Timely vaccination | medical | medical | 9.0 | yearly | medical | A | WHO |
-| **Medicine: Dental** | INT_037 | Regular dental visits | medical | diagnostic | 8.0 | yearly | medical | B | - |
-| **Medicine: Ophthalmology** | INT_038 | Vision check | medical | diagnostic | 7.5 | yearly | medical | B | - |
-| **Medicine: Dermatology** | INT_039 | Skin check for lesions | medical | diagnostic | 8.0 | yearly | medical | B | - |
-| **Medicine: Mental Health** | INT_040 | Work with therapist/psychologist | mental | medical | 9.0 | weekly | self-report | A | - |
-| **Medicine: Genetic Testing** | INT_041 | Genetic tests for personalization | medical | diagnostic | 7.5 | once | lab | B | - |
-| **Medicine: Biohacking** | INT_042 | Data-driven personalized interventions | medical | medical | 7.0 | monthly | lab, device | C | - |
-| **Devices: HRV Monitoring** | INT_043 | Heart rate variability tracking | physical | device | 8.5 | daily | wearable | B | whoop.com; ouraring.com |
-| **Devices: SpO2 Monitoring** | INT_044 | Blood oxygen level tracking | physical | device | 7.5 | daily | wearable | B | whoop.com |
-| **Devices: Body Temperature** | INT_045 | Basal body temperature tracking | physical | device | 7.0 | daily | wearable | B | ouraring.com |
-| **Devices: Sleep Quality** | INT_046 | Sleep quality and stages monitoring | sleep | device | 9.0 | daily | wearable | A | whoop.com; ouraring.com |
-| **Devices: Activity Tracker** | INT_047 | Steps, calories, workout tracking | physical | device | 8.0 | daily | wearable | B | fitbit.com; garmin.com |
-| **Devices: ECG** | INT_048 | Electrocardiogram for arrhythmia detection | medical | device | 9.0 | on-demand | device | A | whoop.com/mg |
-| **Devices: BP Monitor** | INT_049 | Blood pressure measurement | medical | device | 9.0 | daily | device | A | whoop.com/mg |
-| **Devices: Glucose Meter** | INT_050 | Blood glucose monitoring | medical | device | 8.5 | daily | device, lab | A | - |
-| **Lab: Lipid Profile** | INT_051 | Cholesterol, HDL, LDL, triglycerides | medical | lab | 9.0 | yearly | lab | A | questdiagnostics.com |
-| **Lab: Inflammation Markers** | INT_052 | C-reactive protein (CRP), IL-6 | medical | lab | 8.5 | yearly | lab | A | questdiagnostics.com |
-| **Lab: Hormones** | INT_053 | Testosterone, estrogen, cortisol, DHEA | medical | lab | 8.0 | yearly | lab | B | questdiagnostics.com |
-| **Lab: Vitamin D** | INT_054 | Vitamin D level | medical | lab | 8.0 | yearly | lab | A | - |
-| **Lab: HbA1c** | INT_055 | Glycated hemoglobin | medical | lab | 9.0 | yearly | lab | A | - |
-| **Lab: Thyroid** | INT_056 | TSH, T4, T3 | medical | lab | 8.5 | yearly | lab | A | - |
-| **Lab: Nutritional Status** | INT_057 | Iron, ferritin, B12, folate | medical | lab | 8.0 | yearly | lab | B | questdiagnostics.com |
-| **Lab: Oxidative Stress** | INT_058 | Oxidative stress markers | medical | lab | 7.5 | yearly | lab | C | - |
-| **Lab: Epigenetic Age** | INT_059 | Biological age by methylation | medical | lab | 8.0 | yearly | lab | B | - |
-| **Lab: Microbiome** | INT_060 | Gut microbiome analysis | medical | lab | 8.0 | once | lab | B | - |
-| **Biohacking: NAD+** | INT_061 | NAD+ precursors (NMN, NR) | medicine | supplement | 8.0 | daily | self-report, lab | B | - |
-| **Biohacking: Senolytics** | INT_062 | Senolytic drugs | medicine | medical | 8.5 | monthly | lab | C | - |
-| **Biohacking: Metformin** | INT_063 | Metformin for longevity | medicine | medical | 8.0 | daily | lab, medical | B | - |
-| **Biohacking: Rapamycin** | INT_064 | Rapamycin (off-label) | medicine | medical | 8.5 | weekly | lab, medical | C | - |
-| **Biohacking: Ketosis** | INT_065 | Ketosis maintenance | food | behavior | 7.5 | daily | device, self-report | B | - |
-| **Biohacking: Red Light** | INT_066 | Red light therapy (PBM) | physical | device | 7.0 | daily | self-report | C | - |
-| **Biohacking: Sauna** | INT_067 | Regular sauna visits | physical | behavior | 8.0 | weekly | self-report, wearable | B | - |
-| **Biohacking: Hyperbaric O2** | INT_068 | Hyperbaric oxygen therapy | medical | medical | 7.5 | monthly | self-report | C | - |
-| **Biohacking: Testosterone** | INT_069 | HRT (hormone replacement therapy) | medical | medical | 8.5 | monthly | lab, medical | B | - |
-| **Biohacking: Hypoxic Training** | INT_070 | Low oxygen training | physical | behavior | 7.0 | weekly | device | C | - |
-| **Habits: Early Rise** | INT_071 | Early rise (before 7 AM) | mental | behavior | 7.5 | daily | wearable | C | - |
-| **Habits: Morning Routine** | INT_072 | Structured morning routine | mental | behavior | 8.0 | daily | self-report | B | whoop.com |
-| **Habits: Planning** | INT_073 | Weekly planning and reflection | mental | behavior | 7.5 | weekly | self-report | B | - |
-| **Habits: Time Management** | INT_074 | Pomodoro, time-blocking | mental | behavior | 7.0 | daily | self-report | C | - |
-| **Habits: Sleep Ritual** | INT_075 | Evening sleep ritual | sleep | behavior | 8.5 | daily | self-report, wearable | B | whoop.com; sleepfoundation.org |
-| **Habits: Contrast Shower** | INT_076 | Hot/cold water alternation | physical | behavior | 7.5 | daily | self-report | C | - |
-| **Habits: Teeth Brushing** | INT_077 | Oral hygiene 2 times/day | physical | behavior | 9.0 | daily | self-report | A | - |
-| **Habits: Sun Protection** | INT_078 | SPF and UV protection | physical | behavior | 9.0 | daily | self-report | A | - |
-| **Habits: Posture** | INT_079 | Posture control during day | physical | behavior | 7.0 | daily | self-report | C | - |
-| **Habits: Movement Breaks** | INT_080 | Hourly 5-minute break | physical | behavior | 7.5 | daily | wearable | B | - |
-| **Habits: Deep Breathing** | INT_081 | Breathing exercises 2x/day | mental | behavior | 8.0 | daily | wearable | B | whoop.com |
-| **Habits: Bibliotherapy** | INT_082 | Reading for cognitive health | mental | behavior | 7.0 | daily | self-report | C | - |
-| **Habits: Music** | INT_083 | Music for relaxation | mental | behavior | 6.5 | daily | self-report | C | - |
-| **Habits: Family Time** | INT_084 | Quality time with loved ones | social | behavior | 9.0 | weekly | self-report | A | PMID: 28715126 |
-| **Habits: Volunteering** | INT_085 | Helping others for purpose | social | behavior | 8.0 | weekly | self-report | B | - |
-| **Habits: Acceptance** | INT_086 | Acceptance practices | mental | behavior | 8.0 | daily | self-report | B | - |
-| **Habits: Toxin Avoidance** | INT_087 | Minimize toxin exposure | environmental | behavior | 8.5 | daily | self-report | B | - |
-| **Habits: Clean Air** | INT_088 | Air purifiers | environmental | device | 7.5 | daily | device | C | - |
-| **Habits: Water Quality** | INT_089 | High-quality drinking water | food | behavior | 7.5 | daily | self-report | B | - |
-| **Habits: Ergonomics** | INT_090 | Proper workspace setup | physical | behavior | 7.0 | daily | self-report | B | - |
-| **Habits: Safety** | INT_091 | Seatbelts, helmets, protection | physical | behavior | 10.0 | daily | self-report | A | CDC |
-| **Habits: Sex** | INT_092 | Regular sexual activity | social | behavior | 8.0 | weekly | self-report | B | - |
-| **Habits: Laughter** | INT_093 | Regular laughter and positivity | mental | behavior | 7.5 | daily | self-report | C | - |
+| Code | Name | Description | Category | Type | Impact | Regularity | Data Source | Evidence | Sources |
+|------|------|-------------|----------|------|--------|-----------|-------------|-------------|----------|--------|
+| **01_SLEEP** |
+| 01_1 | Sleep: Bedtime | Fixed bedtime for circadian rhythm stabilization | sleep | behavior | 9.0 | daily | self-report, wearable | A | PMID: 31735704; whoop.com |
+| 01_2 | Sleep: Blue Light Limit | Screen avoidance 1-2 hours before bed for melatonin | sleep | behavior | 8.5 | daily | self-report, wearable | A | PMID: 32852159; nature.com |
+| 01_3 | Sleep: Cool Temperature | Bedroom temperature 18-21°C for optimal sleep | sleep | behavior | 7.5 | daily | wearable, device | B | PMID: 29621487 |
+| 01_4 | Sleep: Dark Room | Complete darkness for sleep quality | sleep | behavior | 7.0 | daily | self-report | B | sleepfoundation.org |
+| 01_5 | Sleep: Nap | Short nap (20-30 min) for recovery | sleep | behavior | 8.0 | on-demand | wearable | B | PMID: 24795612 |
+| 01_6 | Sleep: Ritual | Evening sleep ritual | sleep | behavior | 8.5 | daily | self-report, wearable | B | whoop.com; sleepfoundation.org |
+| **02_PHYSICAL** |
+| 02_1 | Training: HIIT | High-intensity interval training for cardio | physical | behavior | 9.0 | weekly | wearable, device | A | PMID: 29631804; whoop.com |
+| 02_2 | Training: Strength | Regular strength training for muscle mass | physical | behavior | 8.5 | weekly | wearable, device | A | PMID: 28615992 |
+| 02_3 | Training: Aerobic | Running, swimming, cycling | physical | behavior | 9.0 | weekly | wearable, device | A | PMID: 29631804 |
+| 02_4 | Training: Stretching/Yoga | Flexibility and mobility | physical | behavior | 7.0 | weekly | self-report | B | PMID: 28715760 |
+| 02_5 | Training: Walking | Daily walks for activity and HRV | physical | behavior | 7.5 | daily | wearable | B | whoop.com |
+| 02_6 | Recovery: Massage | Massage for muscle recovery | physical | behavior | 6.5 | weekly | self-report | C | - |
+| 02_7 | Stress: Cold Shower | Cryotherapy, cold shower for parasympathetic activation | physical | behavior | 7.0 | daily | self-report | C | - |
+| 02_8 | Habits: Contrast Shower | Hot/cold water alternation | physical | behavior | 7.5 | daily | self-report | C | - |
+| 02_9 | Habits: Teeth Brushing | Oral hygiene 2 times/day | physical | behavior | 9.0 | daily | self-report | A | - |
+| 02_10 | Habits: Sun Protection | SPF and UV protection | physical | behavior | 9.0 | daily | self-report | A | - |
+| 02_11 | Habits: Posture | Posture control during day | physical | behavior | 7.0 | daily | self-report | C | - |
+| 02_12 | Habits: Movement Breaks | Hourly 5-minute break | physical | behavior | 7.5 | daily | wearable | B | - |
+| 02_13 | Habits: Ergonomics | Proper workspace setup | physical | behavior | 7.0 | daily | self-report | B | - |
+| 02_14 | Habits: Safety | Seatbelts, helmets, protection | physical | behavior | 10.0 | daily | self-report | A | CDC |
+| **03_MENTAL** |
+| 03_1 | Recovery: Meditation | Meditation and mindfulness for stress reduction | mental | behavior | 8.5 | daily | self-report, wearable | A | PMID: 24795612; ouraring.com |
+| 03_2 | Recovery: Breathing | Deep breathing, box breathing for parasympathetic activation | mental | behavior | 8.0 | daily | wearable | B | PMID: 29165047 |
+| 03_3 | Stress: Journaling | Reflection and journaling for emotional regulation | mental | behavior | 7.5 | daily | self-report | B | PMID: 24860198 |
+| 03_4 | Stress: Digital Detox | Technology breaks for mental health | mental | behavior | 7.0 | daily | self-report | C | - |
+| 03_5 | Mental: Learning | Continuous learning, cognitive training | mental | behavior | 8.0 | daily | self-report | B | - |
+| 03_6 | Mental: Goals | Setting and achieving personal goals | mental | behavior | 8.0 | weekly | self-report | B | - |
+| 03_7 | Mental: Gratitude | Daily gratitude practice | mental | behavior | 7.5 | daily | self-report | B | PMID: 24860198 |
+| 03_8 | Mental: Creativity | Creative activities (music, drawing) | mental | behavior | 7.0 | weekly | self-report | C | - |
+| 03_9 | Mental: Deep Breathing | Breathing exercises 2x/day | mental | behavior | 8.0 | daily | wearable | B | whoop.com |
+| 03_10 | Mental: Bibliotherapy | Reading for cognitive health | mental | behavior | 7.0 | daily | self-report | C | - |
+| 03_11 | Mental: Music | Music for relaxation | mental | behavior | 6.5 | daily | self-report | C | - |
+| 03_12 | Mental: Laughter | Regular laughter and positivity | mental | behavior | 7.5 | daily | self-report | C | - |
+| 03_13 | Mental: Acceptance | Acceptance practices | mental | behavior | 8.0 | daily | self-report | B | - |
+| **04_FOOD** |
+| 04_1 | Nutrition: Calorie Limit | Moderate calorie restriction for longevity | food | behavior | 8.5 | daily | self-report, lab | A | PMID: 29135908 |
+| 04_2 | Nutrition: Intermittent Fasting | 16:8 or 5:2 fasting protocols | food | behavior | 8.0 | daily | self-report, wearable | B | PMID: 29135908 |
+| 04_3 | Nutrition: Protein | Adequate protein intake (1.6-2.2 g/kg) | food | behavior | 8.0 | daily | self-report | A | ISSN; nutrition.org |
+| 04_4 | Nutrition: Omega-3 | Omega-3 fatty acids (EPA/DHA) | food | supplement | 8.5 | daily | lab, self-report | A | PMID: 24860198 |
+| 04_5 | Nutrition: Antioxidants | Antioxidant-rich foods (berries, greens) | food | behavior | 7.5 | daily | self-report | B | - |
+| 04_6 | Nutrition: Fiber | Adequate fiber intake (25-35 g/day) | food | behavior | 8.0 | daily | self-report | A | - |
+| 04_7 | Nutrition: Hydration | 2-3 liters of water per day | food | behavior | 8.0 | daily | self-report, wearable | B | - |
+| 04_8 | Nutrition: Sugar Limit | Reduced added sugar | food | behavior | 8.5 | daily | self-report | A | - |
+| 04_9 | Nutrition: Alcohol Limit | Minimize or avoid alcohol | food | behavior | 9.0 | weekly | self-report, wearable | A | whoop.com; PMID: 30644556 |
+| 04_10 | Nutrition: Caffeine | Caffeine control (up to 400 mg/day) | food | behavior | 7.0 | daily | self-report, wearable | B | - |
+| 04_11 | Nutrition: Micronutrients | Multivitamins and micronutrients | food | supplement | 6.5 | daily | lab, self-report | C | - |
+| 04_12 | Habits: Water Quality | High-quality drinking water | food | behavior | 7.5 | daily | self-report | B | - |
+| **05_SOCIAL** |
+| 05_1 | Stress: Social Connections | Close relationships and social contacts | social | behavior | 9.0 | weekly | self-report | A | PMID: 28715126 |
+| 05_2 | Habits: Family Time | Quality time with loved ones | social | behavior | 9.0 | weekly | self-report | A | PMID: 28715126 |
+| 05_3 | Habits: Volunteering | Helping others for purpose | social | behavior | 8.0 | weekly | self-report | B | - |
+| 05_4 | Habits: Sex | Regular sexual activity | social | behavior | 8.0 | weekly | self-report | B | - |
+| **06_ENVIRONMENTAL** |
+| 06_1 | Stress: Nature | Time in nature for cortisol reduction | environmental | behavior | 7.5 | weekly | self-report | B | - |
+| 06_2 | Habits: Toxin Avoidance | Minimize toxin exposure | environmental | behavior | 8.5 | daily | self-report | B | - |
+| 06_3 | Habits: Clean Air | Air purifiers | environmental | device | 7.5 | daily | device | C | - |
+| **07_MEDICAL** |
+| 07_1 | Medicine: Regular Checkup | Annual medical examinations | medical | diagnostic | 9.0 | yearly | lab, medical | A | CDC; whoop.com/advanced-labs |
+| 07_2 | Medicine: Screening | Preventive screenings (BP, cholesterol, glucose) | medical | diagnostic | 9.0 | yearly | lab, device | A | AHA |
+| 07_3 | Medicine: Vaccination | Timely vaccination | medical | medical | 9.0 | yearly | medical | A | WHO |
+| 07_4 | Medicine: Dental | Regular dental visits | medical | diagnostic | 8.0 | yearly | medical | B | - |
+| 07_5 | Medicine: Ophthalmology | Vision check | medical | diagnostic | 7.5 | yearly | medical | B | - |
+| 07_6 | Medicine: Dermatology | Skin check for lesions | medical | diagnostic | 8.0 | yearly | medical | B | - |
+| 07_7 | Medicine: Mental Health | Work with therapist/psychologist | mental | medical | 9.0 | weekly | self-report | A | - |
+| 07_8 | Medicine: Genetic Testing | Genetic tests for personalization | medical | diagnostic | 7.5 | once | lab | B | - |
+| 07_9 | Medicine: Biohacking | Data-driven personalized interventions | medical | medical | 7.0 | monthly | lab, device | C | - |
+| **08_DEVICES** |
+| 08_1 | Devices: HRV Monitoring | Heart rate variability tracking | physical | device | 8.5 | daily | wearable | B | whoop.com; ouraring.com |
+| 08_2 | Devices: SpO2 Monitoring | Blood oxygen level tracking | physical | device | 7.5 | daily | wearable | B | whoop.com |
+| 08_3 | Devices: Body Temperature | Basal body temperature tracking | physical | device | 7.0 | daily | wearable | B | ouraring.com |
+| 08_4 | Devices: Sleep Quality | Sleep quality and stages monitoring | sleep | device | 9.0 | daily | wearable | A | whoop.com; ouraring.com |
+| 08_5 | Devices: Activity Tracker | Steps, calories, workout tracking | physical | device | 8.0 | daily | wearable | B | fitbit.com; garmin.com |
+| 08_6 | Devices: ECG | Electrocardiogram for arrhythmia detection | medical | device | 9.0 | on-demand | device | A | whoop.com/mg |
+| 08_7 | Devices: BP Monitor | Blood pressure measurement | medical | device | 9.0 | daily | device | A | whoop.com/mg |
+| 08_8 | Devices: Glucose Meter | Blood glucose monitoring | medical | device | 8.5 | daily | device, lab | A | - |
+| **09_LAB** |
+| 09_1 | Lab: Lipid Profile | Cholesterol, HDL, LDL, triglycerides | medical | lab | 9.0 | yearly | lab | A | questdiagnostics.com |
+| 09_2 | Lab: Inflammation Markers | C-reactive protein (CRP), IL-6 | medical | lab | 8.5 | yearly | lab | A | questdiagnostics.com |
+| 09_3 | Lab: Hormones | Testosterone, estrogen, cortisol, DHEA | medical | lab | 8.0 | yearly | lab | B | questdiagnostics.com |
+| 09_4 | Lab: Vitamin D | Vitamin D level | medical | lab | 8.0 | yearly | lab | A | - |
+| 09_5 | Lab: HbA1c | Glycated hemoglobin | medical | lab | 9.0 | yearly | lab | A | - |
+| 09_6 | Lab: Thyroid | TSH, T4, T3 | medical | lab | 8.5 | yearly | lab | A | - |
+| 09_7 | Lab: Nutritional Status | Iron, ferritin, B12, folate | medical | lab | 8.0 | yearly | lab | B | questdiagnostics.com |
+| 09_8 | Lab: Oxidative Stress | Oxidative stress markers | medical | lab | 7.5 | yearly | lab | C | - |
+| 09_9 | Lab: Epigenetic Age | Biological age by methylation | medical | lab | 8.0 | yearly | lab | B | - |
+| 09_10 | Lab: Microbiome | Gut microbiome analysis | medical | lab | 8.0 | once | lab | B | - |
+| **10_BIOHACKING** |
+| 10_1 | Biohacking: NAD+ | NAD+ precursors (NMN, NR) | medicine | supplement | 8.0 | daily | self-report, lab | B | - |
+| 10_2 | Biohacking: Senolytics | Senolytic drugs | medicine | medical | 8.5 | monthly | lab | C | - |
+| 10_3 | Biohacking: Metformin | Metformin for longevity | medicine | medical | 8.0 | daily | lab, medical | B | - |
+| 10_4 | Biohacking: Rapamycin | Rapamycin (off-label) | medicine | medical | 8.5 | weekly | lab, medical | C | - |
+| 10_5 | Biohacking: Ketosis | Ketosis maintenance | food | behavior | 7.5 | daily | device, self-report | B | - |
+| 10_6 | Biohacking: Red Light | Red light therapy (PBM) | physical | device | 7.0 | daily | self-report | C | - |
+| 10_7 | Biohacking: Sauna | Regular sauna visits | physical | behavior | 8.0 | weekly | self-report, wearable | B | - |
+| 10_8 | Biohacking: Hyperbaric O2 | Hyperbaric oxygen therapy | medical | medical | 7.5 | monthly | self-report | C | - |
+| 10_9 | Biohacking: Testosterone | HRT (hormone replacement therapy) | medical | medical | 8.5 | monthly | lab, medical | B | - |
+| 10_10 | Biohacking: Hypoxic Training | Low oxygen training | physical | behavior | 7.0 | weekly | device | C | - |
+| **11_HABITS** |
+| 11_1 | Habits: Early Rise | Early rise (before 7 AM) | mental | behavior | 7.5 | daily | wearable | C | - |
+| 11_2 | Habits: Morning Routine | Structured morning routine | mental | behavior | 8.0 | daily | self-report | B | whoop.com |
+| 11_3 | Habits: Planning | Weekly planning and reflection | mental | behavior | 7.5 | weekly | self-report | B | - |
+| 11_4 | Habits: Time Management | Pomodoro, time-blocking | mental | behavior | 7.0 | daily | self-report | C | - |
 
 ---
 
