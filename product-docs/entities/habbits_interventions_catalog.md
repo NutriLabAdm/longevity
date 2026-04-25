@@ -1,4 +1,22 @@
-# INTERVENTION_DB — Interventions Database for Digital Twin
+# Interventions & Habbits Catalog for Digital Twin
+
+**Purpose:** Evidence-based interventions and habits database for the longevity Digital Twin system  
+**Total Records:** 93 interventions across 8 categories  
+**Last Updated:** 2025
+
+---
+
+## Synopsis
+
+This catalog provides a comprehensive list of 93 validated interventions and habits that positively impact healthspan and longevity. Each intervention is categorized by domain (Physical, Medical, Mental, Food, Sleep, Social, Environmental, Medicine), with assigned impact scores (0-10), evidence levels (A-D), and data sources.
+
+Key findings:
+- **62%** of interventions are behavioral (lifestyle-based)
+- **38%** have Level A evidence (highest)
+- **Core domains:** Physical (24%), Medical (23%), Mental (19%), Food (15%)
+- **Top impact (10.0):** Safety (seatbelts, helmets)
+
+The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) and supports personalized intervention selection based on biomarkers, genetic markers, and lifestyle data.
 
 ---
 
