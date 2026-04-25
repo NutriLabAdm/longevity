@@ -1,6 +1,6 @@
 # Market Research
 
-This folder contains market research, competitive analysis, and positioning strategies for GliaTwin AI.
+This folder contains market research, competitive analysis, and positioning strategies for Healora AI.
 
 ## Contents
 
@@ -205,7 +205,7 @@ flowchart LR
     subgraph SME["3. SME Specialization"]
         SM1[Human Longevity<br/>$50M]
         SM2[InsideTracker<br/>$20M]
-        SM3["⭐ GliaTwin AI<br/>TARGET: $10M+"]
+        SM3["⭐ Healora AI<br/>TARGET: $10M+"]
         SM4[TruDiagnostic<br/>$10M]
         SM5[BioAge Labs<br/>$30M]
     end
@@ -243,7 +243,7 @@ flowchart LR
 
 ### Where Our Project Fits
 
-⭐ **GliaTwin AI** is positioned in Column 3 (SME Specialization) with:
+⭐ **Healora AI** is positioned in Column 3 (SME Specialization) with:
 - **Focus**: Digital Twin of Microglia for Predictive Neuroprotection
 - **Target Revenue**: $10M+ ARR (scalable)
 - **Advantage**: Unique niche (brain immune niche) vs competitors
@@ -259,4 +259,4 @@ flowchart LR
 
 ## Contact
 
-For business inquiries: business@gliatwin.ai
+For business inquiries: business@Healora.ai

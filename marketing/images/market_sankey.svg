@@ -90,7 +90,7 @@
   <text x="750" y="220" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">$20M ARR</text>
   
   <rect x="650" y="250" width="200" height="80" rx="8" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
-  <text x="750" y="275" font-family="Arial" font-size="14" font-weight="bold" fill="#059669" text-anchor="middle">⭐ GliaTwin AI</text>
+  <text x="750" y="275" font-family="Arial" font-size="14" font-weight="bold" fill="#059669" text-anchor="middle">⭐ Healora AI</text>
   <text x="750" y="295" font-family="Arial" font-size="11" fill="#059669" text-anchor="middle">Digital Twin of Microglia</text>
   <text x="750" y="315" font-family="Arial" font-size="12" font-weight="bold" fill="#16a34a" text-anchor="middle">TARGET: $10M+</text>
   <rect x="650" y="250" width="200" height="80" rx="8" fill="#10b981" fill-opacity="0.3" stroke="#16a34a" stroke-width="3"/>

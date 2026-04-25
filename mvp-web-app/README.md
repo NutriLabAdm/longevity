@@ -1,6 +1,6 @@
 # MVP Web Application
 
-This folder contains the Minimum Viable Product (MVP) web application for GliaTwin AI.
+This folder contains the Minimum Viable Product (MVP) web application for Healora AI.
 
 ## Contents
 

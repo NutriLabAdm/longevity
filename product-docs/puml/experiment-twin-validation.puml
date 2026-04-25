@@ -1,6 +1,7 @@
 @startuml
 skinparam shadowing false
-skinparam defaultTextAlignment center
+' skinparam defaultTextAlignment center
+skinparam noteAlignment left
 skinparam roundcorner 8
 skinparam ArrowColor black
 skinparam LineColor black
@@ -14,6 +15,13 @@ skinparam rectangle<<experiment>> {
   BorderColor #2a5f3c
   BackgroundColor #e8f5e9
 }
+
+skinparam note<<notes>> {
+  BorderStyle dashed
+  BackgroundColor #fffde7
+  FontSize 14
+}
+
 
 skinparam rectangle<<input>> {
   BorderColor #1976d2
@@ -113,7 +121,8 @@ package "EXPERIMENT T3: Intervention Response" <<experiment>> {
 ' =========================
 ' BOTTOM: METRICS
 ' =========================
-package "EVALUATION METRICS" {
+' FIX: Added 'as EVALUATION_METRICS' to allow the note to reference this package
+package "EVALUATION METRICS" as EVALUATION_METRICS {
   rectangle "BERT-score ≥ 0.75" as M1 <<metric>>
   rectangle "SBERT Similarity ≥ 0.75" as M2 <<metric>>
   rectangle "Direction Accuracy ≥ 85%" as M3 <<metric>>
@@ -156,17 +165,18 @@ IntB --> T3_Input
 IntC --> T3_Input
 IntD --> T3_Input
 
-
 ' =========================
 ' FOOTNOTE
 ' =========================
-note bottom of diagram
-HYPOTHESIS: DT trained on multi-feature profiles will predict:
+note bottom of "EVALUATION_METRICS" <<notes>>
+  "Hypothesis: DT trained on multi-feature profiles will predict:
+
   - Diary content with >= 75% accuracy
   - Interview responses with >= 75% semantic similarity
   - Intervention reactions with >= 85% direction accuracy
 
 N = 50 participants | Duration: 12 weeks
+  "
 end note
 
 @enduml

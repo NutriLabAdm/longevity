@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Процесс извлечения Digital Twin — Анимация</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FA;
+  --bg-tertiary: #E9ECEF;
+  --text-primary: #1A1A2E;
+  --text-muted: #6B7280;
+  --accent: #2563EB;
+  --accent-green: #059669;
+  --accent-orange: #D97706;
+  --accent-purple: #7C3AED;
+  --border: #E5E7EB;
+  --highlight: #FEF3C7;
+  --highlight-green: #D1FAE5;
+  --highlight-blue: #DBEAFE;
+  --speed-1: 8s; --delay-1: 0s;
+  --speed-2: 12s; --delay-2: 1s;
+  --speed-3: 10s; --delay-3: 2s;
+  --speed-4: 15s; --delay-4: 3s;
+  --speed-5: 9s; --delay-5: 4s;
+  --speed-6: 11s; --delay-6: 5s;
+  --speed-7: 14s; --delay-7: 6s;
+  --speed-8: 10s; --delay-8: 7s;
+  --speed-9: 13s; --delay-9: 8s;
+  --speed-10: 8s; --delay-10: 9s;
+  --speed-11: 12s; --delay-11: 10s;
+  --speed-12: 11s; --delay-12: 11s;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: 16px 16px;
+}
+
+h1 { text-align: center; font-size: 20px; margin-bottom: 4px; }
+
+.subtitle { text-align: center; color: var(--text-muted); margin-bottom: 12px; font-size: 12px; }
+
+.controls { display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+
+button {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover { background: var(--bg-tertiary); border-color: var(--accent); }
+button.active { background: var(--accent); color: white; border-color: var(--accent); }
+#btnIcon { font-size: 14px; margin-right: 6px; animation: iconPulse 2s ease-in-out infinite; }
+#btnIcon.playing { animation: iconPulseActive 0.6s ease-in-out infinite; }
+@keyframes iconPulse {
+  0%, 100% { color: #fff; transform: scale(1); }
+  50% { color: #a855f7; transform: scale(1.1); }
+}
+@keyframes iconPulseActive {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.8; }
+}
+
+select {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 50%;
+  gap: 16px;
+  max-width: 1600px;
+  margin: 0 auto;
+  max-height: calc(100vh - 100px);
+}
+
+@media (max-width: 900px) {
+  .main-container { grid-template-columns: 1fr; height: auto; }
+}
+
+/* Transcript panel */
+.transcript-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.transcript-header {
+  background: var(--bg-tertiary);
+  padding: 8px 12px;
+  font-weight: 600;
+  font-size: 11px;
+  border-bottom: 1px solid var(--border);
+}
+
+.transcript-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  font-size: 10px;
+  line-height: 1.5;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.transcript-line { padding: 2px 4px; border-radius: 3px; transition: all 0.3s; }
+.transcript-line.highlighted { background: var(--highlight); }
+.transcript-line .time { color: var(--accent); margin-right: 6px; }
+.transcript-line .speaker { color: var(--text-muted); margin-right: 6px; }
+.transcript-line .keyword-motivation { background: #d1fae5; color: #065f46; padding: 0 2px; border-radius: 2px; }
+.transcript-line .keyword-barrier { background: #fee2e2; color: #991b1b; padding: 0 2px; border-radius: 2px; }
+.transcript-line .keyword-financial { background: #fef3c7; color: #92400e; padding: 0 2px; border-radius: 2px; }
+.transcript-line .keyword-health { background: #dbeafe; color: #1e40af; padding: 0 2px; border-radius: 2px; }
+.transcript-line .keyword-redflag { background: #ef4444; color: white; padding: 0 2px; border-radius: 2px; font-weight: 600; }
+.transcript-line .keyword-green { background: #22c55e; color: white; padding: 0 2px; border-radius: 2px; font-weight: 600; }
+
+/* Profile panel */
+.profile-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-panel.merged {
+  max-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-avatar {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.profile-info { display: flex; flex-direction: column; flex: 1; }
+.profile-name { font-weight: 600; font-size: 13px; }
+
+.profile-badge {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.profile-badge.high { background: #d1fae5; color: #065f46; }
+.profile-badge.medium { background: #fef3c7; color: #92400e; }
+.profile-badge.low { background: #fee2e2; color: #991b1b; }
+
+.profile-id { font-size: 10px; color: var(--text-muted); font-family: 'IBM Plex Mono', monospace; }
+
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.quick-stat {
+  text-align: center;
+  padding: 4px 2px;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.qs-label { display: block; font-size: 8px; color: var(--text-muted); margin-bottom: 1px; }
+.qs-value { font-weight: 600; font-size: 11px; font-family: 'IBM Plex Mono', monospace; }
+
+.profile-content.scrollable {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.profile-columns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.profile-column {
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.profile-section-title {
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+  font-weight: 600;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-grid { display: grid; grid-template-columns: 1fr; gap: 1px; }
+
+.profile-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 6px;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.profile-label { color: var(--text-muted); }
+.profile-value { font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+.profile-value.high { color: var(--accent-green); }
+.profile-value.medium { color: var(--accent-orange); }
+.profile-value.low { color: #DC2626; }
+
+/* Flowing dots */
+.flow-dots {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.flow-dots.running .flow-dot {
+  animation: flowRight 8s ease-in-out infinite;
+  opacity: 0;
+}
+
+.flow-dots.paused .flow-dot {
+  animation: flowRight 25s ease-in-out infinite;
+  opacity: 0;
+}
+
+.flow-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.flow-dot:nth-child(1) { top: 20%; animation: flowRight var(--speed-1) ease-in-out infinite; animation-delay: var(--delay-1); }
+.flow-dot:nth-child(2) { top: 30%; animation: flowRight var(--speed-2) ease-in-out infinite; animation-delay: var(--delay-2); }
+.flow-dot:nth-child(3) { top: 40%; animation: flowRight var(--speed-3) ease-in-out infinite; animation-delay: var(--delay-3); }
+.flow-dot:nth-child(4) { top: 50%; animation: flowRight var(--speed-4) ease-in-out infinite; animation-delay: var(--delay-4); }
+.flow-dot:nth-child(5) { top: 60%; animation: flowRight var(--speed-5) ease-in-out infinite; animation-delay: var(--delay-5); }
+.flow-dot:nth-child(6) { top: 25%; animation: flowRight var(--speed-6) ease-in-out infinite; animation-delay: var(--delay-6); }
+.flow-dot:nth-child(7) { top: 35%; animation: flowRight var(--speed-7) ease-in-out infinite; animation-delay: var(--delay-7); }
+.flow-dot:nth-child(8) { top: 45%; animation: flowRight var(--speed-8) ease-in-out infinite; animation-delay: var(--delay-8); }
+.flow-dot:nth-child(9) { top: 55%; animation: flowRight var(--speed-9) ease-in-out infinite; animation-delay: var(--delay-9); }
+.flow-dot:nth-child(10) { top: 65%; animation: flowRight var(--speed-10) ease-in-out infinite; animation-delay: var(--delay-10); }
+.flow-dot:nth-child(11) { top: 30%; animation: flowRight var(--speed-11) ease-in-out infinite; animation-delay: var(--delay-11); }
+.flow-dot:nth-child(12) { top: 40%; animation: flowRight var(--speed-12) ease-in-out infinite; animation-delay: var(--delay-12); }
+
+@keyframes flowRight {
+  0% { left: -20px; opacity: 0; transform: translateY(-50%) scale(0.3); }
+  5% { opacity: 1; transform: translateY(-50%) scale(1); }
+  95% { opacity: 1; transform: translateY(-50%) scale(1); }
+  100% { left: 100%; opacity: 0; transform: translateY(-50%) scale(0.3); }
+}
+
+.flow-dot.color-1 { background: #3b82f6; }
+.flow-dot.color-2 { background: #10b981; }
+.flow-dot.color-3 { background: #f59e0b; }
+.flow-dot.color-4 { background: #8b5cf6; }
+.flow-dot.color-5 { background: #ef4444; }
+.flow-dot.color-6 { background: #ec4899; }
+
+/* Pipeline */
+.pipeline {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pipeline-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.phase-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 30%;
+}
+
+.phase-group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.phase-number {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.phase-number.active { background: var(--accent); color: white; }
+.phase-number.phase-1 { background: #3b82f6; color: white; }
+.phase-number.phase-2 { background: #8b5cf6; color: white; }
+.phase-number.phase-3 { background: #059669; color: white; }
+
+.phase-title { font-size: 11px; font-weight: 600; }
+.phase-title.active { color: var(--accent); }
+.phase-title.phase-1 { color: #3b82f6; }
+.phase-title.phase-2 { color: #8b5cf6; }
+.phase-title.phase-3 { color: #059669; }
+
+.phase-items { display: flex; gap: 8px; }
+
+.item {
+  flex: 1;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 6px;
+  text-align: center;
+  font-size: 10px;
+  transition: all 0.5s;
+  position: relative;
+}
+
+.item.active {
+  background: var(--highlight-green);
+  border-color: var(--accent-green);
+}
+
+.item .item-name { font-weight: 600; display: block; margin-bottom: 2px; }
+.item .item-desc { font-size: 8px; color: var(--text-muted); }
+.item .item-result { font-size: 9px; color: var(--accent-green); font-weight: 600; display: block; }
+
+/* Results cards */
+.results-cards {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.results-card {
+  flex: 1;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.results-card-header {
+  padding: 8px 12px;
+  background: var(--bg-tertiary);
+  font-weight: 600;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.results-card-header.phase-1 { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; }
+.results-card-header.phase-2 { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: white; }
+.results-card-header.phase-3 { background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; }
+.results-card.phase-1 { border-left: 4px solid #3b82f6; }
+.results-card.phase-2 { border-left: 4px solid #8b5cf6; }
+.results-card.phase-3 { border-left: 4px solid #059669; }
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+
+.results-table th, .results-table td {
+  padding: 4px 6px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.results-table th { background: var(--bg-tertiary); font-weight: 600; font-size: 9px; }
+.results-table tr.highlighted { background: var(--highlight-green); }
+.results-table tr.highlighted td { font-weight: 600; }
+.results-table tr.highlighted .badge { background: linear-gradient(135deg, var(--accent-green) 0%, #10b981 100%); color: white; border-color: var(--accent-green); box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3); }
+.results-table .result-cell { color: var(--accent-green); font-weight: 600; font-size: 9px; }
+.results-table .result-cell.filled { }
+.results-table .badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  font-size: 9px;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  border: 1px solid var(--border);
+}
+.results-table .badge.active {
+  background: linear-gradient(135deg, var(--accent-green) 0%, #10b981 100%);
+  color: white;
+  border-color: var(--accent-green);
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.3);
+  animation: badgePop 0.3s ease-out;
+}
+@keyframes badgePop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.results-table a { color: var(--accent); text-decoration: none; }
+.results-table a:hover { text-decoration: underline; }
+
+.results-card-content { padding: 8px; font-size: 10px; font-family: 'IBM Plex Mono', monospace; }
+.result-row { padding: 4px 0; }
+
+/* Status bar */
+.status-bar {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-top: 12px;
+  text-align: center;
+  font-weight: 500;
+  color: var(--accent);
+}
+.top-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.top-controls .controls {
+  margin-bottom: 0;
+}
+.top-controls .status-bar {
+  margin-top: 0;
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Animation */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Radar chart */
+.radar-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 16px;
+}
+.radar-title {
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.radar-chart {
+  max-height: 350px;
+  max-width: 350px;
+  width: 350px;
+  height: 350px;
+}
+
+.scatter-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px;
+  max-height: 380px;
+}
+
+.scatter-title, .radar-title {
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* Method mini-charts */
+.mini-chart {
+  height: 20px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.mini-bar {
+  flex: 1;
+  background: var(--accent);
+  border-radius: 2px 2px 0 0;
+  height: 0;
+  transition: height 0.5s ease;
+}
+
+.mini-bar.filled { animation: barGrow 0.5s ease forwards; }
+@keyframes barGrow { from { height: 0; } to { height: var(--h); } }
+
+.mini-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.wave-chart {
+  height: 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.wave-bar {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  animation: wavePulse 1.5s ease-in-out infinite;
+}
+.wave-bar:nth-child(1) { background: #8b5cf6; animation-delay: 0s; }
+.wave-bar:nth-child(2) { background: #a855f7; animation-delay: 0.1s; }
+.wave-bar:nth-child(3) { background: #c084fc; animation-delay: 0.2s; }
+.wave-bar:nth-child(4) { background: #d8b4fe; animation-delay: 0.3s; }
+.wave-bar:nth-child(5) { background: #e9d5ff; animation-delay: 0.4s; }
+.wave-bar:nth-child(6) { background: #f3e8ff; animation-delay: 0.5s; }
+@keyframes wavePulse {
+  0%, 100% { height: 4px; opacity: 0.6; }
+  50% { height: 20px; opacity: 1; }
+}
+  height: 20px;
+}
+.mini-wave span {
+  width: 3px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: wave 0.8s ease-in-out infinite;
+}
+.mini-wave span:nth-child(1) { animation-delay: 0s; height: 8px; }
+.mini-wave span:nth-child(2) { animation-delay: 0.1s; height: 14px; }
+.mini-wave span:nth-child(3) { animation-delay: 0.2s; height: 20px; }
+.mini-wave span:nth-child(4) { animation-delay: 0.3s; height: 12px; }
+.mini-wave span:nth-child(5) { animation-delay: 0.4s; height: 6px; }
+@keyframes wave { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.5); } }
+
+.mini-pulse {
+  width: 10px;
+  height: 10px;
+  background: var(--accent-green);
+  border-radius: 50%;
+  animation: pulse 1s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } }
+
+.mini-gauge {
+  width: 40px;
+  height: 20px;
+  border: 2px solid var(--accent);
+  border-radius: 20px 20px 0 0;
+  position: relative;
+  overflow: hidden;
+}
+.mini-gauge::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: var(--accent);
+  transition: height 0.5s ease;
+}
+.mini-gauge.filled::after { height: 70%; }
+
+.mini-dots {
+  display: flex;
+  gap: 3px;
+}
+.mini-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+}
+.mini-dot.animate { animation: dotAppear 0.3s ease forwards; }
+.mini-dot:nth-child(1) { animation-delay: 0s; }
+.mini-dot:nth-child(2) { animation-delay: 0.1s; }
+.mini-dot:nth-child(3) { animation-delay: 0.2s; }
+.mini-dot:nth-child(4) { animation-delay: 0.3s; }
+@keyframes dotAppear { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+
+.mini-text {
+  font-size: 8px;
+  color: var(--accent-green);
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+  animation: typing 1s steps(10) forwards;
+  overflow: hidden;
+  white-space: nowrap;
+}
+@keyframes typing { from { width: 0; } to { width: 100%; } }
+
+.mini-norm {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.mini-norm-bar {
+  width: 8px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform-origin: bottom;
+  animation: normScale 0.5s ease forwards;
+}
+@keyframes normScale { from { transform: scaleY(0.3); } to { transform: scaleY(1); } }
+
+.mini-cluster {
+  position: relative;
+  width: 40px;
+  height: 20px;
+}
+.mini-cluster-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: clusterMove 1s ease-in-out infinite;
+}
+.mini-cluster-dot:nth-child(1) { left: 5px; top: 8px; animation-delay: 0s; background: #3b82f6; }
+.mini-cluster-dot:nth-child(2) { left: 18px; top: 3px; animation-delay: 0.2s; background: #10b981; }
+.mini-cluster-dot:nth-child(3) { left: 30px; top: 10px; animation-delay: 0.4s; background: #f59e0b; }
+@keyframes clusterMove { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(3px, -3px); } }
+
+.mini-model {
+  display: flex;
+  gap: 2px;
+}
+.mini-model-layer {
+  width: 6px;
+  height: 20px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: layerGrow 0.5s ease forwards;
+  transform-origin: bottom;
+}
+@keyframes layerGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+  </style>
+</head>
+<body>
+  <h1>Digital Twin <button onclick="showFeatures()" style="margin-left:12px;padding:4px 12px;cursor:pointer;font-size:12px;background:#e5e7eb;border:1px solid #d1d5db;border-radius:4px;">Demo Feature</button></h1>
+  <div class="top-controls">
+    <div class="controls">
+      <button id="btnPlay" onclick="playFull()"><span id="btnIcon">▶</span> <span id="btnLabel">Старт</span></button>
+      <button onclick="reset()">↺ Сброс</button>
+      <select id="clientSelect" onchange="selectClient()">
+        <option value="">— Выберите клиента —</option>
+      </select>
+    </div>
+    <div class="status-bar" id="status">Нажмите «Старт» для анимации</div>
+  </div>
+
+  <div class="main-container">
+    <div class="transcript-panel">
+      <div class="transcript-header">
+        📝 Транскрипт звонка
+        <span id="callInfo" style="margin-left: auto; font-weight: normal; color: var(--text-muted);"></span>
+      </div>
+      <div class="transcript-content" id="transcript"></div>
+    </div>
+
+    <div class="profile-panel merged">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">—</div>
+        <div class="profile-info">
+          <span class="profile-name" id="profileName">—</span>
+          <span class="profile-badge" id="profileBadge"></span>
+        </div>
+        <span class="profile-id" id="profileId">—</span>
+      </div>
+
+      <div class="quick-stats">
+        <div class="quick-stat"><span class="qs-label">Вес</span><span class="qs-value" id="qsWeight">—</span></div>
+        <div class="quick-stat"><span class="qs-label">BMI</span><span class="qs-value" id="qsBMI">—</span></div>
+        <div class="quick-stat"><span class="qs-label">LTV</span><span class="qs-value" id="qsLTV">—</span></div>
+        <div class="quick-stat"><span class="qs-label">Статус</span><span class="qs-value" id="qsStatus">—</span></div>
+      </div>
+
+      <div class="profile-content scrollable">
+        <div class="profile-columns">
+          <div class="profile-column">
+            <div class="profile-section-title">📋 Настройки</div>
+            <div class="profile-grid">
+              <div class="profile-item"><span class="profile-label">Имя</span><span class="profile-value" id="pName">—</span></div>
+              <div class="profile-item"><span class="profile-label">Пол</span><span class="profile-value" id="pGender">—</span></div>
+              <div class="profile-item"><span class="profile-label">Возраст</span><span class="profile-value" id="pAge">—</span></div>
+              <div class="profile-item"><span class="profile-label">Вес</span><span class="profile-value" id="pWeight">—</span></div>
+              <div class="profile-item"><span class="profile-label">Рост</span><span class="profile-value" id="pHeight">—</span></div>
+              <div class="profile-item"><span class="profile-label">BMI</span><span class="profile-value" id="pBMI">—</span></div>
+              <div class="profile-item"><span class="profile-label">Мотивация</span><span class="profile-value" id="pMotivation">—</span></div>
+              <div class="profile-item"><span class="profile-label">Цель</span><span class="profile-value" id="pGoal">—</span></div>
+            </div>
+          </div>
+
+          <div class="profile-column">
+            <div class="profile-section-title">🏥 Анамнез</div>
+            <div class="profile-grid">
+              <div class="profile-item"><span class="profile-label">Заболевания</span><span class="profile-value" id="pDiseases">—</span></div>
+              <div class="profile-item"><span class="profile-label">Аллергии</span><span class="profile-value" id="pAllergies">—</span></div>
+              <div class="profile-item"><span class="profile-label">Операции</span><span class="profile-value" id="pSurgery">—</span></div>
+              <div class="profile-item"><span class="profile-label">Препараты</span><span class="profile-value" id="pMeds">—</span></div>
+              <div class="profile-item"><span class="profile-label">Сем. анамнез</span><span class="profile-value" id="pFamily">—</span></div>
+              <div class="profile-item"><span class="profile-label">Питание</span><span class="profile-value" id="pDiet">—</span></div>
+              <div class="profile-item"><span class="profile-label">Сон</span><span class="profile-value" id="pSleep">—</span></div>
+              <div class="profile-item"><span class="profile-label">Стресс</span><span class="profile-value" id="pStress">—</span></div>
+              <div class="profile-item"><span class="profile-label">Активность</span><span class="profile-value" id="pActivity">—</span></div>
+              <div class="profile-item"><span class="profile-label">Вредные пр.</span><span class="profile-value" id="pHabits">—</span></div>
+            </div>
+          </div>
+
+          <div class="profile-column">
+            <div class="profile-section-title">Поведение</div>
+            <div class="profile-grid">
+              <div class="profile-item"><span class="profile-label">Готовность</span><span class="profile-value" id="pReadiness">—</span></div>
+              <div class="profile-item"><span class="profile-label">Прогноз</span><span class="profile-value" id="pPrediction">—</span></div>
+              <div class="profile-item"><span class="profile-label">Барьеры</span><span class="profile-value" id="pBarriers">—</span></div>
+            </div>
+          </div>
+
+          <div class="profile-column">
+            <div class="profile-section-title">Результаты</div>
+            <div class="profile-grid">
+              <div class="profile-item"><span class="profile-label">Старт</span><span class="profile-value" id="pStart">—</span></div>
+              <div class="profile-item"><span class="profile-label">Текущий</span><span class="profile-value" id="pCurrent">—</span></div>
+              <div class="profile-item"><span class="profile-label">Изменение</span><span class="profile-value" id="pDelta">—</span></div>
+              <div class="profile-item"><span class="profile-label">Дней</span><span class="profile-value" id="pDays">—</span></div>
+              <div class="profile-item"><span class="profile-label">Выполнение</span><span class="profile-value" id="pCompletion">—</span></div>
+              <div class="profile-item"><span class="profile-label">Вовлеч.</span><span class="profile-value" id="pEngagement">—</span></div>
+              <div class="profile-item"><span class="profile-label">След.звонок</span><span class="profile-value" id="pNextCall">—</span></div>
+              <div class="profile-item"><span class="profile-label">Uplift</span><span class="profile-value" id="pUplift">—</span></div>
+            </div>
+          </div>
+
+          <div class="profile-column">
+            <div class="profile-section-title">💰 Финансы</div>
+            <div class="profile-grid">
+              <div class="profile-item"><span class="profile-label">Бюджет</span><span class="profile-value" id="pBudget">—</span></div>
+              <div class="profile-item"><span class="profile-label">Чувствит.</span><span class="profile-value" id="pSensitivity">—</span></div>
+              <div class="profile-item"><span class="profile-label">LTV</span><span class="profile-value" id="pLTV">—</span></div>
+              <div class="profile-item"><span class="profile-label">Статус</span><span class="profile-value" id="pStatus">—</span></div>
+              <div class="profile-item"><span class="profile-label">Цена/мес</span><span class="profile-value" id="pPrice">—</span></div>
+              <div class="profile-item"><span class="profile-label">Срок</span><span class="profile-value" id="pTerm">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="charts-row" style="margin-top:8px;">
+        <div class="radar-container" style="margin:0;">
+          <canvas id="radarChart" class="radar-chart" style="max-height:350px; height: 350px; width: 350px;"></canvas>
+        </div>
+        <div class="scatter-container" style="margin:0;">
+          <div class="scatter-legend" style="font-size:9px; display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:4px;">
+            <span style="color:#ef4444;">●redflag</span>
+            <span style="color:#22c55e;">●green</span>
+            <span style="color:#3b82f6;">●motivation</span>
+            <span style="color:#f59e0b;">●barrier</span>
+            <span style="color:#fbbf24;">●financial</span>
+            <span style="color:#0ea5e9;">●health</span>
+            <span style="color:#8b5cf6;">●default</span>
+          </div>
+          <canvas id="scatterChart" class="radar-chart" style="max-height:350px; height: 350px; width: 350px; display:block;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pipeline">
+    <div class="flow-dots">
+      <div class="flow-dot color-1"></div>
+      <div class="flow-dot color-2"></div>
+      <div class="flow-dot color-3"></div>
+      <div class="flow-dot color-4"></div>
+      <div class="flow-dot color-5"></div>
+      <div class="flow-dot color-6"></div>
+      <div class="flow-dot color-1"></div>
+      <div class="flow-dot color-2"></div>
+      <div class="flow-dot color-3"></div>
+      <div class="flow-dot color-4"></div>
+      <div class="flow-dot color-5"></div>
+      <div class="flow-dot color-6"></div>
+    </div>
+  </div>
+
+  <div class="results-cards" id="resultsCards">
+    <div class="results-card phase-1" id="resultCard1">
+      <div class="results-card-header phase-1">Сбор данных</div>
+      <table class="results-table">
+        <tr><th>#</th><th>Метод</th><th>Описание</th><th>Визуализация</th><th>Результат</th></tr>
+        <tr id="row1-1" class="result-row"><td>1</td><td><span class="badge">MARS</span></td><td>транскрипт: Шкала приверженности</td><td><div class="mini-wave" id="viz1-1"><span></span><span></span><span></span><span></span><span></span></div></td><td class="result-cell" id="res1-1">—</td></tr>
+        <tr id="row1-2" class="result-row"><td>2</td><td><span class="badge">GSES</span></td><td>MARS/GSES: Шкала самоэффективности</td><td><div class="mini-chart" id="viz1-2"><div class="mini-bar" style="--h:80%"></div><div class="mini-bar" style="--h:60%"></div><div class="mini-bar" style="--h:90%"></div><div class="mini-bar" style="--h:70%"></div><div class="mini-bar" style="--h:50%"></div></div></td><td class="result-cell" id="res1-2">—</td></tr>
+        <tr id="row1-3" class="result-row"><td>3</td><td><span class="badge">ASR</span></td><td>поведение: Распознавание речи</td><td><div class="mini-pulse" id="viz1-3"></div></td><td class="result-cell" id="res1-3">—</td></tr>
+        <tr id="row1-4" class="result-row"><td>4</td><td><span class="badge">API</span></td><td>внешние: Внешние источники</td><td><div class="mini-dots" id="viz1-4"><span class="mini-dot"></span><span class="mini-dot"></span><span class="mini-dot"></span><span class="mini-dot"></span></div></td><td class="result-cell" id="res1-4">—</td></tr>
+      </table>
+    </div>
+    <div class="results-card phase-2" id="resultCard2">
+      <div class="results-card-header phase-2">Извлечение</div>
+      <table class="results-table">
+        <tr><th>#</th><th>Метод</th><th>Описание</th><th>Визуализация</th><th>Результат</th></tr>
+        <tr id="row2-1" class="result-row"><td>1</td><td><span class="badge" style="background:#8b5cf6;">LIWC</span></td><td>психолингв: Психолингвистический анализ</td><td><div class="wave-chart" id="viz2-1"><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div></div></td><td class="result-cell" id="res2-1">—</td></tr>
+        <tr id="row2-2" class="result-row"><td>2</td><td><span class="badge">TF-IDF</span></td><td>TF-IDF: Анализ ключевых слов</td><td><div class="mini-chart" id="viz2-2"><div class="mini-bar" style="--h:30%"></div><div class="mini-bar" style="--h:60%"></div><div class="mini-bar" style="--h:45%"></div><div class="mini-bar" style="--h:80%"></div><div class="mini-bar" style="--h:35%"></div></div></td><td class="result-cell" id="res2-2">—</td></tr>
+        <tr id="row2-3" class="result-row"><td>3</td><td><span class="badge">NER</span></td><td>инференс: Извлечение сущностей</td><td><div class="mini-dots" id="viz2-3"><span class="mini-dot"></span><span class="mini-dot"></span><span class="mini-dot"></span><span class="mini-dot"></span></div></td><td class="result-cell" id="res2-3">—</td></tr>
+        <tr id="row2-4" class="result-row"><td>4</td><td><span class="badge">LLM</span></td><td>JSON: Большие языковые модели</td><td><div class="mini-text" id="viz2-4">{}</div></td><td class="result-cell" id="res2-4">—</td></tr>
+      </table>
+    </div>
+    <div class="results-card phase-3" id="resultCard3">
+      <div class="results-card-header phase-3">Digital Twin</div>
+      <table class="results-table">
+        <tr><th>#</th><th>Метод</th><th>Описание</th><th>Визуализация</th><th>Результат</th></tr>
+        <tr id="row3-1" class="result-row"><td>1</td><td><span class="badge">Вектор</span></td><td>признаков: Вектор признаков</td><td><div class="mini-chart" id="viz3-1"><div class="mini-bar" style="--h:90%"></div><div class="mini-bar" style="--h:85%"></div><div class="mini-bar" style="--h:95%"></div><div class="mini-bar" style="--h:80%"></div><div class="mini-bar" style="--h:88%"></div><div class="mini-bar" style="--h:75%"></div><div class="mini-bar" style="--h:92%"></div><div class="mini-bar" style="--h:70%"></div></div></td><td class="result-cell" id="res3-1">—</td></tr>
+        <tr id="row3-2" class="result-row"><td>2</td><td><span class="badge">Z-score</span></td><td>Z-score: Нормализация данных</td><td><div class="mini-norm" id="viz3-2"><div class="mini-norm-bar" style="height:6px"></div><div class="mini-norm-bar" style="height:12px"></div><div class="mini-norm-bar" style="height:8px"></div><div class="mini-norm-bar" style="height:14px"></div><div class="mini-norm-bar" style="height:10px"></div></div></td><td class="result-cell" id="res3-2">—</td></tr>
+        <tr id="row3-3" class="result-row"><td>3</td><td><span class="badge">K-means</span></td><td>K-means: Кластеризация</td><td><div class="mini-cluster" id="viz3-3"><span class="mini-cluster-dot"></span><span class="mini-cluster-dot"></span><span class="mini-cluster-dot"></span></div></td><td class="result-cell" id="res3-3">—</td></tr>
+        <tr id="row3-4" class="result-row"><td>4</td><td><span class="badge">ML</span></td><td>модель: Машинное обучение</td><td><div class="mini-model" id="viz3-4"><div class="mini-model-layer" style="height:16px"></div><div class="mini-model-layer" style="height:12px"></div><div class="mini-model-layer" style="height:20px"></div><div class="mini-model-layer" style="height:8px"></div></div></td><td class="result-cell" id="res3-4">—</td></tr>
+</table>
+    </div>
+  </div>
+<script>
+// Sample transcript data
+const transcriptLines = [
+  { time: "0:08", speaker: "Менеджер", text: "алло татьяна здравствуйте" },
+  { time: "0:15", speaker: "Клиент", text: "здравствуйте я Cветлана Светлана от Виктора Фитнесова и Лены Павловой мы с вами общались в августе и хотела буквально к вам на пару минут удобно говорить" },
+  { time: "0:32", speaker: "Клиент", text: "да слушаю ага отлично ну во первых рада вас слышать мы с вами общались аж в августе ну и хотела уточнить как вообще ваши успехи" },
+  { time: "0:48", speaker: "Клиент", text: "ну пока сложно судить только вот начинаем первый модуль начинаем проходить но в целом нет будет" },
+  { time: "1:05", speaker: "Клиент", text: "отлично да понравилось как бы да все понравилось единственное что как бы не все получалось потому что тут времени как бы мало надо" },
+  { time: "1:22", speaker: "Клиент", text: "к этому подходить ну понятно мне все понравилось нравится да ну вы также будете продолжать же решать свои задачи по здоровью" },
+  { time: "1:38", speaker: "Клиент", text: "да улучшился сон все есть да да ага то есть сейчас и вот это вот вздутие у вас прошло" },
+  { time: "1:55", speaker: "Клиент", text: "объемы уменьшились да то есть можно дало порадоваться ага тоже радуюсь да" },
+  { time: "2:12", speaker: "Клиент", text: "ну это да я ни разу не пожалела и надеюсь что не пожалею в будущем" },
+  { time: "2:28", speaker: "Клиент", text: "надеюсь только получить еще больше знаний ну если у вас уже за месяц есть такие результаты" },
+  { time: "2:45", speaker: "Клиент", text: "пока не решила я такой возможности не исключаю но честно это пока мало вероятно но мне очень" },
+  { time: "3:02", speaker: "Клиент", text: "поэтому так держать очень очень рада татьян за вас потому что в задачах еще и пород" },
+  { time: "3:18", speaker: "Клиент", text: "вот ну пока в планах пройти у вас именно клуб да закончить да" },
+  { time: "3:35", speaker: "Клиент", text: "ну финансовая сторона вопроса а в целом то как бы сомнений не было да" },
+  { time: "3:52", speaker: "Клиент", text: "вот что это за программа и какой она дает результат в плане улучшения здоровья" },
+  { time: "4:08", speaker: "Клиент", text: "ну поэтому нужно находить плюсы ну а деньги все равно это хоть и важная составляющая но не второстепенная" },
+  { time: "4:25", speaker: "Менеджер", text: "татьяна а как вы себя чувствуете после первого модуля есть какие-то изменения" },
+  { time: "4:38", speaker: "Клиент", text: "да знаете я уже привыкла к режиму и особо не заморачиваюсь голодом не сильно мучаюсь" },
+  { time: "4:52", speaker: "Клиент", text: "сон стал лучше это правда и вздутие прошло совсем как вы помните было в начале" },
+  { time: "5:08", speaker: "Менеджер", text: "это отлично а какие сложности возникают в процессе" },
+  { time: "5:22", speaker: "Клиент", text: "ну иногда лень готовить особенно вечером после работы хочется просто отдохнуть" },
+  { time: "5:38", speaker: "Клиент", text: "но я стараюсь хоть что-то легкое сделать овощи нарезать или йогурт взять" },
+  { time: "5:52", speaker: "Менеджер", text: "а как семья относится к вашим изменениям в питании" },
+  { time: "6:08", speaker: "Клиент", text: "муж initially был скептиком говорил что это очередная диета и надоест" },
+  { time: "6:22", speaker: "Клиент", text: "а теперь сам интересуется что я там готовлю и даже пробует иногда" },
+  { time: "6:38", speaker: "Клиент", text: "дочка тоже начала со мной завтракать по-новому это радует" },
+  { time: "6:52", speaker: "Менеджер", text: "татьяна а вы уже думали о продлении программы после первого года" },
+  { time: "7:08", speaker: "Клиент", text: "да я уже решила буду продлевать точно и может подругу приведу" },
+  { time: "7:22", speaker: "Клиент", text: "она как раз тоже хочет похудеть после родов но не знает с чего начать" },
+  { time: "7:38", speaker: "Менеджер", text: "отлично будет скидка за приглашенного я вам расскажу как оформить" }
+];
+
+const clientData = {
+  tatiana: { id: '001', name: 'Татьяна', age: 35, gender: 'Ж', startWeight: 54, currentWeight: 51, change: -3, days: 30, completion: 95, engagement: 'Высокий', nextCall: 7, uplift: 15, motivation: { level: 'high', score: 42 }, health: { weight: 65, height: 175, bmi: 21.3, goal: 'здоровье', issues: 'вздутие' }, behavior: { readiness: 'action', prediction: '85%', barriers: 'время' }, financial: { budget: 'нет огр.', sensitivity: 'низкая' } },
+  alexandr: { id: '002', name: 'Александр', age: 42, gender: 'М', startWeight: 92, currentWeight: 91, change: -1, days: 14, completion: 45, engagement: 'Средний', nextCall: 3, uplift: 5, motivation: { level: 'low', score: 18 }, health: { weight: 92, height: 178, bmi: 29, goal: 'похудение', issues: 'ожирение' }, behavior: { readiness: 'contemplation', prediction: '35%', barriers: 'финансы' }, financial: { budget: 'ограничен', sensitivity: 'высокая' } },
+  elena: { id: '003', name: 'Елена', age: 38, gender: 'Ж', startWeight: 58, currentWeight: 58, change: 0, days: 30, completion: 98, engagement: 'Высокий', nextCall: 14, uplift: 20, motivation: { level: 'high', score: 45 }, health: { weight: 58, height: 168, bmi: 20.5, goal: 'поддержание', issues: '—' }, behavior: { readiness: 'action', prediction: '92%', barriers: '—' }, financial: { budget: 'нет огр.', sensitivity: 'низкая' } },
+  mikhail: { id: '004', name: 'Михаил', age: 45, gender: 'М', startWeight: 88, currentWeight: 86, change: -2, days: 21, completion: 72, engagement: 'Средний', nextCall: 7, uplift: 12, motivation: { level: 'medium', score: 28 }, health: { weight: 88, height: 180, bmi: 27, goal: 'здоровье', issues: 'давление' }, behavior: { readiness: 'preparation', prediction: '55%', barriers: 'время' }, financial: { budget: 'средний', sensitivity: 'средняя' } },
+  natalia: { id: '005', name: 'Наталья', age: 29, gender: 'Ж', startWeight: 54, currentWeight: 52, change: -2, days: 30, completion: 95, engagement: 'Высокий', nextCall: 10, uplift: 18, motivation: { level: 'high', score: 48 }, health: { weight: 54, height: 165, bmi: 19.8, goal: 'спорт', issues: '—' }, behavior: { readiness: 'action', prediction: '95%', barriers: '—' }, financial: { budget: 'нет огр.', sensitivity: 'низкая' } },
+  igor: { id: '006', name: 'Игорь', age: 51, gender: 'М', startWeight: 105, currentWeight: 104, change: -1, days: 10, completion: 35, engagement: 'Низкий', nextCall: 2, uplift: 3, motivation: { level: 'medium', score: 32 }, health: { weight: 105, height: 175, bmi: 34, goal: 'диабет', issues: 'диабет' }, behavior: { readiness: 'contemplation', prediction: '45%', barriers: 'время' }, financial: { budget: 'средний', sensitivity: 'средняя' } },
+  svetlana: { id: '007', name: 'Светлана', age: 44, gender: 'Ж', startWeight: 72, currentWeight: 69, change: -3, days: 28, completion: 88, engagement: 'Высокий', nextCall: 7, uplift: 14, motivation: { level: 'high', score: 44 }, health: { weight: 72, height: 170, bmi: 24.9, goal: 'здоровье', issues: 'щитовидка' }, behavior: { readiness: 'action', prediction: '88%', barriers: '—' }, financial: { budget: 'нет огр.', sensitivity: 'низкая' } },
+  dmitry: { id: '008', name: 'Дмитрий', age: 36, gender: 'М', startWeight: 95, currentWeight: 96, change: 1, days: 7, completion: 20, engagement: 'Низкий', nextCall: 1, uplift: 0, motivation: { level: 'low', score: 15 }, health: { weight: 95, height: 182, bmi: 28.7, goal: 'похудение', issues: '—' }, behavior: { readiness: 'precontemplation', prediction: '20%', barriers: 'мотивация' }, financial: { budget: 'ограничен', sensitivity: 'высокая' } },
+  anna: { id: '009', name: 'Анна', age: 31, gender: 'Ж', startWeight: 56, currentWeight: 55, change: -1, days: 30, completion: 90, engagement: 'Высокий', nextCall: 14, uplift: 22, motivation: { level: 'high', score: 46 }, health: { weight: 56, height: 170, bmi: 19.3, goal: 'беременность', issues: '—' }, behavior: { readiness: 'action', prediction: '90%', barriers: '—' }, financial: { budget: 'нет огр.', sensitivity: 'низкая' } },
+  sergey: { id: '010', name: 'Сергей', age: 48, gender: 'М', startWeight: 82, currentWeight: 81, change: -1, days: 14, completion: 55, engagement: 'Средний', nextCall: 4, uplift: 8, motivation: { level: 'medium', score: 25 }, health: { weight: 82, height: 176, bmi: 26.5, goal: 'давление', issues: 'гипертония' }, behavior: { readiness: 'contemplation', prediction: '40%', barriers: 'время' }, financial: { budget: 'средний', sensitivity: 'средняя' } }
+};
+
+let currentPhase = 0;
+let currentLine = 0;
+let isPlaying = false;
+let timer = null;
+let selectedClientKey = 'tatiana';
+
+const keywords = {
+  motivation: ['мотивация', 'результат', 'знания', 'улучшился', 'рада', 'нравится', 'польза', 'желание', 'цель', 'хочу', 'стремлюсь', 'достичь', 'успех', 'изменения', 'новый'],
+  barrier: ['времени мало', 'сложно', 'сомнений', 'финансовая', 'трудно', 'незнаю', 'сомневаюсь', 'боюсь', 'проблема', 'препятствие'],
+  financial: ['деньги', 'стоимость', 'рассрочка', 'финансы', 'бюджет', 'скидка', 'оформить', 'продлевать', 'подписать', 'оплатить', 'цена', 'рублей', 'абонемент', 'тариф', 'платеж', 'бесплатно'],
+  health: ['здоровье', 'вес', 'сон', 'объемы', 'вздутие', 'кишечник', 'проблемы', 'усталость', 'энергия', 'самочувствие', 'болезнь', 'симптом'],
+  redflag: ['опасно', 'давление', 'гипертония', 'диабет', 'преддиабет', 'ожирение', 'инфаркт', 'инсульт', 'сердце', 'тахикардия', 'аритмия', 'сахар', 'глюкоза', 'холестерин', 'тревога', 'симптом', 'обследование', 'врач', 'анализы', 'дефицит', 'гомоцистеин', 'желчь', 'поджелудочная', 'щитовидка', 'гормоны'],
+  green: ['готов', 'оплачу', 'оформлю', 'запишу', 'присоединюсь', 'продлеваю', 'буду платить', 'согласен', 'решил', 'хочу', 'надо', 'нужно', 'интересует', 'подходит', 'нравится']
+};
+
+function highlightText(text) {
+  let result = text;
+  Object.entries(keywords).forEach(([type, words]) => {
+    words.forEach(word => {
+      const regex = new RegExp('(' + word + ')', 'gi');
+      result = result.replace(regex, '<span class="keyword-' + type + '">$1</span>');
+    });
+  });
+  return result;
+}
+
+function renderTranscript(lines) {
+  const el = document.getElementById('transcript');
+  el.innerHTML = lines.map((line, i) => `
+    <div class="transcript-line" id="line${i}">
+      <span class="time">${line.time}</span>
+      <span class="speaker">${line.speaker}:</span>
+      ${highlightText(line.text)}
+    </div>
+  `).join('');
+}
+
+function highlightLine(idx) {
+  const el = document.getElementById('line' + idx);
+  if (el) el.classList.add('highlighted');
+}
+
+function updateStatus(text) {
+  document.getElementById('status').textContent = text;
+}
+
+function populateClientList() {
+  const select = document.getElementById('clientSelect');
+  const clients = Object.keys(clientData);
+  clients.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = clientData[c].name + ', ' + clientData[c].age + ' лет';
+    select.appendChild(opt);
+  });
+}
+
+const clientTranscripts = {
+  tatiana: [
+    { time: "0:08", speaker: "Менеджер", text: "алло татьяна здравствуйте" },
+    { time: "0:15", speaker: "Клиент", text: "здравствуйте Светлана от Виктора Фитнесова и Лены Павловой мы с вами общались я буквально к вам на пару минут удобно говорить" },
+    { time: "0:32", speaker: "Клиент", text: "да слушаю ага отлично ну во первых рада вас слышать мы с вами общались аж в августе ну и хотела уточнить как вообще ваши успехи" },
+    { time: "0:48", speaker: "Клиент", text: "ну пока сложно судить только вот начинаем первый модуль начинаем проходить но в целом нет будет" },
+    { time: "1:05", speaker: "Клиент", text: "отлично да понравилось как бы да все понравилось единственное что как бы не все получалось потому что тут времени как бы мало надо" },
+    { time: "1:22", speaker: "Клиент", text: "к этому подходить ну понятно мне все понравилось нравится да ну вы также будете продолжать же решать свои задачи по здоровью" },
+    { time: "1:38", speaker: "Клиент", text: "да улучшился сон все есть да да ага то есть сейчас и вот это вот вздутие у вас прошло" },
+    { time: "1:55", speaker: "Клиент", text: "объемы уменьшились да то есть можно дало порадоваться ага тоже радуюсь да" },
+    { time: "2:12", speaker: "Клиент", text: "ну это да я ни разу не пожалела и надеюсь что не пожалею в будущем" },
+    { time: "2:28", speaker: "Клиент", text: "надеюсь только получить еще больше знаний ну если у вас уже за месяц есть такие результаты" },
+    { time: "2:45", speaker: "Клиент", text: "пока не решила я такой возможности не исключаю но честно это пока мало вероятно но мне очень" },
+    { time: "3:02", speaker: "Клиент", text: "поэтому так держать очень очень рада татьян за вас потому что в задачах еще и пород" },
+    { time: "3:18", speaker: "Клиент", text: "вот ну пока в планах пройти у вас именно клуб да закончить да" },
+    { time: "3:35", speaker: "Клиент", text: "ну финансовая сторона вопроса а в целом то как бы сомнений не было да" },
+    { time: "3:52", speaker: "Клиент", text: "вот что это за программа и какой она дает результат в плане улучшения здоровья" },
+    { time: "4:08", speaker: "Клиент", text: "ну поэтому нужно находить плюсы ну а деньги все равно это хоть и важная составляющая но не второстепенная" },
+    { time: "4:25", speaker: "Менеджер", text: "татьяна а как вы себя чувствуете после первого модуля есть какие-то изменения" },
+    { time: "4:38", speaker: "Клиент", text: "да знаете я уже привыкла к режиму и особо не заморачиваюсь голодом не сильно мучаюсь" },
+    { time: "4:52", speaker: "Клиент", text: "сон стал лучше это правда и вздутие прошло совсем как вы помните было в начале" },
+    { time: "5:08", speaker: "Менеджер", text: "это отлично а какие сложности возникают в процессе" },
+    { time: "5:22", speaker: "Клиент", text: "ну иногда лень готовить особенно вечером после работы хочется просто отдохнуть" },
+    { time: "5:38", speaker: "Клиент", text: "но я стараюсь хоть что-то легкое сделать овощи нарезать или йогурт взять" },
+    { time: "5:52", speaker: "Менеджер", text: "а как семья относится к вашим изменениям в питании" },
+    { time: "6:08", speaker: "Клиент", text: "муж initially был скептиком говорил что это очередная диета и надоест" },
+    { time: "6:22", speaker: "Клиент", text: "а теперь сам интересуется что я там готовлю и даже пробует иногда" },
+    { time: "6:38", speaker: "Клиент", text: "дочка тоже начала со мной завтракать по-новому это радует" },
+    { time: "6:52", speaker: "Менеджер", text: "татьяна а вы уже думали о продлении программы после первого года" },
+    { time: "7:08", speaker: "Клиент", text: "да я уже решила буду продлевать точно и может подругу приведу" },
+    { time: "7:22", speaker: "Клиент", text: "она как раз тоже хочет похудеть после родов но не знает с чего начать" },
+    { time: "7:38", speaker: "Менеджер", text: "отлично будет скидка за приглашенного я вам расскажу как оформить" },
+    { time: "7:52", speaker: "Клиент", text: "да интересно сколько это будет стоить и есть ли рассрочка" },
+    { time: "8:08", speaker: "Менеджер", text: "конечно есть несколько вариантов оплаты я вам подробно расскажу" },
+    { time: "8:22", speaker: "Клиент", text: "хорошо тогда оформим заявку на продление" },
+    { time: "8:38", speaker: "Менеджер", text: "отлично татьяна рад был вашим успехам до следующего звонка" },
+    { time: "8:52", speaker: "Клиент", text: "спасибо вам большое за поддержку и мотивацию" }
+  ],
+  alexandr: [
+    { time: "0:10", speaker: "Менеджер", text: "алло александр добрый день это bmi tech беспокоит" },
+    { time: "0:22", speaker: "Клиент", text: "да добрый день слушаю вас" },
+    { time: "0:35", speaker: "Клиент", text: "честно говоря времени особо нет заниматься своим здоровьем" },
+    { time: "0:52", speaker: "Клиент", text: "работа заваливает каждый день с утра до ночи" },
+    { time: "1:10", speaker: "Клиент", text: "может быть в отпуске начну но пока не знаю" },
+    { time: "1:28", speaker: "Клиент", text: "финансы пока не позволяют особо тратить на программы" },
+    { time: "1:45", speaker: "Клиент", text: "хотя врач сказал что надо бы вес сбросить" },
+    { time: "2:02", speaker: "Клиент", text: "но понимаете руководство компании требует результатов" },
+    { time: "2:20", speaker: "Клиент", text: "проекты горящие сдаем постоянно дедлайны" },
+    { time: "2:38", speaker: "Менеджер", text: "александр а сколько вы спите в среднем" },
+    { time: "2:55", speaker: "Клиент", text: "часов пять максимум иногда три четыре" },
+    { time: "3:12", speaker: "Клиент", text: "конечно потом весь день разбитый хожу" },
+    { time: "3:30", speaker: "Клиент", text: "но что поделаешь такая работа" },
+    { time: "3:48", speaker: "Клиент", text: "пока не готов инвестировать свое время в программу" },
+    { time: "4:05", speaker: "Менеджер", text: "а сколько вы весите сейчас если не секрет" },
+    { time: "4:22", speaker: "Клиент", text: "девяносто два килограмма при росте сто семьдесят восемь" },
+    { time: "4:40", speaker: "Клиент", text: "врач говорит что ожирение уже первой степени" },
+    { time: "4:58", speaker: "Клиент", text: "но мне пока некогда по врачам ходить" },
+    { time: "5:15", speaker: "Менеджер", text: "а питаетесь как обычно в течение дня" },
+    { time: "5:32", speaker: "Клиент", text: "да особо не до этого кофе с булочкой и вперед" },
+    { time: "5:50", speaker: "Клиент", text: "вечером когда прихожу домой сил нет готовить" },
+    { time: "6:08", speaker: "Клиент", text: "заказываем часто готовую еду или фастфуд" },
+    { time: "6:25", speaker: "Менеджер", text: "александр а что насчет спорта" },
+    { time: "6:42", speaker: "Клиент", text: "да какой там спорт времени нет" },
+    { time: "7:00", speaker: "Клиент", text: "может быть в следующем году посмотрю" },
+    { time: "7:18", speaker: "Менеджер", text: "хорошо когда решитесь обращайтесь" },
+    { time: "7:35", speaker: "Клиент", text: "спасибо за информацию пока думаю" }
+  ],
+  elena: [
+    { time: "0:08", speaker: "Менеджер", text: "елена добрый день как ваши успехи" },
+    { time: "0:20", speaker: "Клиент", text: "здравствуйте я очень довольна результатами программы" },
+    { time: "0:38", speaker: "Клиент", text: "муж тоже заинтересовался и хочет присоединиться" },
+    { time: "0:56", speaker: "Клиент", text: "уже минус восемь килограмм за три месяца" },
+    { time: "1:14", speaker: "Клиент", text: "врач просто удивился когда увидел анализы" },
+    { time: "1:32", speaker: "Клиент", text: "семья теперь вместе питается это так здорово" },
+    { time: "1:50", speaker: "Клиент", text: "дети тоже привыкли к здоровому питанию" },
+    { time: "2:08", speaker: "Клиент", text: "энергии стало намного больше я даже начала бегать по утрам" },
+    { time: "2:26", speaker: "Клиент", text: "муж говорит что я помолодела лет на десять" },
+    { time: "2:44", speaker: "Менеджер", text: "елена а как вы себя чувствуете эмоционально" },
+    { time: "3:02", speaker: "Клиент", text: "намного лучше раньше часто стрессовала на работе" },
+    { time: "3:20", speaker: "Клиент", text: "сейчас спокойнее отношусь к проблемам" },
+    { time: "3:38", speaker: "Клиент", text: "собираюсь продлить программу еще на год точно" },
+    { time: "3:56", speaker: "Клиент", text: "рекомендую всем знакомым эту программу" },
+    { time: "4:14", speaker: "Менеджер", text: "елена а сколько вы сейчас весите" },
+    { time: "4:32", speaker: "Клиент", text: "пятьдесят восемь килограмм при росте сто шестьдесят восемь" },
+    { time: "4:50", speaker: "Клиент", text: "врач говорит что это идеальный вес для моего роста" },
+    { time: "5:08", speaker: "Менеджер", text: "а как изменился ваш режим питания" },
+    { time: "5:26", speaker: "Клиент", text: "ем теперь маленькими порциями пять раз в день" },
+    { time: "5:44", speaker: "Клиент", text: "исключила весь сахар и мучное полностью" },
+    { time: "6:02", speaker: "Клиент", text: "пью больше воды минимум два литра в день" },
+    { time: "6:20", speaker: "Менеджер", text: "а как семья отнеслась к этим изменениям" },
+    { time: "6:38", speaker: "Клиент", text: "муж сначала скептически относился" },
+    { time: "6:56", speaker: "Клиент", text: "а теперь сам следит за питанием" },
+    { time: "7:14", speaker: "Клиент", text: "дети тоже просят овощи вместо сладостей" },
+    { time: "7:32", speaker: "Менеджер", text: "елена вы уже думали о продлении" },
+    { time: "7:50", speaker: "Клиент", text: "конечно буду продлевать точно" },
+    { time: "8:08", speaker: "Клиент", text: "может еще подругу приведу она тоже хочет" },
+    { time: "8:26", speaker: "Менеджер", text: "отлично будет скидка за приглашенного" },
+    { time: "8:44", speaker: "Клиент", text: "да расскажите мне подробнее об условиях" },
+    { time: "9:02", speaker: "Менеджер", text: "конечно я вам все объясню по телефону" },
+    { time: "9:20", speaker: "Клиент", text: "хорошо буду ждать вашего звонка" },
+    { time: "9:38", speaker: "Менеджер", text: "елена рад был вашим успехам до свидания" },
+    { time: "9:56", speaker: "Клиент", text: "спасибо вам большое за поддержку" }
+  ],
+  mikhail: [
+    { time: "0:10", speaker: "Менеджер", text: "михаил добрый день это по поводу вашего здоровья" },
+    { time: "0:25", speaker: "Клиент", text: "да слушаю врач посоветовал питание поменять" },
+    { time: "0:42", speaker: "Клиент", text: "но работы много пока не до этого" },
+    { time: "0:58", speaker: "Клиент", text: "проект горящий сдаем в конце месяца" },
+    { time: "1:15", speaker: "Клиент", text: "может быть в июле начну когда отчетность сдадим" },
+    { time: "1:32", speaker: "Клиент", text: "давление беспокоит уже несколько месяцев" },
+    { time: "1:50", speaker: "Клиент", text: "врач выписал таблетки но я их пью нерегулярно" },
+    { time: "2:08", speaker: "Клиент", text: "супруга переживает за мое здоровье постоянно" },
+    { time: "2:25", speaker: "Клиент", text: "но понимаете руководство не отпускает раньше" },
+    { time: "2:42", speaker: "Менеджер", text: "михаил а сколько часов в день вы работаете" },
+    { time: "3:00", speaker: "Клиент", text: "часов по десять двенадцать бывает" },
+    { time: "3:18", speaker: "Клиент", text: "а иногда и по выходным приходится" },
+    { time: "3:35", speaker: "Клиент", text: "на себя времени совсем не остается" },
+    { time: "3:52", speaker: "Клиент", text: "может быть после отпуска начну заниматься" },
+    { time: "4:10", speaker: "Менеджер", text: "михаил а сколько вы весите сейчас" },
+    { time: "4:28", speaker: "Клиент", text: "восемьдесят восемь килограмм при росте сто восемьдесят" },
+    { time: "4:46", speaker: "Клиент", text: "врач говорит что надо хотя бы до семидесяти сбросить" },
+    { time: "5:04", speaker: "Менеджер", text: "а как вы питаетесь в течение дня" },
+    { time: "5:22", speaker: "Клиент", text: "да особо не до этого кофе и сигареты" },
+    { time: "5:40", speaker: "Клиент", text: "вечером набегаюсь по ресторанам" },
+    { time: "5:58", speaker: "Клиент", text: "фастфуд часто приходится есть на ходу" },
+    { time: "6:16", speaker: "Менеджер", text: "а что насчет спорта и физической активности" },
+    { time: "6:34", speaker: "Клиент", text: "да какой там спорт времени нет" },
+    { time: "6:52", speaker: "Клиент", text: "лифт до квартиры поднимаюсь это и есть нагрузка" },
+    { time: "7:10", speaker: "Менеджер", text: "а давление часто измеряете" },
+    { time: "7:28", speaker: "Клиент", text: "давление скачет постоянно" },
+    { time: "7:46", speaker: "Клиент", text: "верхнее бывает и сто шестьдесят" },
+    { time: "8:04", speaker: "Менеджер", text: "михаил а вы уже думали о смене работы" },
+    { time: "8:22", speaker: "Клиент", text: "понимаете надо еще квартиру оплатить" },
+    { time: "8:40", speaker: "Клиент", text: "ипотека давит приходится работать" },
+    { time: "8:58", speaker: "Менеджер", text: "но здоровье важнее денег подумайте" },
+    { time: "9:16", speaker: "Клиент", text: "вы правы попробую найти время" },
+    { time: "9:34", speaker: "Менеджер", text: "хорошо когда решите обращайтесь" },
+    { time: "9:52", speaker: "Клиент", text: "спасибо за беспокойство пока думаю" },
+    { time: "10:10", speaker: "Менеджер", text: "михаил заботьтесь о себе до свидания" },
+    { time: "10:28", speaker: "Клиент", text: "спасибо вам за информацию" }
+  ],
+  natalia: [
+    { time: "0:08", speaker: "Менеджер", text: "наталья добрый день как ваши успехи на программе" },
+    { time: "0:22", speaker: "Клиент", text: "отлично все просто замечательно" },
+    { time: "0:36", speaker: "Клиент", text: "я уже бегаю каждое утро по пять километров" },
+    { time: "0:52", speaker: "Клиент", text: "сестра тоже захотела присоединиться к программе" },
+    { time: "1:08", speaker: "Клиент", text: "энергии стало намного больше чем раньше" },
+    { time: "1:24", speaker: "Клиент", text: "хочу стать консультантом по здоровому питанию" },
+    { time: "1:42", speaker: "Клиент", text: "подругам уже рассказала о программе трое записались" },
+    { time: "1:58", speaker: "Клиент", text: "муж тоже поддерживает мои занятия спортом" },
+    { time: "2:15", speaker: "Клиент", text: "сбросила уже шесть килограмм" },
+    { time: "2:32", speaker: "Менеджер", text: "наталья а как изменился ваш рацион" },
+    { time: "2:50", speaker: "Клиент", text: "теперь ем больше овощей и белка" },
+    { time: "3:08", speaker: "Клиент", text: "фастфуд полностью исключила из меню" },
+    { time: "3:25", speaker: "Клиент", text: "чувствую себя намного здоровее" },
+    { time: "3:42", speaker: "Клиент", text: "планирую участвовать в марафоне этим летом" },
+    { time: "4:00", speaker: "Менеджер", text: "наталья а сколько сейчас весите" },
+    { time: "4:18", speaker: "Клиент", text: "пятьдесят четыре килограмма при росте сто шестьдесят пять" },
+    { time: "4:36", speaker: "Клиент", text: "врач говорит что это идеальный вес" },
+    { time: "4:54", speaker: "Менеджер", text: "а как семья относится к вашим занятиям" },
+    { time: "5:12", speaker: "Клиент", text: "муж полностью поддерживает" },
+    { time: "5:30", speaker: "Клиент", text: "тоже начал бегать со мной по утрам" },
+    { time: "5:48", speaker: "Клиент", text: "дети едят теперь только здоровую еду" },
+    { time: "6:06", speaker: "Менеджер", text: "наталья вы уже думали о продлении" },
+    { time: "6:24", speaker: "Клиент", text: "конечно буду продлевать" },
+    { time: "6:42", speaker: "Клиент", text: "и подругу приведу она тоже хочет" },
+    { time: "7:00", speaker: "Менеджер", text: "отлично будет скидка за приглашенного" },
+    { time: "7:18", speaker: "Клиент", text: "да расскажите мне условия" },
+    { time: "7:36", speaker: "Менеджер", text: "конечно я вам все объясню" },
+    { time: "7:54", speaker: "Клиент", text: "хорошо буду ждать" },
+    { time: "8:12", speaker: "Менеджер", text: "наталья рад был успехам до свидания" },
+    { time: "8:30", speaker: "Клиент", text: "спасибо вам большое" }
+  ],
+  igor: [
+    { time: "0:12", speaker: "Менеджер", text: "игорь добрый день есть вопрос по вашему здоровью" },
+    { time: "0:28", speaker: "Клиент", text: "да врач сказал что надо вес сбросить срочно" },
+    { time: "0:45", speaker: "Клиент", text: "но работа такая что некогда даже поесть нормально" },
+    { time: "1:02", speaker: "Клиент", text: "диабет начинается уже преддиабет по анализам" },
+    { time: "1:20", speaker: "Клиент", text: "супруга переживает постоянно за мое здоровье" },
+    { time: "1:38", speaker: "Клиент", text: "может быть покажу ей программу она заинтересуется" },
+    { time: "1:55", speaker: "Клиент", text: "а вопрос по стоимости сколько это стоит" },
+    { time: "2:12", speaker: "Менеджер", text: "igor а сколько вы весите сейчас" },
+    { time: "2:30", speaker: "Клиент", text: "сто пять килограмм при росте сто семьдесят пять" },
+    { time: "2:48", speaker: "Клиент", text: "врач говорит что надо хотя бы до восьмидесяти сбросить" },
+    { time: "3:05", speaker: "Клиент", text: "но понимаете работа не позволяет" },
+    { time: "3:22", speaker: "Клиент", text: "часто ем на ходу фастфуд" },
+    { time: "3:40", speaker: "Клиент", text: "давление тоже начало скакать" },
+    { time: "3:58", speaker: "Клиент", text: "надо что-то менять но не знаю с чего начать" },
+    { time: "4:16", speaker: "Менеджер", text: "игорь а как часто вы едите в течение дня" },
+    { time: "4:34", speaker: "Клиент", text: "да особо не до еды днем" },
+    { time: "4:52", speaker: "Клиент", text: "вечером наверстываю" },
+    { time: "5:10", speaker: "Клиент", text: "ем все подряд и много" },
+    { time: "5:28", speaker: "Менеджер", text: "а сахар измеряете" },
+    { time: "5:46", speaker: "Клиент", text: "сахар скачет постоянно" },
+    { time: "6:04", speaker: "Клиент", text: "бывает и двенадцать и четырнадцать" },
+    { time: "6:22", speaker: "Менеджер", text: "это очень опасно надо следить" },
+    { time: "6:40", speaker: "Клиент", text: "понимаю но времени нет" },
+    { time: "6:58", speaker: "Клиент", text: "работа забирает все силы" },
+    { time: "7:16", speaker: "Менеджер", text: "а семья поддерживает ваши занятия" },
+    { time: "7:34", speaker: "Клиент", text: "супруга очень переживает" },
+    { time: "7:52", speaker: "Клиент", text: "давай говорит надо лечиться" },
+    { time: "8:10", speaker: "Менеджер", text: "игорь подумайте о здоровье" },
+    { time: "8:28", speaker: "Клиент", text: "вы правы попробую" },
+    { time: "8:46", speaker: "Менеджер", text: "хорошо когда решите обращайтесь" },
+    { time: "9:04", speaker: "Клиент", text: "спасибо за информацию" },
+    { time: "9:22", speaker: "Менеджер", text: "игорь берегите здоровье до свидания" },
+    { time: "9:40", speaker: "Клиент", text: "спасибо вам пока" }
+  ],
+  svetlana: [
+    { time: "0:10", speaker: "Менеджер", text: "светлана как дела на программе" },
+    { time: "0:25", speaker: "Клиент", text: "все замечательно энергии стало намного больше" },
+    { time: "0:42", speaker: "Клиент", text: "дети тоже начали правильно питаться" },
+    { time: "0:58", speaker: "Клиент", text: "муж тоже на программу записался" },
+    { time: "1:15", speaker: "Клиент", text: "минус пять килограмм за первый месяц" },
+    { time: "1:32", speaker: "Клиент", text: "всем рекомендую эту программу" },
+    { time: "1:50", speaker: "Клиент", text: "щитовидка перестала беспокоить" },
+    { time: "2:08", speaker: "Клиент", text: "врач сказал что анализы улучшились" },
+    { time: "2:25", speaker: "Клиент", text: "семья теперь вместе занимается здоровьем" },
+    { time: "2:42", speaker: "Менеджер", text: "светлана а как изменился ваш режим дня" },
+    { time: "3:00", speaker: "Клиент", text: "теперь ложусь спать в одно и то же время" },
+    { time: "3:18", speaker: "Клиент", text: "стараюсь высыпаться по восемь часов" },
+    { time: "3:35", speaker: "Клиент", text: "утром делаю зарядку пятнадцать минут" },
+    { time: "3:52", speaker: "Клиент", text: "очень довольна результатами" },
+    { time: "4:10", speaker: "Менеджер", text: "светлана а сколько сейчас весите" },
+    { time: "4:28", speaker: "Клиент", text: "семьдесят два килограмма при росте сто семьдесят" },
+    { time: "4:46", speaker: "Клиент", text: "врач говорит что уже хорошо" },
+    { time: "5:04", speaker: "Менеджер", text: "а как изменилось питание" },
+    { time: "5:22", speaker: "Клиент", text: "ем теперь больше овощей" },
+    { time: "5:40", speaker: "Клиент", text: "исключила все жареное" },
+    { time: "5:58", speaker: "Клиент", text: "пью травяные чаи" },
+    { time: "6:16", speaker: "Менеджер", text: "а как семья относится к изменениям" },
+    { time: "6:34", speaker: "Клиент", text: "муж полностью поддерживает" },
+    { time: "6:52", speaker: "Клиент", text: "тоже начал следить за питанием" },
+    { time: "7:10", speaker: "Клиент", text: "дети едят теперь овощи с удовольствием" },
+    { time: "7:28", speaker: "Менеджер", text: "светлана вы уже думали о продлении" },
+    { time: "7:46", speaker: "Клиент", text: "конечно буду продлевать" },
+    { time: "8:04", speaker: "Клиент", text: "может подругу приведу" },
+    { time: "8:22", speaker: "Менеджер", text: "отлично будет скидка" },
+    { time: "8:40", speaker: "Клиент", text: "да расскажите условия" },
+    { time: "8:58", speaker: "Менеджер", text: "конечно я вам все объясню" },
+    { time: "9:16", speaker: "Клиент", text: "хорошо буду ждать" },
+    { time: "9:34", speaker: "Менеджер", text: "светлана рад был успехам до свидания" },
+    { time: "9:52", speaker: "Клиент", text: "спасибо вам большое" }
+  ],
+  dmitry: [
+    { time: "0:08", speaker: "Менеджер", text: "дмитрий добрый день есть интерес к программе" },
+    { time: "0:25", speaker: "Клиент", text: "да но пока не решил нужен ли мне этот курс" },
+    { time: "0:42", speaker: "Клиент", text: "может быть потом когда время будет" },
+    { time: "1:00", speaker: "Клиент", text: "финансы пока не позволяют особо тратить" },
+    { time: "1:18", speaker: "Клиент", text: "посмотрю что за программа и потом решу" },
+    { time: "1:35", speaker: "Клиент", text: "пока не готов инвестировать в это" },
+    { time: "1:52", speaker: "Клиент", text: "работа отнимает все силы" },
+    { time: "2:10", speaker: "Менеджер", text: "дмитрий а чем вы занимаетесь" },
+    { time: "2:28", speaker: "Клиент", text: "я в it сфере работаю project manager" },
+    { time: "2:45", speaker: "Клиент", text: "понимаете дедлайны постоянные стресс" },
+    { time: "3:02", speaker: "Клиент", text: "на себя времени не остается совсем" },
+    { time: "3:20", speaker: "Клиент", text: "плюс командировки часто" },
+    { time: "3:38", speaker: "Клиент", text: "может в следующем году посмотрю" },
+    { time: "3:55", speaker: "Клиент", text: "спасибо за информацию пока думаю" },
+    { time: "4:12", speaker: "Менеджер", text: "дмитрий а сколько вы весите" },
+    { time: "4:30", speaker: "Клиент", text: "девяносто пять килограмм при росте сто восемьдесят два" },
+    { time: "4:48", speaker: "Клиент", text: "врач говорит что уже ожирение" },
+    { time: "5:05", speaker: "Менеджер", text: "а как вы питаетесь в течение дня" },
+    { time: "5:22", speaker: "Клиент", text: "да особо не до еды днем" },
+    { time: "5:40", speaker: "Клиент", text: "вечером наверстываю" },
+    { time: "5:58", speaker: "Клиент", text: "ем все подряд и много" },
+    { time: "6:15", speaker: "Менеджер", text: "а что насчет спорта" },
+    { time: "6:32", speaker: "Клиент", text: "да какой там спорт времени нет" },
+    { time: "6:50", speaker: "Клиент", text: "может летом начну" },
+    { time: "7:08", speaker: "Менеджер", text: "дмитрий а сколько вы спите" },
+    { time: "7:25", speaker: "Клиент", text: "часов пять максимум" },
+    { time: "7:42", speaker: "Клиент", text: "постоянно недосып" },
+    { time: "8:00", speaker: "Менеджер", text: "это очень плохо влияет на здоровье" },
+    { time: "8:18", speaker: "Клиент", text: "понимаю но что поделать" },
+    { time: "8:35", speaker: "Менеджер", text: "подумайте о своем здоровье" },
+    { time: "8:52", speaker: "Клиент", text: "вы правы попробую" },
+    { time: "9:10", speaker: "Менеджер", text: "хорошо когда решите обращайтесь" },
+    { time: "9:28", speaker: "Клиент", text: "спасибо за информацию" },
+    { time: "9:45", speaker: "Менеджер", text: "дмитрий берегите здоровье до свидания" },
+    { time: "10:02", speaker: "Клиент", text: "спасибо пока" }
+  ],
+  anna: [
+    { time: "0:08", speaker: "Менеджер", text: "анна добрый день поздравляю с началом программы" },
+    { time: "0:22", speaker: "Клиент", text: "спасибо я очень мотивирована и рада" },
+    { time: "0:38", speaker: "Клиент", text: "готовимся к беременности поэтому здоровье очень важно" },
+    { time: "0:55", speaker: "Клиент", text: "врач сказал что надо питание улучшить" },
+    { time: "1:12", speaker: "Клиент", text: "хочу максимально естественно подготовиться к беременности" },
+    { time: "1:30", speaker: "Клиент", text: "муж полностью поддерживает мое решение" },
+    { time: "1:48", speaker: "Клиент", text: "сбросила уже три килограмма" },
+    { time: "2:05", speaker: "Клиент", text: "чувствую себя намного лучше" },
+    { time: "2:22", speaker: "Менеджер", text: "анна а как вы изменили свой рацион" },
+    { time: "2:40", speaker: "Клиент", text: "добавила больше овощей и белка" },
+    { time: "2:58", speaker: "Клиент", text: "исключила все вредные продукты" },
+    { time: "3:15", speaker: "Клиент", text: "муж тоже стал правильно питаться" },
+    { time: "3:32", speaker: "Клиент", text: "очень довольна программой" },
+    { time: "3:50", speaker: "Клиент", text: "планируем беременность через полгода" },
+    { time: "4:08", speaker: "Менеджер", text: "анна а сколько сейчас весите" },
+    { time: "4:26", speaker: "Клиент", text: "пятьдесят шесть килограмм при росте сто семьдесят" },
+    { time: "4:44", speaker: "Клиент", text: "врач говорит что это идеально" },
+    { time: "5:02", speaker: "Менеджер", text: "а как изменился ваш режим" },
+    { time: "5:20", speaker: "Клиент", text: "теперь сплю по восемь часов" },
+    { time: "5:38", speaker: "Клиент", text: "стараюсь ложиться в одно время" },
+    { time: "5:56", speaker: "Клиент", text: "исключила стресс из жизни" },
+    { time: "6:14", speaker: "Менеджер", text: "а как семья относится к программе" },
+    { time: "6:32", speaker: "Клиент", text: "муж полностью поддерживает" },
+    { time: "6:50", speaker: "Клиент", text: "тоже начал следить за питанием" },
+    { time: "7:08", speaker: "Клиент", text: "мама рада что я занимаюсь здоровьем" },
+    { time: "7:26", speaker: "Менеджер", text: "анна вы уже думали о продлении" },
+    { time: "7:44", speaker: "Клиент", text: "конечно буду продлевать" },
+    { time: "8:02", speaker: "Клиент", text: "очень нравится программа" },
+    { time: "8:20", speaker: "Менеджер", text: "отлично рад вашим успехам" },
+    { time: "8:38", speaker: "Клиент", text: "спасибо вам большое" },
+    { time: "8:56", speaker: "Менеджер", text: "анна до свидания" },
+    { time: "9:14", speaker: "Клиент", text: "до свидания" }
+  ],
+  sergey: [
+    { time: "0:10", speaker: "Менеджер", text: "сергей добрый день по поводу вашего давления" },
+    { time: "0:25", speaker: "Клиент", text: "да повышенное давление уже год как" },
+    { time: "0:42", speaker: "Клиент", text: "времени не хватает на себя совсем" },
+    { time: "0:58", speaker: "Клиент", text: "работа отнимает все силы" },
+    { time: "1:15", speaker: "Клиент", text: "надо бы заняться здоровьем уже" },
+    { time: "1:32", speaker: "Клиент", text: "может быть кто-то из семьи подтолкнет" },
+    { time: "1:50", speaker: "Клиент", text: "супруга постоянно говорит что надо худеть" },
+    { time: "2:08", speaker: "Менеджер", text: "сергей а сколько вы весите" },
+    { time: "2:25", speaker: "Клиент", text: "восемьдесят два килограмма при росте сто семьдесят шесть" },
+    { time: "2:42", speaker: "Клиент", text: "врач сказал что это не критично но надо следить" },
+    { time: "3:00", speaker: "Клиент", text: "гипертония уже начальная стадия" },
+    { time: "3:18", speaker: "Клиент", text: "таблетки пью но не регулярно" },
+    { time: "3:35", speaker: "Клиент", text: "надо менять образ жизни" },
+    { time: "3:52", speaker: "Клиент", text: "может быть в отпуске начну заниматься" },
+    { time: "4:10", speaker: "Менеджер", text: "сергей а как вы питаетесь" },
+    { time: "4:28", speaker: "Клиент", text: "да особо не до этого" },
+    { time: "4:46", speaker: "Клиент", text: "кофе и сигареты это мое всё" },
+    { time: "5:04", speaker: "Клиент", text: "вечером часто набегаюсь" },
+    { time: "5:22", speaker: "Менеджер", text: "а давление часто измеряете" },
+    { time: "5:40", speaker: "Клиент", text: "давление скачет постоянно" },
+    { time: "5:58", speaker: "Клиент", text: "бывает и сто пятьдесят на сто" },
+    { time: "6:16", speaker: "Менеджер", text: "это очень опасно" },
+    { time: "6:34", speaker: "Клиент", text: "понимаю но времени нет" },
+    { time: "6:52", speaker: "Клиент", text: "работа не отпускает" },
+    { time: "7:10", speaker: "Менеджер", text: "а что насчет спорта" },
+    { time: "7:28", speaker: "Клиент", text: "да какой там спорт" },
+    { time: "7:46", speaker: "Клиент", text: "может быть в отпуске" },
+    { time: "8:04", speaker: "Менеджер", text: "сергей подумайте о здоровье" },
+    { time: "8:22", speaker: "Клиент", text: "вы правы надо что-то делать" },
+    { time: "8:40", speaker: "Менеджер", text: "хорошо когда решите обращайтесь" },
+    { time: "8:58", speaker: "Клиент", text: "спасибо за информацию" },
+    { time: "9:16", speaker: "Менеджер", text: "сергей берегите здоровье до свидания" },
+    { time: "9:34", speaker: "Клиент", text: "спасибо пока" }
+  ]
+};
+
+function selectClient() {
+  const sel = document.getElementById('clientSelect').value;
+  if (sel && clientData[sel]) {
+    selectedClientKey = sel;
+    reset();
+    const newTranscript = clientTranscripts[sel] || clientTranscripts.tatiana;
+    transcriptLines.length = 0;
+    newTranscript.forEach(line => transcriptLines.push(line));
+    renderTranscript(transcriptLines);
+    initRadar(clientData[sel]);
+    initScatter(clientData[sel]);
+    updateStatus('Клиент: ' + clientData[sel].name + ' - транскрипт загружен');
+  } else {
+    updateStatus('Выберите клиента');
+  }
+}
+
+function activatePhase(phaseNum, items) {
+  const numEl = document.getElementById('num' + phaseNum);
+  const titleEl = document.getElementById('title' + phaseNum);
+  if (numEl) numEl.classList.add('active');
+  if (titleEl) titleEl.classList.add('active');
+
+  if (items) items.forEach((itemId, idx) => {
+    setTimeout(() => {
+      const el = document.getElementById(itemId);
+      if (el) el.classList.add('active');
+    }, idx * 1000);
+  });
+}
+
+function updateProfileBasic(data) {
+  if (!data) return;
+  document.getElementById('profileAvatar').textContent = data.name.charAt(0);
+  document.getElementById('profileName').textContent = data.name + ', ' + data.age + ' лет';
+  document.getElementById('profileBadge').textContent = data.motivation.level.toUpperCase();
+  document.getElementById('profileBadge').className = 'profile-badge ' + data.motivation.level;
+  document.getElementById('profileId').textContent = 'ID: ' + data.id;
+  document.getElementById('qsWeight').textContent = data.health.weight;
+  document.getElementById('qsBMI').textContent = data.health.bmi;
+  document.getElementById('pName').textContent = data.name;
+  document.getElementById('pGender').textContent = data.gender === 'Ж' ? 'Женский' : 'Мужской';
+  document.getElementById('pAge').textContent = data.age + ' лет';
+  document.getElementById('pWeight').textContent = data.health.weight + ' кг';
+  document.getElementById('pHeight').textContent = data.health.height + ' см';
+  document.getElementById('pBMI').textContent = data.health.bmi;
+  document.getElementById('pMotivation').textContent = data.motivation.level;
+  document.getElementById('pMotivation').className = 'profile-value ' + data.motivation.level;
+  document.getElementById('pGoal').textContent = data.health.goal;
+}
+
+function updateProfileAnamnesis(data) {
+  if (!data) return;
+  document.getElementById('pDiseases').textContent = data.health.issues || '—';
+  document.getElementById('pAllergies').textContent = '—';
+  document.getElementById('pSurgery').textContent = '—';
+  document.getElementById('pMeds').textContent = '—';
+  document.getElementById('pFamily').textContent = '—';
+  document.getElementById('pDiet').textContent = 'обычное';
+  document.getElementById('pSleep').textContent = '7 ч';
+  document.getElementById('pStress').textContent = 'средний';
+  document.getElementById('pActivity').textContent = 'низкая';
+  document.getElementById('pHabits').textContent = '—';
+}
+
+function updateProfile(data) {
+  if (!data) return;
+  document.getElementById('qsLTV').textContent = data.motivation.score || 42;
+  document.getElementById('qsStatus').textContent = data.motivation.level === 'high' ? 'Премиум' : 'Стандарт';
+  document.getElementById('pReadiness').textContent = data.behavior.readiness;
+  document.getElementById('pPrediction').textContent = data.behavior.prediction;
+  document.getElementById('pBarriers').textContent = data.behavior.barriers;
+  document.getElementById('pStart').textContent = data.health.weight + ' кг';
+  document.getElementById('pCurrent').textContent = (data.health.weight - 3) + ' кг';
+  document.getElementById('pDelta').textContent = '-3 кг';
+  document.getElementById('pDays').textContent = '30 дн';
+  document.getElementById('pCompletion').textContent = data.motivation.score >= 40 ? '95%' : '60%';
+  document.getElementById('pEngagement').textContent = data.motivation.score >= 40 ? 'Высокий' : 'Средний';
+  document.getElementById('pNextCall').textContent = '+7 дней';
+  document.getElementById('pUplift').textContent = '+15%';
+  document.getElementById('pBudget').textContent = data.financial.budget;
+  document.getElementById('pSensitivity').textContent = data.financial.sensitivity;
+  document.getElementById('pLTV').textContent = data.motivation.score >= 40 ? '8500 ₽' : '4200 ₽';
+  document.getElementById('pStatus').textContent = data.motivation.level === 'high' ? 'Активен' : 'Приостановлен';
+  document.getElementById('pPrice').textContent = data.motivation.level === 'high' ? '8500 ₽' : '4200 ₽';
+  document.getElementById('pTerm').textContent = data.motivation.level === 'high' ? '12 мес' : '3 мес';
+}
+
+function stepForward() {
+  if (currentPhase >= 3) { reset(); return; }
+  currentPhase++;
+  
+  // Highlight all rows in the current phase results card and badges
+  const results = {
+    1: ['транскрипт: 45 мин', 'MARS: 42/50', 'ASR: 98%', 'API: 3 источника'],
+    2: ['психолингвистика: 12 признаков', 'TF-IDF: 28 ключевых', 'NER: 15 сущностей', 'LLM: JSON структура'],
+    3: ['вектор: 256 признаков', 'Z-score: норм.', 'K-means: кластер 3', 'ML: модель готова']
+  };
+  for (let i = 1; i <= 4; i++) {
+    const rowEl = document.getElementById('row' + currentPhase + '-' + i);
+    const resEl = document.getElementById('res' + currentPhase + '-' + i);
+    const vizEl = document.getElementById('viz' + currentPhase + '-' + i);
+    if (rowEl) {
+      setTimeout(() => {
+        rowEl.style.transition = 'background 0.3s';
+        rowEl.classList.add('highlighted');
+        rowEl.querySelectorAll('.badge').forEach(b => b.classList.add('active'));
+        if (resEl) {
+          resEl.textContent = results[currentPhase][i-1];
+          resEl.classList.add('filled');
+        }
+        if (vizEl) {
+          vizEl.querySelectorAll('.mini-bar').forEach(b => b.classList.add('filled'));
+          vizEl.querySelectorAll('.mini-dot').forEach(d => d.classList.add('animate'));
+        }
+      }, (i - 1) * 500);
+    }
+  }
+  
+  const phaseLabels = { 1: 'Сбор данных', 2: 'Извлечение', 3: 'Digital Twin' };
+  updateStatus('Этап ' + currentPhase + ': ' + phaseLabels[currentPhase]);
+
+  // Highlight ALL transcript lines progressively during phase 1
+  if (currentPhase === 1) {
+    transcriptLines.forEach((line, i) => {
+      setTimeout(() => highlightLine(i), i * 200);
+    });
+    setTimeout(() => { updateProfileBasic(clientData[selectedClientKey]); updateRadar(1); updateScatter(1); updateStatus('Этап 1: Данные собраны'); }, transcriptLines.length * 200 + 500);
+  }
+  if (currentPhase === 2) {
+    setTimeout(() => { updateProfileAnamnesis(clientData[selectedClientKey]); updateRadar(2); updateScatter(2); updateStatus('Этап 2: Данные извлечены'); }, 2000);
+  }
+  if (currentPhase === 3) {
+    setTimeout(() => { updateProfile(clientData[selectedClientKey]); updateRadar(3); updateScatter(3); updateStatus('✓ Digital Twin создан!'); }, 2000);
+  }
+}
+
+function playFull() {
+  if (isPlaying) {
+    isPlaying = false;
+    clearTimeout(timer);
+    document.getElementById('btnPlay').innerHTML = '<span id="btnIcon">▶</span> <span id="btnLabel">Старт</span>';
+    document.getElementById('btnPlay').classList.remove('active');
+    document.querySelector('.flow-dots')?.classList.remove('running');
+    document.querySelector('.flow-dots')?.classList.add('paused');
+    updateStatus('Пауза');
+    return;
+  }
+  isPlaying = true;
+  document.getElementById('btnPlay').innerHTML = '<span id="btnIcon" class="playing">◉</span> <span id="btnLabel">Пауза</span>';
+  document.getElementById('btnPlay').classList.add('active');
+  document.querySelector('.flow-dots')?.classList.remove('paused');
+  document.querySelector('.flow-dots')?.classList.add('running');
+  function nextStep() {
+    if (!isPlaying || currentPhase >= 3) {
+      isPlaying = false;
+document.getElementById('btnPlay').innerHTML = '<span id="btnIcon">▶</span> <span id="btnLabel">Старт</span>';
+      document.getElementById('btnPlay').classList.remove('active');
+      document.querySelector('.flow-dots')?.classList.remove('running');
+      if (currentPhase >= 3) updateStatus('✓ Digital Twin создан!');
+      return;
+    }
+    stepForward();
+    timer = setTimeout(nextStep, 2500);
+  }
+  nextStep();
+}
+
+function reset() {
+  isPlaying = false; clearTimeout(timer); currentPhase = 0; currentLine = 0;
+  selectedClientKey = document.getElementById('clientSelect').value || 'tatiana';
+  document.getElementById('btnPlay').innerHTML = '<span id="btnIcon">▶</span> <span id="btnLabel">Старт</span>';
+  document.getElementById('btnPlay').classList.remove('active');
+  const fd = document.querySelector('.flow-dots');
+  if (fd) { fd.classList.remove('running'); fd.classList.remove('paused'); }
+  [1,2,3].forEach(p => {
+    document.getElementById('num' + p)?.classList.remove('active');
+    document.getElementById('title' + p)?.classList.remove('active');
+  });
+  
+  // Reset result table highlights and results
+  for (let p = 1; p <= 3; p++) {
+    for (let i = 1; i <= 4; i++) {
+      const rowEl = document.getElementById('row' + p + '-' + i);
+      const resEl = document.getElementById('res' + p + '-' + i);
+      const vizEl = document.getElementById('viz' + p + '-' + i);
+      if (rowEl) {
+        rowEl.classList.remove('highlighted');
+        rowEl.querySelectorAll('.badge').forEach(b => b.classList.remove('active'));
+      }
+      if (resEl) {
+        resEl.textContent = '—';
+        resEl.classList.remove('filled');
+      }
+      if (vizEl) {
+        vizEl.querySelectorAll('.mini-bar').forEach(b => b.classList.remove('filled'));
+        vizEl.querySelectorAll('.mini-dot').forEach(d => d.classList.remove('animate'));
+      }
+    }
+  }
+  
+  // Reset transcript highlights
+  transcriptLines.forEach((_, i) => {
+    document.getElementById('line' + i)?.classList.remove('highlighted');
+  });
+  
+  // Reset radar to 0
+  if (radarChart) {
+    radarChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0];
+    radarChart.update();
+  }
+  
+  // Reset scatter - clear all points
+  if (scatterChart) {
+    scatterPoints.length = 0;
+    scatterChart.data.datasets[0].data = [];
+    scatterChart.update();
+  }
+  
+  // Reset profile to empty
+  document.getElementById('profileAvatar').textContent = '—';
+  document.getElementById('profileName').textContent = '—';
+  document.getElementById('profileBadge').textContent = '';
+  document.getElementById('profileBadge').className = 'profile-badge';
+  document.getElementById('profileId').textContent = '—';
+  ['qsWeight', 'qsBMI', 'qsLTV', 'qsStatus'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = '—';
+  });
+  ['pName', 'pGender', 'pAge', 'pWeight', 'pHeight', 'pBMI', 'pMotivation', 'pGoal', 
+   'pDiseases', 'pAllergies', 'pSurgery', 'pMeds', 'pFamily', 'pDiet', 'pSleep', 'pStress', 'pActivity', 'pHabits',
+   'pReadiness', 'pPrediction', 'pBarriers', 'pBudget', 'pSensitivity',
+   'pStart', 'pCurrent', 'pDelta', 'pDays', 'pCompletion', 'pEngagement', 'pNextCall', 'pUplift',
+   'pLTV', 'pStatus', 'pPrice', 'pTerm'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = '—';
+  });
+  
+  updateStatus('Нажмите «Старт» для анимации');
+  initRadar(clientData[selectedClientKey]);
+}
+
+// Radar chart
+let radarChart = null;
+let scatterChart = null;
+let currentRadarData = null;
+let scatterPoints = [];
+
+function initRadar(data) {
+  if (!data) return;
+  currentRadarData = data;
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  const labels = ['Старт', 'Выполнение', 'Вовлеч.', 'След.звонок', 'Дней', 'Изменение'];
+  const motivationScore = (data.motivation?.score || 50) * 2;
+  const completion = data.completion || 50;
+  const engagement = data.engagement === 'Высокий' ? 90 : data.engagement === 'Средний' ? 60 : 35;
+  const nextCallScore = Math.min(100, (data.nextCall || 3) * 12);
+  const daysScore = Math.min(100, (data.days || 15) * 3.3);
+  const changeScore = data.startWeight && data.currentWeight ? Math.min(100, Math.max(15, (data.startWeight - data.currentWeight) * 30 + 30)) : 25;
+  const baseValues = [
+    data.startWeight || 50,
+    completion,
+    engagement,
+    nextCallScore,
+    daysScore,
+    changeScore
+  ].map(v => Math.min(100, Math.max(10, v)));
+  currentRadarData._dtLabels = labels;
+  
+  if (radarChart) {
+    radarChart.destroy();
+  }
+  
+  radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: data.name,
+        data: [0, 0, 0, 0, 0, 0],
+        backgroundColor: 'rgba(37, 99, 235, 0.2)',
+        borderColor: 'rgba(37, 99, 235, 1)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(37, 99, 235, 1)'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        r: {
+          beginAtZero: true,
+          max: 100,
+          ticks: { stepSize: 20, display: false },
+          pointLabels: { font: { size: 9 } }
+        }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+  currentRadarData._baseValues = baseValues;
+  currentRadarData._dtLabels = labels;
+}
+
+function updateRadar(phase) {
+  if (!currentRadarData || !radarChart || !currentRadarData._baseValues) return;
+  const base = currentRadarData._baseValues;
+  
+  for (let i = 0; i < base.length; i++) {
+    setTimeout(() => {
+      const currentValues = radarChart.data.datasets[0].data;
+      currentValues[i] = base[i] * (phase / 3);
+      radarChart.data.datasets[0].data = [...currentValues];
+      radarChart.update();
+    }, i * 300);
+  }
+}
+
+const scatterKeywords = {
+  health: ['здоровье', 'вес', 'сон', 'вздутие', 'кишечник', 'усталость', 'энергия', 'давление', 'диабет', 'Щитовидка'],
+  motivation: ['мотивация', 'хочу', 'цель', 'желание', 'результат', 'нравится', 'рада', 'успех', 'изменения'],
+  barrier: ['трудно', 'сложно', 'времени', 'сомневаюсь', 'боюсь', 'проблема'],
+  financial: ['деньги', 'цена', 'скидка', 'оплатить', 'рассрочка', 'бюджет']
+};
+
+function initScatter(data) {
+  if (!data) return;
+  const ctx = document.getElementById('scatterChart').getContext('2d');
+  scatterPoints = [];
+  
+  if (scatterChart) {
+    scatterChart.destroy();
+  }
+  
+  scatterChart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'Клиенты',
+        data: scatterPoints,
+        backgroundColor: (ctx) => {
+          const pt = scatterPoints[ctx.dataIndex];
+          if (!pt || !pt.backgroundColor) return 'rgba(139, 92, 246, 0.3)';
+          const hex = pt.backgroundColor;
+          const r = parseInt(hex.slice(1, 3), 16);
+          const g = parseInt(hex.slice(3, 5), 16);
+          const b = parseInt(hex.slice(5, 7), 16);
+          return `rgba(${r}, ${g}, ${b}, 0.3)`;
+        },
+        borderColor: (ctx) => {
+          const pt = scatterPoints[ctx.dataIndex];
+          if (!pt || !pt.backgroundColor) return 'rgba(139, 92, 246, 0.7)';
+          const hex = pt.backgroundColor;
+          const r = parseInt(hex.slice(1, 3), 16);
+          const g = parseInt(hex.slice(3, 5), 16);
+          const b = parseInt(hex.slice(5, 7), 16);
+          return `rgba(${r}, ${g}, ${b}, 0.7)`;
+        },
+        borderWidth: 0.8,
+        pointRadius: (ctx) => {
+          const pt = scatterPoints[ctx.dataIndex];
+          return pt && pt.r ? pt.r : 6;
+        },
+        pointHoverRadius: 15
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      onHover: function(e, chartElements) {
+        if (chartElements && chartElements.length) {
+          const idx = chartElements[0].index;
+          const pt = scatterPoints[idx];
+          if (pt && typeof pt.lineIndex !== 'undefined') {
+            highlightLine(pt.lineIndex);
+          }
+        } else {
+          document.querySelectorAll('.transcript-line').forEach(el => el.classList.remove('highlighted'));
+        }
+      },
+      plugins: {
+        tooltip: {
+          enabled: true,
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          titleFont: { size: 12 },
+          bodyFont: { size: 11 },
+          padding: 8,
+          callbacks: {
+            label: function(context) {
+              const pt = context.raw;
+              if (!pt) return '';
+              let tip = 'x:' + pt.x.toFixed(1) + ' y:' + pt.y.toFixed(1);
+              if (pt.lineIndex === undefined) return tip;
+              const line = transcriptLines[pt.lineIndex];
+              if (!line || !line.text) return tip;
+              const words = line.text.split(/[\s,.]+/).filter(w => w.length > 3);
+              const word = words.length > 0 ? words[Math.floor(Math.random() * words.length)] : line.text.substring(0, 20);
+              return tip + ' | ' + word;
+            },
+            title: function(context) {
+              const pt = context[0] && context[0].raw;
+              return pt && pt.lineIndex !== undefined ? 'Строка ' + (pt.lineIndex + 1) : '';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          min: 0,
+          max: 10,
+          title: { display: true, text: 'Мотивация', font: { size: 10 } },
+          ticks: { stepSize: 2 }
+        },
+        y: {
+          min: 0,
+          max: 10,
+          title: { display: true, text: 'Оценка резервов здоровья', font: { size: 10 } },
+          ticks: { stepSize: 2 }
+        }
+      },
+      plugins: { legend: { display: false } }
+    }
+  });
+}
+
+function getKeywordColor(text) {
+  if (!text) return '#8b5cf6';
+  const lower = text.toLowerCase();
+  for (const w of keywords.redflag) if (lower.includes(w)) return '#ef4444';
+  for (const w of keywords.green) if (lower.includes(w)) return '#22c55e';
+  for (const w of keywords.motivation) if (lower.includes(w)) return '#3b82f6';
+  for (const w of keywords.barrier) if (lower.includes(w)) return '#f59e0b';
+  for (const w of keywords.financial) if (lower.includes(w)) return '#fbbf24';
+  for (const w of keywords.health) if (lower.includes(w)) return '#0ea5e9';
+  return '#8b5cf6';
+}
+
+function findKeyword(text) {
+  if (!text) return '';
+  const lower = text.toLowerCase();
+  for (const type of ['redflag', 'green', 'motivation', 'barrier', 'financial', 'health']) {
+    for (const w of keywords[type]) if (lower.includes(w)) return w;
+  }
+  return '';
+}
+
+function addScatterPoint(text, lineIndex, totalLines) {
+  if (!scatterChart || !currentRadarData) return;
+  const data = currentRadarData;
+  const motScore = (data.motivation?.score || 40) / 5;
+  const engScore = data.engagement === 'Высокий' ? 8 : data.engagement === 'Средний' ? 5 : 2;
+  const baseX = motScore;
+  const baseY = engScore;
+  const pointIdx = lineIndex || 0;
+  const xRand = baseX < 3 ? (Math.random() - 0.5) * 5 : (baseX > 7 ? (Math.random() - 0.5) * 5 : 0);
+  const yRand = baseY < 3 ? (Math.random() - 0.5) * 5 : (baseY > 7 ? (Math.random() - 0.5) * 5 : 0);
+  const xOffset = ((pointIdx % 5) - 2) * 1;
+  const yOffset = ((pointIdx % 7) - 3) * 0.7;
+  const x = Math.min(9, Math.max(1, baseX + xOffset + xRand));
+  const y = Math.min(9, Math.max(1, baseY + yOffset + yRand));
+  const r = 2 + Math.floor(Math.random() * 9);
+  const color = getKeywordColor(text);
+  const foundWord = findKeyword(text);
+  const label = foundWord || (text ? text.substring(0, 15) + (text.length > 15 ? '...' : ''): '');
+  
+  scatterPoints.push({ x, y, r: r, backgroundColor: color, lineIndex: lineIndex, label: label });
+  scatterChart.data.datasets[0].data = [...scatterPoints];
+  scatterChart.update();
+}
+
+function updateScatter(phase) {
+  if (!scatterChart || !currentRadarData || transcriptLines.length === 0) return;
+  scatterPoints.length = 0;
+  const totalPts = 20 + Math.floor(Math.random() * 6);
+  const step = Math.floor(transcriptLines.length / totalPts);
+  
+  for (let i = 0; i < totalPts; i++) {
+    const idx = Math.min(i * step, transcriptLines.length - 1);
+    setTimeout(() => {
+      const line = transcriptLines[idx];
+      if (line && line.text) addScatterPoint(line.text, idx, transcriptLines.length);
+    }, i * 150);
+  }
+}
+
+// Init
+renderTranscript(transcriptLines);
+populateClientList();
+const clientKeys = Object.keys(clientData);
+const randomKey = clientKeys[Math.floor(Math.random() * clientKeys.length)];
+document.getElementById('clientSelect').value = randomKey;
+selectClient();
+setTimeout(playFull, 500);
+
+function showFeatures() {
+  const f = [
+    '=== СБОР ДАННЫХ ===',
+    '1. MARS    - транскрипт: Шкала приверженности',
+    '2. GSES   - MARS/GSES: Шкала самоэффективности',
+    '3. ASR    - поведение: Распознавание речи',
+    '4. API    - внешние: Внешние источники',
+    '',
+    '=== ИЗВЛЕЧЕНИЕ ===',
+    '5. LIWC   - психолингв: Психолингвистический анализ',
+    '6. TF-IDF - TF-IDF: Анализ ключевых слов',
+    '7. NER    - инференс: Извлечение сущностей',
+    '8. LLM    - JSON: Большие языковые модели',
+    '',
+    '=== DIGITAL TWIN ===',
+    '9. Вектор  - признаков: Вектор признаков',
+    '10. Z-score - Z-score: Нормализация данных',
+    '11. K-means - K-means: Кластеризация',
+    '12. ML    - модель: Машинное обучение',
+    '',
+    '=== ВИЗУАЛИЗАЦИЯ ===',
+    '- Pipeline: 12 этапов (3 группы по 4)',
+    '- Анимация слева направо',
+    '- Радар: 6 показателей Digital Twin',
+    '- Скаттер: точки из транскрипта',
+    '- Профиль клиента заполняется поэтапно',
+    '- Результат заполняется по этапам',
+    '- Выбор случайного клиента',
+    '- Клиент: ' + (clientData[selectedClientKey]?.name || '')
+  ].join('\n');
+  alert('Demo Features:\n\n' + f);
+}
+</script>
+</body>
+</html>

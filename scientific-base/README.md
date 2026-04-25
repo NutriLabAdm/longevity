@@ -1,6 +1,6 @@
 # Scientific Base
 
-This folder contains the scientific research, data analysis, and ML models for GliaTwin AI.
+This folder contains the scientific research, data analysis, and ML models for Healora AI.
 
 ## Contents
 
@@ -35,4 +35,4 @@ See `docs/` for detailed research documentation.
 
 ## Contact
 
-For research inquiries: research@gliatwin.ai
+For research inquiries: research@Healora.ai

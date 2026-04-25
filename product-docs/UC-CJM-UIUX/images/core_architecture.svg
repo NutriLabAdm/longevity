@@ -3,7 +3,7 @@
   <rect width="800" height="500" fill="#1a202c"/>
   
   <!-- Title -->
-  <text x="400" y="40" fill="#fff" font-size="24" text-anchor="middle" font-family="Arial">GliaTwin AI - Core Architecture</text>
+  <text x="400" y="40" fill="#fff" font-size="24" text-anchor="middle" font-family="Arial">Healora AI - Core Architecture</text>
   
   <!-- Input Box -->
   <rect x="50" y="80" width="150" height="80" rx="10" fill="#667eea"/>
