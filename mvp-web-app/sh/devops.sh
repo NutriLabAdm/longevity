@@ -38,14 +38,14 @@ show_menu() {
     echo "  2. Run: sudo bash vps.sh (or paste vps.sh content)"
     echo ""
     echo "COMMANDS:"
-    echo "  0) Commit changes          (git add/commit/push)"
     echo "  1) Deploy prod ($REMOTE_DIR/)"
     echo "  2) Pull from GitHub        (git clone/pull on server)"
     echo "  3) Backup current          (copy to backups/)"
     echo "  4) Rollback                (restore backup)"
     echo "  5) Check status            (nginx, SSL)"
     echo "  6) View logs               (tail access log)"
-    echo "  7) Exit"
+    echo "  7) Commit changes          (git add/commit/push)"
+    echo "  0) Exit"
     echo ""
     read -p "Select option [0-7]: " choice
 }
@@ -210,15 +210,15 @@ case $1 in
     *)
         show_menu
         case $choice in
-            0) commit_changes ;;
+            0) exit 0 ;;
             1) deploy_local ;;
             2) deploy_github ;;
             3) backup ;;
             4) rollback ;;
             5) check_status ;;
             6) view_logs ;;
-            7) exit 0 ;;
-            *) log_error "Invalid option" ;;
+            7) commit_changes ;;
+            *) log_error "Invalid option";;
         esac
         ;;
 esac
