@@ -128,16 +128,20 @@ The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) a
 
 ## Interventions Table
 
+## Interventions Table
+
+## Interventions Table
+
 | Code | Name | Description | Category | Type | Impact | Regularity | Data Source | Evidence | Sources |
-|------|------|-------------|----------|------|--------|-----------|-------------|-------------|----------|--------|
-| **01_SLEEP** |
+|:-----|:-----|:------------|:---------|:-----|-------:|:-----------|:------------|:---------|:--------|
+| **01_SLEEP** | — | — | — | — | — | — | — | — | — |
 | 01_1 | Sleep: Bedtime | Fixed bedtime for circadian rhythm stabilization | sleep | behavior | 9.0 | daily | self-report, wearable | A | PMID: 31735704; whoop.com |
 | 01_2 | Sleep: Blue Light Limit | Screen avoidance 1-2 hours before bed for melatonin | sleep | behavior | 8.5 | daily | self-report, wearable | A | PMID: 32852159; nature.com |
 | 01_3 | Sleep: Cool Temperature | Bedroom temperature 18-21°C for optimal sleep | sleep | behavior | 7.5 | daily | wearable, device | B | PMID: 29621487 |
 | 01_4 | Sleep: Dark Room | Complete darkness for sleep quality | sleep | behavior | 7.0 | daily | self-report | B | sleepfoundation.org |
 | 01_5 | Sleep: Nap | Short nap (20-30 min) for recovery | sleep | behavior | 8.0 | on-demand | wearable | B | PMID: 24795612 |
 | 01_6 | Sleep: Ritual | Evening sleep ritual | sleep | behavior | 8.5 | daily | self-report, wearable | B | whoop.com; sleepfoundation.org |
-| **02_PHYSICAL** |
+| **02_PHYSICAL** | — | — | — | — | — | — | — | — | — |
 | 02_1 | Training: HIIT | High-intensity interval training for cardio | physical | behavior | 9.0 | weekly | wearable, device | A | PMID: 29631804; whoop.com |
 | 02_2 | Training: Strength | Regular strength training for muscle mass | physical | behavior | 8.5 | weekly | wearable, device | A | PMID: 28615992 |
 | 02_3 | Training: Aerobic | Running, swimming, cycling | physical | behavior | 9.0 | weekly | wearable, device | A | PMID: 29631804 |
@@ -152,7 +156,7 @@ The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) a
 | 02_12 | Habits: Movement Breaks | Hourly 5-minute break | physical | behavior | 7.5 | daily | wearable | B | - |
 | 02_13 | Habits: Ergonomics | Proper workspace setup | physical | behavior | 7.0 | daily | self-report | B | - |
 | 02_14 | Habits: Safety | Seatbelts, helmets, protection | physical | behavior | 10.0 | daily | self-report | A | CDC |
-| **03_MENTAL** |
+| **03_MENTAL** | — | — | — | — | — | — | — | — | — |
 | 03_1 | Recovery: Meditation | Meditation and mindfulness for stress reduction | mental | behavior | 8.5 | daily | self-report, wearable | A | PMID: 24795612; ouraring.com |
 | 03_2 | Recovery: Breathing | Deep breathing, box breathing for parasympathetic activation | mental | behavior | 8.0 | daily | wearable | B | PMID: 29165047 |
 | 03_3 | Stress: Journaling | Reflection and journaling for emotional regulation | mental | behavior | 7.5 | daily | self-report | B | PMID: 24860198 |
@@ -166,7 +170,7 @@ The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) a
 | 03_11 | Mental: Music | Music for relaxation | mental | behavior | 6.5 | daily | self-report | C | - |
 | 03_12 | Mental: Laughter | Regular laughter and positivity | mental | behavior | 7.5 | daily | self-report | C | - |
 | 03_13 | Mental: Acceptance | Acceptance practices | mental | behavior | 8.0 | daily | self-report | B | - |
-| **04_FOOD** |
+| **04_FOOD** | — | — | — | — | — | — | — | — | — |
 | 04_1 | Nutrition: Calorie Limit | Moderate calorie restriction for longevity | food | behavior | 8.5 | daily | self-report, lab | A | PMID: 29135908 |
 | 04_2 | Nutrition: Intermittent Fasting | 16:8 or 5:2 fasting protocols | food | behavior | 8.0 | daily | self-report, wearable | B | PMID: 29135908 |
 | 04_3 | Nutrition: Protein | Adequate protein intake (1.6-2.2 g/kg) | food | behavior | 8.0 | daily | self-report | A | ISSN; nutrition.org |
@@ -179,16 +183,16 @@ The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) a
 | 04_10 | Nutrition: Caffeine | Caffeine control (up to 400 mg/day) | food | behavior | 7.0 | daily | self-report, wearable | B | - |
 | 04_11 | Nutrition: Micronutrients | Multivitamins and micronutrients | food | supplement | 6.5 | daily | lab, self-report | C | - |
 | 04_12 | Habits: Water Quality | High-quality drinking water | food | behavior | 7.5 | daily | self-report | B | - |
-| **05_SOCIAL** |
+| **05_SOCIAL** | — | — | — | — | — | — | — | — | — |
 | 05_1 | Stress: Social Connections | Close relationships and social contacts | social | behavior | 9.0 | weekly | self-report | A | PMID: 28715126 |
 | 05_2 | Habits: Family Time | Quality time with loved ones | social | behavior | 9.0 | weekly | self-report | A | PMID: 28715126 |
 | 05_3 | Habits: Volunteering | Helping others for purpose | social | behavior | 8.0 | weekly | self-report | B | - |
 | 05_4 | Habits: Sex | Regular sexual activity | social | behavior | 8.0 | weekly | self-report | B | - |
-| **06_ENVIRONMENTAL** |
+| **06_ENVIRONMENTAL** | — | — | — | — | — | — | — | — | — |
 | 06_1 | Stress: Nature | Time in nature for cortisol reduction | environmental | behavior | 7.5 | weekly | self-report | B | - |
 | 06_2 | Habits: Toxin Avoidance | Minimize toxin exposure | environmental | behavior | 8.5 | daily | self-report | B | - |
 | 06_3 | Habits: Clean Air | Air purifiers | environmental | device | 7.5 | daily | device | C | - |
-| **07_MEDICAL** |
+| **07_MEDICAL** | — | — | — | — | — | — | — | — | — |
 | 07_1 | Medicine: Regular Checkup | Annual medical examinations | medical | diagnostic | 9.0 | yearly | lab, medical | A | CDC; whoop.com/advanced-labs |
 | 07_2 | Medicine: Screening | Preventive screenings (BP, cholesterol, glucose) | medical | diagnostic | 9.0 | yearly | lab, device | A | AHA |
 | 07_3 | Medicine: Vaccination | Timely vaccination | medical | medical | 9.0 | yearly | medical | A | WHO |
@@ -198,7 +202,7 @@ The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) a
 | 07_7 | Medicine: Mental Health | Work with therapist/psychologist | mental | medical | 9.0 | weekly | self-report | A | - |
 | 07_8 | Medicine: Genetic Testing | Genetic tests for personalization | medical | diagnostic | 7.5 | once | lab | B | - |
 | 07_9 | Medicine: Biohacking | Data-driven personalized interventions | medical | medical | 7.0 | monthly | lab, device | C | - |
-| **08_DEVICES** |
+| **08_DEVICES** | — | — | — | — | — | — | — | — | — |
 | 08_1 | Devices: HRV Monitoring | Heart rate variability tracking | physical | device | 8.5 | daily | wearable | B | whoop.com; ouraring.com |
 | 08_2 | Devices: SpO2 Monitoring | Blood oxygen level tracking | physical | device | 7.5 | daily | wearable | B | whoop.com |
 | 08_3 | Devices: Body Temperature | Basal body temperature tracking | physical | device | 7.0 | daily | wearable | B | ouraring.com |
@@ -207,7 +211,7 @@ The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) a
 | 08_6 | Devices: ECG | Electrocardiogram for arrhythmia detection | medical | device | 9.0 | on-demand | device | A | whoop.com/mg |
 | 08_7 | Devices: BP Monitor | Blood pressure measurement | medical | device | 9.0 | daily | device | A | whoop.com/mg |
 | 08_8 | Devices: Glucose Meter | Blood glucose monitoring | medical | device | 8.5 | daily | device, lab | A | - |
-| **09_LAB** |
+| **09_LAB** | — | — | — | — | — | — | — | — | — |
 | 09_1 | Lab: Lipid Profile | Cholesterol, HDL, LDL, triglycerides | medical | lab | 9.0 | yearly | lab | A | questdiagnostics.com |
 | 09_2 | Lab: Inflammation Markers | C-reactive protein (CRP), IL-6 | medical | lab | 8.5 | yearly | lab | A | questdiagnostics.com |
 | 09_3 | Lab: Hormones | Testosterone, estrogen, cortisol, DHEA | medical | lab | 8.0 | yearly | lab | B | questdiagnostics.com |
@@ -218,7 +222,7 @@ The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) a
 | 09_8 | Lab: Oxidative Stress | Oxidative stress markers | medical | lab | 7.5 | yearly | lab | C | - |
 | 09_9 | Lab: Epigenetic Age | Biological age by methylation | medical | lab | 8.0 | yearly | lab | B | - |
 | 09_10 | Lab: Microbiome | Gut microbiome analysis | medical | lab | 8.0 | once | lab | B | - |
-| **10_BIOHACKING** |
+| **10_BIOHACKING** | — | — | — | — | — | — | — | — | — |
 | 10_1 | Biohacking: NAD+ | NAD+ precursors (NMN, NR) | medicine | supplement | 8.0 | daily | self-report, lab | B | - |
 | 10_2 | Biohacking: Senolytics | Senolytic drugs | medicine | medical | 8.5 | monthly | lab | C | - |
 | 10_3 | Biohacking: Metformin | Metformin for longevity | medicine | medical | 8.0 | daily | lab, medical | B | - |
@@ -229,13 +233,11 @@ The database integrates with wearable ecosystems (Whoop, Oura, Fitbit, Garmin) a
 | 10_8 | Biohacking: Hyperbaric O2 | Hyperbaric oxygen therapy | medical | medical | 7.5 | monthly | self-report | C | - |
 | 10_9 | Biohacking: Testosterone | HRT (hormone replacement therapy) | medical | medical | 8.5 | monthly | lab, medical | B | - |
 | 10_10 | Biohacking: Hypoxic Training | Low oxygen training | physical | behavior | 7.0 | weekly | device | C | - |
-| **11_HABITS** |
+| **11_HABITS** | — | — | — | — | — | — | — | — | — |
 | 11_1 | Habits: Early Rise | Early rise (before 7 AM) | mental | behavior | 7.5 | daily | wearable | C | - |
 | 11_2 | Habits: Morning Routine | Structured morning routine | mental | behavior | 8.0 | daily | self-report | B | whoop.com |
 | 11_3 | Habits: Planning | Weekly planning and reflection | mental | behavior | 7.5 | weekly | self-report | B | - |
 | 11_4 | Habits: Time Management | Pomodoro, time-blocking | mental | behavior | 7.0 | daily | self-report | C | - |
-
----
 
 ## References
 

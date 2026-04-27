@@ -38,15 +38,64 @@ show_menu() {
     echo "  2. Run: sudo bash vps.sh (or paste vps.sh content)"
     echo ""
     echo "COMMANDS:"
+    echo "  0) Commit changes          (git add/commit/push)"
     echo "  1) Deploy prod ($REMOTE_DIR/)"
-    echo "  2) Pull from GitHub      (git clone/pull)"
-    echo "  3) Backup current        (copy to backups/)"
-    echo "  4) Rollback              (restore backup)"
-    echo "  5) Check status          (nginx, SSL)"
-    echo "  6) View logs             (tail access log)"
+    echo "  2) Pull from GitHub        (git clone/pull on server)"
+    echo "  3) Backup current          (copy to backups/)"
+    echo "  4) Rollback                (restore backup)"
+    echo "  5) Check status            (nginx, SSL)"
+    echo "  6) View logs               (tail access log)"
     echo "  7) Exit"
     echo ""
-    read -p "Select option [1-7]: " choice
+    read -p "Select option [0-7]: " choice
+}
+
+commit_changes() {
+    log_info "Git Commit Helper"
+    
+    # Check if we are in a git repo
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        log_error "Not a git repository. Run this script from the project root."
+        return 1
+    fi
+    
+    echo ""
+    echo "=== Git Status ==="
+    git status --short
+    echo ""
+    
+    # Check for changes
+    if [ -z "$(git status --porcelain)" ]; then
+        log_info "Working tree clean. Nothing to commit."
+        return 0
+    fi
+    
+    read -p "Add all changes (git add -A)? [y/n]: " add_all
+    if [ "$add_all" = "y" ]; then
+        git add -A
+        log_info "Files staged."
+    else
+        read -p "Enter files to add (or skip): " files
+        if [ -n "$files" ]; then
+            git add $files
+        fi
+    fi
+    
+    read -p "Enter commit message: " commit_msg
+    if [ -n "$commit_msg" ]; then
+        git commit -m "$commit_msg"
+        log_info "Committed: '$commit_msg'"
+    else
+        log_warn "Empty message, commit skipped."
+        return 0
+    fi
+    
+    read -p "Push to remote now? [y/n]: " do_push
+    if [ "$do_push" = "y" ]; then
+        log_info "Pushing to remote..."
+        git push
+        log_info "Push complete."
+    fi
 }
 
 deploy_local() {
@@ -145,22 +194,31 @@ view_logs() {
 }
 
 # Main
-if [ "$1" = "deploy" ]; then
-    deploy_local
-elif [ "$1" = "status" ]; then
-    check_status
-elif [ "$1" = "logs" ]; then
-    view_logs
-else
-    show_menu
-    case $choice in
-        1) deploy_local ;;
-        2) deploy_github ;;
-        3) backup ;;
-        4) rollback ;;
-        5) check_status ;;
-        6) view_logs ;;
-        7) exit 0 ;;
-        *) log_error "Invalid option" ;;
-    esac
-fi
+case $1 in
+    commit)
+        commit_changes
+        ;;
+    deploy)
+        deploy_local
+        ;;
+    status)
+        check_status
+        ;;
+    logs)
+        view_logs
+        ;;
+    *)
+        show_menu
+        case $choice in
+            0) commit_changes ;;
+            1) deploy_local ;;
+            2) deploy_github ;;
+            3) backup ;;
+            4) rollback ;;
+            5) check_status ;;
+            6) view_logs ;;
+            7) exit 0 ;;
+            *) log_error "Invalid option" ;;
+        esac
+        ;;
+esac
